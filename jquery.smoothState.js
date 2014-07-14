@@ -16,8 +16,6 @@
      *
      * @author  Miguel Ángel Pérez   reachme@miguel-perez.com
      * @param   {object}             options - List of configuarable variables
-     * @param   {function}           callback - Function that is ran after all of
-     *                               the render functions have been run.
      * 
      */
     $.fn.smoothState = function( options ) {
