@@ -6,20 +6,20 @@ The approach taken here is that of a mix of ajax, pushstate, and a series of ren
 
 
 Barebones
-```
+```JavaScript
 $('#body[data-page]').smoothState();
 
 ```
 
 Barebones + prefetching = faster page loads
-```
+```JavaScript
 $('#body[data-page]').smoothState({ prefetch: true });
 
 ```
 
 
 Animate page loads
-```
+```JavaScript
 $('#body[data-page]').smoothState({
     // Define an array of render functions to set up HTML needed for CSS transitions
     renderFrame: [
@@ -43,7 +43,7 @@ $('#body[data-page]').smoothState({
 });
 ```
 And how the CSS might look like:
-```
+```css
 [data-page] {
 
     .content {
