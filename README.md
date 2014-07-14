@@ -43,7 +43,7 @@ $('#body[data-page]').smoothState({
 });
 ```
 And how the CSS might look like:
-```css
+```scss
 [data-page] {
 
     .content {
