@@ -20,23 +20,24 @@
      *                               the render functions have been run.
      * 
      */
-    $.fn.smoothState = function( options, callback ) {
+    $.fn.smoothState = function( options ) {
+        
+        var popedState = false, // used later to check if we need to update the URL
+            cache = {}, // used to store the contents that we fetch with ajax
+            $body = $('body'),
+            $wind =  $(window);
 
+        // Defaults
         options = $.extend({
             innerPageSelector   : '[data-page]',
             prefetch            : false,
             renderFrame         : [renderFrame],
             onBefore            : onBefore,
+            onAfter             : function() {},
             frameDelay          : 400,
             blacklist           : '.no-ajax',
             loadingBodyClass    : 'loading-cursor'
         }, options);
-
-
-        var popedState = false, // used later to check if we need to update the URL
-            cache = {}, // used to store the contents that we fetch with ajax
-            $body = $('body'),
-            $wind =  $(window);
 
         /**
          * Loads the contents of a url into a specified container 
@@ -170,7 +171,7 @@
                 var html = options.renderFrame[i]($content, $container);
                 $container.html(html);
                 if (isLastFrame) {
-                    callback($content, $container);
+                    options.onAfter($content, $container);
                 }
             }, timing);
         }
