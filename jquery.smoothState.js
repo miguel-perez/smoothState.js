@@ -20,11 +20,11 @@
      */
     $.fn.smoothState = function (options) {
         
-        var popedState = false, // used later to check if we need to update the URL
-            cache = {}, // used to store the contents that we fetch with ajax
-            $body = $("body"),
-            $wind =  $(window),
-            consl = (window.console || false);
+        var popedState  = false, // used later to check if we need to update the URL
+            cache       = {}, // used to store the contents that we fetch with ajax
+            $body       = $("body"),
+            $wind       =  $(window),
+            consl       = (window.console || false);
 
         // Defaults
         options = $.extend({
@@ -97,6 +97,7 @@
             if (!cache.hasOwnProperty(url)) {
                 cache[url] = null;
                 var request = $.ajax(url);
+                
                 // Store contents in cache variable if successful
                 request.success(function (html) {
                     cache[url] = { // Content is indexed by the url
@@ -104,6 +105,7 @@
                         html: html // Stores the contents of the page
                     };
                 });
+                
                 // Mark as error
                 request.error(function () {
                     cache[url] = "error";
@@ -245,7 +247,6 @@
          * the container to be the element the plugin was init'ed on.
          *
          * @param   {page}    url - url being evaluated
-         * @todo    If the container doesn't have an ID, throw a warning and escape
          * 
          */
         function getTargetContainer(container, selector) {
