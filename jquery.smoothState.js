@@ -1,5 +1,5 @@
 
-(function($){
+(function ($) {
 
     "use strict";
 
@@ -18,23 +18,29 @@
      * @param   {object}             options - List of configuarable variables
      * 
      */
-    $.fn.smoothState = function( options ) {
+    $.fn.smoothState = function (options) {
         
         var popedState = false, // used later to check if we need to update the URL
             cache = {}, // used to store the contents that we fetch with ajax
-            $body = $('body'),
+            $body = $("body"),
             $wind =  $(window);
 
         // Defaults
         options = $.extend({
-            innerPageSelector   : '[data-page]',
+            innerPageSelector   : "[data-page]",
             prefetch            : false,
-            renderFrame         : [renderFrame],
-            onBefore            : onBefore,
-            onAfter             : function() {},
+            renderFrame         : [
+                function ($content) {
+                    return $("<div/>").append($content).html();
+                }
+            ],
+            onBefore            : function () {
+                $wind.scrollTop(0);
+            },
+            onAfter             : function () {},
             frameDelay          : 400,
-            blacklist           : '.no-ajax',
-            loadingBodyClass    : 'loading-cursor'
+            blacklist           : ".no-ajax",
+            loadingBodyClass    : "loading-cursor"
         }, options);
 
         /**
@@ -48,13 +54,13 @@
          */
         function load(url, $container) {
             // Checks to see if we already have the contents of this URL
-            if(cache.hasOwnProperty(url)) {
+            if (cache.hasOwnProperty(url)) {
                 // Null is an indication that the Ajax request has been
                 // fired but has not completed.
-                if(cache[url] === null) {
+                if (cache[url] === null) {
                     // If the content has been request but is not done,
                     // wait 10ms and try again and add a loading indicator.
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $body.addClass(options.loadingBodyClass);
                         load(url, $container);
                     }, 10);
@@ -83,30 +89,17 @@
          * 
          */
         function fetch(url) {
-             if(!cache.hasOwnProperty(url)) {
+            if (!cache.hasOwnProperty(url)) {
                 cache[url] = null;
                 var request = $.ajax(url);
-                request.success(function(html){
+                request.success(function (html) {
                     cache[url] = { // Content is indexed by the url
-                        title: $(html).filter('title').text(), // Stores the title of the page
+                        title: $(html).filter("title").text(), // Stores the title of the page
                         html: html // Stores the contents of the page
                     };
                 });
-             }
+            }
         }
-
-
-        /**
-         * Function that runs before the page is update with content
-         * @param   {string}    url
-         * @param   {jquery}    $container - the container that is listening for
-         *                      interactions to links.
-         * 
-         */
-        function onBefore(url, $container) {
-            $wind.scrollTop(0);
-        }
-
 
         /**
          * Fetches the contents of a url and stores it in the 'cache' varible
@@ -114,8 +107,8 @@
          * 
          */
         function updatePage(url, $container) {
-            var containerId = $container.prop('id'),
-                $content    = $($(cache[url].html).find('#' + containerId).html());
+            var containerId = $container.prop("id"),
+                $content    = $($(cache[url].html).find("#" + containerId).html());
             animateContent($content, $container);
             updateState(cache[url].title, url, containerId);
         }
@@ -130,8 +123,9 @@
          * 
          */
         function animateContent($content, $container) {
-            for (var i = 0; i < options.renderFrame.length; i++) {
-                var isLastFrame = (i === options.renderFrame.length - 1);
+            var i, isLastFrame;
+            for (i = 0; i < options.renderFrame.length; i += 1) {
+                isLastFrame = (i === options.renderFrame.length - 1);
                 showFrame(i, $content, $container, isLastFrame);
             }
         }
@@ -146,9 +140,9 @@
          */
         function updateState(title, url, id) {
             document.title = title;
-            if(!popedState && history.pushState) {
+            if (!popedState && history.pushState) {
                 // the id is used to know what needs to be updated on the popState event
-                history.pushState( { id: id }, title, url);
+                history.pushState({ id: id }, title, url);
             }
         }
 
@@ -165,7 +159,7 @@
          */
         function showFrame(i, $content, $container, isLastFrame) {
             var timing = options.frameDelay * i;
-            setTimeout(function(){
+            setTimeout(function () {
                 var html = options.renderFrame[i]($content, $container);
                 $container.html(html);
                 if (isLastFrame) {
@@ -173,20 +167,6 @@
                 }
             }, timing);
         }
-
-
-        /**
-         * The default render function just replaces the content of the container
-         * @param   {jquery}    $content - the markup that will replace the
-         *                      contents of the container.
-         * @param   {jquery}    $container - the container that is listening for
-         *                      interactions to links.
-         * 
-         */
-        function renderFrame($content, $container) {
-            return $('<div/>').append($content).html();
-        }
-
 
         /**
          * Checks to see if the url is external
@@ -196,8 +176,12 @@
          */
         function isExternal(url) {
             var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/);
-            if (typeof match[1] === "string" && match[1].length > 0 && match[1].toLowerCase() !== location.protocol) return true;
-            if (typeof match[2] === "string" && match[2].length > 0 && match[2].replace(new RegExp(":("+{"http:":80,"https:":443}[location.protocol]+")?$"), "") !== location.host) return true;
+            if (typeof match[1] === "string" && match[1].length > 0 && match[1].toLowerCase() !== location.protocol) {
+                return true;
+            }
+            if (typeof match[2] === "string" && match[2].length > 0 && match[2].replace(new RegExp(":(" + {"http:": 80, "https:": 443}[location.protocol] + ")?$"), "") !== location.host) {
+                return true;
+            }
             return false;
         }
 
@@ -209,7 +193,7 @@
          */
         function isHash(url) {
             var hasPathname = (url.indexOf(window.location.pathname) > 0) ? true : false,
-                hasHash = (url.indexOf('#') > 0) ? true : false;
+                hasHash = (url.indexOf("#") > 0) ? true : false;
             return (hasPathname && hasHash) ? true : false;
         }
 
@@ -219,8 +203,8 @@
          * @param   {string}    url - url being evaluated
          * 
          */
-        function shouldLoad($anchor){
-            var url = $anchor.prop('href');
+        function shouldLoad($anchor) {
+            var url = $anchor.prop("href");
             // URL will only be loaded if it's not an external link, hash, or blacklisted
             return (!isExternal(url) && !isHash(url) && !$anchor.is(options.blacklist));
         }
@@ -237,7 +221,7 @@
          * @todo    If the container doesn't have an ID, throw a warning and escape
          * 
          */
-        function getTargetContainer(container, selector){
+        function getTargetContainer(container, selector) {
             var $container      = $(container),
                 $childContainer = $(selector, $container).first();
             return ($childContainer.length) ? $childContainer : $container;
@@ -253,8 +237,8 @@
         function hoverAnchor(event) {
             event.stopPropagation();
             var $anchor = $(event.currentTarget),
-                url     = $anchor.prop('href');
-            if(shouldLoad($anchor)){
+                url     = $anchor.prop("href");
+            if (shouldLoad($anchor)) {
                 fetch(url);
             }
         }
@@ -272,10 +256,10 @@
             event.stopPropagation();
 
             var $anchor     = $(event.currentTarget),
-                url         = $anchor.prop('href'),
+                url         = $anchor.prop("href"),
                 $container  = getTargetContainer(event.delegateTarget, options.innerPageSelector);
 
-            if(shouldLoad($anchor)) {
+            if (shouldLoad($anchor)) {
                 event.preventDefault();
                 load(url, $container);
             }
@@ -288,21 +272,23 @@
          * @see     https://developer.mozilla.org/en-US/docs/Web/API/Window.onpopstate
          * 
          */
-        function onPopState(event) {
+        function onPopState() {
             var url = window.location.href;
 
             // Doesn't update anything if it's a hash
-            if(isHash(url)) return;
+            if (isHash(url)) {
+                return;
+            }
 
             // Sets the flag that we've begun to pop states
             popedState = true;
 
             // Redirects to the url if we don't have needed data
-            if(history.state === null) {
+            if (history.state === null) {
                 window.location = url;
             } else {
                 // Update content if we know what needs to be updated
-                load(url, $('#' +history.state.id));
+                load(url, $("#" + history.state.id));
             }
         }
 
@@ -311,12 +297,12 @@
 
 
         // Returns the jquery object
-        return this.each(function(){
+        return this.each(function () {
             //@todo: Handle form submissions
             var $this = $(this);
-            $this.on('click touchend', 'a', clickAnchor);
-            if(options.prefetch) {
-                $this.on('mouseover touchstart', 'a', hoverAnchor);
+            $this.on("click touchend", "a", clickAnchor);
+            if (options.prefetch) {
+                $this.on("mouseover touchstart", "a", hoverAnchor);
             }
         });
     };
