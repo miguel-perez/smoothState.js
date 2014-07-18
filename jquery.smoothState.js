@@ -23,7 +23,7 @@
         var popedState  = false, // used later to check if we need to update the URL
             cache       = {}, // used to store the contents that we fetch with ajax
             $body       = $("body"),
-            $wind       =  $(window),
+            $wind       = $(window),
             consl       = (window.console || false);
 
         // Defaults
