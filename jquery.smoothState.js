@@ -23,7 +23,8 @@
         var popedState = false, // used later to check if we need to update the URL
             cache = {}, // used to store the contents that we fetch with ajax
             $body = $("body"),
-            $wind =  $(window);
+            $wind =  $(window),
+            consl = (window.console || false);
 
         // Defaults
         options = $.extend({
@@ -40,8 +41,10 @@
             onAfter             : function () {},
             frameDelay          : 400,
             blacklist           : ".no-ajax",
-            loadingBodyClass    : "loading-cursor"
+            loadingBodyClass    : "loading-cursor",
+            development         : false
         }, options);
+
 
         /**
          * Loads the contents of a url into a specified container 
@@ -64,9 +67,11 @@
                         $body.addClass(options.loadingBodyClass);
                         load(url, $container);
                     }, 10);
+                } else if (cache[url] === "error") {
+                    // If there was an error, abort and redirect
+                    window.location = url;
                 } else {
                     // If the content has been requested and is done:
-
                     // 1. Remove loading class
                     $body.removeClass(options.loadingBodyClass);
                     // 2. Run onBefore function
@@ -92,14 +97,20 @@
             if (!cache.hasOwnProperty(url)) {
                 cache[url] = null;
                 var request = $.ajax(url);
+                // Store contents in cache variable if successful
                 request.success(function (html) {
                     cache[url] = { // Content is indexed by the url
                         title: $(html).filter("title").text(), // Stores the title of the page
                         html: html // Stores the contents of the page
                     };
                 });
+                // Mark as error
+                request.error(function () {
+                    cache[url] = "error";
+                });
             }
         }
+
 
         /**
          * Fetches the contents of a url and stores it in the 'cache' varible
@@ -108,9 +119,24 @@
          */
         function updatePage(url, $container) {
             var containerId = $container.prop("id"),
-                $content    = $($(cache[url].html).find("#" + containerId).html());
-            animateContent($content, $container);
-            updateState(cache[url].title, url, containerId);
+                $content    = (containerId.length) ? $($(cache[url].html).find("#" + containerId).html()) : "";
+
+            // We check to see if the container we hope to update is 
+            // returned in the request so that we can replace existing
+            // content with the updated markup.
+            if (containerId.length && $content.length) {
+                animateContent($content, $container);
+                updateState(cache[url].title, url, containerId);
+            } else if (options.development && consl) { // Throw warning to help debug
+                if (!containerId.length) { // No container ID
+                    consl.warn("The following container has no ID: ", $container[0]);
+                } else if (!$content.length) { // No container in the response
+                    consl.warn("No element with an ID of '#" + containerId + "' in response from " + url);
+                }
+            } else {
+                // If the container isn't in the response, just abort.
+                window.location = url;
+            }
         }
 
 
@@ -167,6 +193,7 @@
                 }
             }, timing);
         }
+
 
         /**
          * Checks to see if the url is external
