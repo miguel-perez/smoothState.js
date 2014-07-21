@@ -19,7 +19,7 @@
      * 
      */
     $.fn.smoothState = function (options) {
-        
+
         var popedState  = false, // used later to check if we need to update the URL
             cache       = {}, // used to store the contents that we fetch with ajax
             $body       = $("body"),
@@ -30,23 +30,23 @@
         options = $.extend({
             innerPageSelector   : "[data-page]",
             prefetch            : false,
-            alterRequestUrl     : function (url) {
-                return url;
-            },
+            blacklist           : ".no-transition, [rel='nofollow'], [target]",
+            loadingBodyClass    : "loading-cursor",
+            development         : false,
+            pageCacheSize       : 5,
+            frameDelay          : 400,
             renderFrame         : [
                 function ($content) {
                     return $("<div/>").append($content).html();
                 }
             ],
-            onBefore            : function () {
-                $wind.scrollTop(0);
+            alterRequestUrl     : function (url) {
+                return url;
             },
             onAfter             : function () {},
-            frameDelay          : 400,
-            blacklist           : ".no-ajax",
-            loadingBodyClass    : "loading-cursor",
-            development         : false,
-            pageCacheSize       : 5
+            onBefore            : function () {
+                $wind.scrollTop(0);
+            }
         }, options);
 
 
@@ -122,6 +122,7 @@
                 });
             }
         }
+
 
         /**
          * Resets an object if it has too many properties
