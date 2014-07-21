@@ -45,7 +45,8 @@
             frameDelay          : 400,
             blacklist           : ".no-ajax",
             loadingBodyClass    : "loading-cursor",
-            development         : false
+            development         : false,
+            pageCacheSize       : 5
         }, options);
 
 
@@ -105,6 +106,10 @@
 
                 // Store contents in cache variable if successful
                 request.success(function (html) {
+
+                    // Clear cache varible if it's getting too big
+                    cache = clearIfOverCapacity(cache, options.pageCacheSize);
+
                     cache[url] = { // Content is indexed by the url
                         title: $(html).filter("title").text(), // Stores the title of the page
                         html: html // Stores the contents of the page
@@ -116,6 +121,41 @@
                     cache[url] = "error";
                 });
             }
+        }
+
+        /**
+         * Resets an object if it has too many properties
+         *
+         * This is used to clear the 'cache' object that stores
+         * all of the html. This would prevent the client from
+         * running out of memory and allow the user to hit the 
+         * server for a fresh copy of the content.
+         *
+         * @param   {object}    obj
+         * @param   {number}    cap
+         * 
+         */
+        function clearIfOverCapacity(obj, cap) {
+
+            // Polyfill Object.keys if it doesn't exist
+            if (!Object.keys) {
+                Object.keys = function (obj) {
+                    var keys = [],
+                        k;
+                    for (k in obj) {
+                        if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                            keys.push(k);
+                        }
+                    }
+                    return keys;
+                };
+            }
+
+            if (Object.keys(obj).length > cap) {
+                obj = {};
+            }
+
+            return obj;
         }
 
 
