@@ -30,6 +30,9 @@
         options = $.extend({
             innerPageSelector   : "[data-page]",
             prefetch            : false,
+            alterRequestUrl     : function (url) {
+                return url;
+            },
             renderFrame         : [
                 function ($content) {
                     return $("<div/>").append($content).html();
@@ -96,8 +99,10 @@
         function fetch(url) {
             if (!cache.hasOwnProperty(url)) {
                 cache[url] = null;
-                var request = $.ajax(url);
-                
+
+                var requestUrl  = options.alterRequestUrl(url),
+                    request     = $.ajax(requestUrl);
+
                 // Store contents in cache variable if successful
                 request.success(function (html) {
                     cache[url] = { // Content is indexed by the url
@@ -105,7 +110,7 @@
                         html: html // Stores the contents of the page
                     };
                 });
-                
+
                 // Mark as error
                 request.error(function () {
                     cache[url] = "error";
@@ -292,6 +297,7 @@
                 load(url, $container);
             }
         }
+
 
         /**
          * Handles the popstate event, like when the user hits 'back'
