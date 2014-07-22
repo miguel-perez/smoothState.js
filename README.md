@@ -96,6 +96,8 @@ $('#body').smoothState({
 
 ```
 
+You can see a [demo](http://miguel-perez.com/) of this simple fade effect on my own site.
+
 ## Options
 smoothState provides some options that allow you to customize the functionality of the plugin.
 
