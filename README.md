@@ -3,7 +3,7 @@ jquery.smoothState.js
 This is jQuery plugin that progressively enhances pages to behave more like single-page application.
 
 ## Usage
-smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on [Coddrops](http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/) or [AprilZero](http://aprilzero.com/). In order to achieve this on a production site, we need to handle less obvious issues as not to break a user's browsing expectations. By default, smoothState will handle few problems for you:
+smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on [Codrops](http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/) or [AprilZero](http://aprilzero.com/). In order to achieve this on a production site, we need to handle less obvious issues as not to break a user's browsing expectations. By default, smoothState will handle few problems for you:
 
 * Updating your user's URL with [popState](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history)
 * Fetching content from your server via AJAX
