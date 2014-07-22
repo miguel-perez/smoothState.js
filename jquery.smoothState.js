@@ -28,9 +28,9 @@
 
         // Defaults
         options = $.extend({
-            innerPageSelector   : "[data-page]",
+            innerPageSelector   : "",
             prefetch            : false,
-            blacklist           : ".no-transition, [rel='nofollow'], [target]",
+            blacklist           : ".no-smoothstate, [rel='nofollow'], [target]",
             loadingBodyClass    : "loading-cursor",
             development         : false,
             pageCacheSize       : 5,
