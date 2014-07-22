@@ -16,7 +16,6 @@ smoothState.js was built to allow you to achive really neat page transitions on 
 To achive this barebones functionallity, you can run:
 ```JavaScript
 $('#body').smoothState();
-
 ```
 This line of code will cause our page to update with the contents of any links inside of the `#body` container without reloading the page.
 
@@ -24,7 +23,7 @@ This line of code will cause our page to update with the contents of any links i
 
 In traditional animation, the changes to a scene need to be drawn out in an array of frames that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This is useful because it allows you to add the needed HTML scaffolding to achive CSS animations. Here's a basic example of a simple fade effect:
 
-*Javascript:*
+**Javascript:**
 ```Javascript
 $('#body').smoothState({
   renderFrame: [
@@ -48,11 +47,11 @@ $('#body').smoothState({
 });
 ```
 
-*CSS:*
+**CSS:**
 ```CSS
 
-/* Page transitions
--------------------------------- */
+/* Page transitions - simple fade effect
+------------------------------------------------- */
 #body .content {
   position: relative;
   z-index: 1;
@@ -66,7 +65,7 @@ $('#body').smoothState({
 }
 
 #body .page--old {
-  animation: fadeOut 0.1s ease; 
+  animation: fadeOut 0.1s ease; /* Don't forget to add vendor prefixes! */
   opacity: 0;
   z-index: 1;
 }
@@ -79,7 +78,7 @@ $('#body').smoothState({
 
 
 /* Animations classes
--------------------------------- */
+------------------------------------------------- */
 
 @keyframes fadeIn {
   from {
@@ -100,8 +99,6 @@ $('#body').smoothState({
 }
 
 ```
-
-Don't forget to add vendor prefixes!
 
 
 
