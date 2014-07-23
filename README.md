@@ -1,6 +1,6 @@
 jquery.smoothState.js
 ===============
-This is jQuery plugin that progressively enhances pages to behave more like single-page application.
+This is jQuery plugin that progressively enhances pages to behave more like a single-page application.
 
 ## Usage
 smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on [Codrops](http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/) or [AprilZero](http://aprilzero.com/). In order to achieve this on a production site, we need to handle less obvious issues as not to break a user's browsing expectations. By default, smoothState will handle few problems for you:
