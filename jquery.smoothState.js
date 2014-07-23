@@ -349,21 +349,13 @@
          */
         function onPopState() {
             var url = window.location.href;
-
-            // Doesn't update anything if it's a hash
-            if (isHash(url)) {
-                return;
-            }
-
-            // Sets the flag that we've begun to pop states
-            popedState = true;
-
-            // Redirects to the url if we don't have needed data
-            if (history.state === null) {
-                window.location = url;
-            } else {
+            if (!isExternal(url) && !isHash(url) && history.state) {
+                // Sets the flag that we've begun to pop states
+                popedState = true;
                 // Update content if we know what needs to be updated
                 load(url, $("#" + history.state.id));
+            } else if (history.state === null && popedState) {
+                window.location = url;
             }
         }
 
