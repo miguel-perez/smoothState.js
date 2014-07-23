@@ -116,9 +116,9 @@ This is the class that will get applied to the body element when there is a noti
 ```CSS
 .loading-cursor {
   cursor: progress;
-  a {
-      cursor: progress;
-  }
+}
+.loading-cursor a {
+  cursor: progress;
 }
 ```
 
