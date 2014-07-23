@@ -114,10 +114,8 @@ A string that is used as a jQuery selector to ignore certain links. By default s
 This is the class that will get applied to the body element when there is a noticeable delay between the time when a user activates a link and when the AJAX request is complete. This can be used to show the user a loading indicator and give the user some feedback that the UI is working. By default it will apply a class of `loading-cursor` to the body. Here's a bit of CSS to go along with it:
 
 ```CSS
-.loading-cursor {
-  cursor: progress;
-}
-.loading-cursor a {
+.loading-cursor,
+.loading-cursor a{
   cursor: progress;
 }
 ```
