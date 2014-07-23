@@ -1,7 +1,7 @@
 {
     "name": "smoothState",
     "title": "smoothState",
-    "description": "A jquery plugin that progressively enhances website page loads to behave more like single-page application.",
+    "description": "A jquery plugin that progressively enhances website page loads to behave more like a single-page application.",
     "keywords": [
         "pjax",
         "animation",
