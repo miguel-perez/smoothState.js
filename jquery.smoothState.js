@@ -367,7 +367,7 @@
         return this.each(function () {
             //@todo: Handle form submissions
             var $this = $(this);
-            $this.on("click touchend", "a", clickAnchor);
+            $this.on("click", "a", clickAnchor);
             if (options.prefetch) {
                 $this.on("mouseover touchstart", "a", hoverAnchor);
             }

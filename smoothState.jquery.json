@@ -1,15 +1,16 @@
 {
     "name": "smoothState",
     "title": "smoothState",
-    "description": "A jquery plugin that progressively enhances website page loads to behave more like single-page application.",
+    "description": "A jquery plugin that progressively enhances website page loads to behave more like a single-page application.",
     "keywords": [
         "pjax",
         "animation",
         "turbolinks",
         "ajax",
-        "ui"
+        "ui",
+        "ajaxify"
     ],
-    "version": "0.1.0",
+    "version": "0.1.1",
     "author": {
         "name": "Miguel Angel Perez",
         "url": "http://miguel-perez.com/"
@@ -17,7 +18,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/jquery/jquery-color/blob/2.1.2/MIT-LICENSE.txt"
+            "url": "http://opensource.org/licenses/MIT"
         }
     ],
     "bugs": "https://github.com/miguel-perez/jquery.smoothState.js/issues",
