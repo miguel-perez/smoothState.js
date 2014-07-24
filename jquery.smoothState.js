@@ -20,11 +20,8 @@
      */
     $.fn.smoothState = function (options) {
 
-        // Exit out of plugin if browser doesn't support pushstate
-        if(!history.pushState) return;
-
-        var popedState  = false, // used later to check if we need to update the URL
-            hasPoped    = false,
+        var poppedState  = false, // used later to check if we need to update the URL
+            hasPopped    = false,
             cache       = {}, // used to store the contents that we fetch with ajax
             $body       = $("body"),
             $wind       = $(window),
@@ -218,12 +215,12 @@
          */
         function updateState(title, url, id) {
             document.title = title;
-            if (!popedState) {
+            if (!poppedState) {
                 // the id is used to know what needs to be updated on the popState event
                 history.pushState({ id: id }, title, url);
-                hasPoped = true;
+                hasPopped = true;
             } else {
-                popedState = false;
+                poppedState = false;
             }
         }
 
@@ -358,10 +355,10 @@
             var url = window.location.href;
             if (!isHash(url) && history.state) {
                 // Sets the flag that we've begun to pop states
-                popedState = true;
+                poppedState = true;
                 // Update content if we know what needs to be updated
                 load(url, $("#" + history.state.id));
-            } else if (history.state === null && hasPoped) {
+            } else if (history.state === null && hasPopped) {
                 window.location = url;
             }
         }
