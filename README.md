@@ -6,7 +6,6 @@ This is jQuery plugin that progressively enhances pages to behave more like a si
 	* [The Basics](#the-basics)
 	* [Adding page transistions](#adding-page-transitions)
 * [Options](#options)
-	* [innerPageSelector](#innerpageselector)
 	* [prefetch](#prefetch)
 	* [blacklist](#blacklist)
 	* [loadingBodyClass](#loadingbodyclass)
