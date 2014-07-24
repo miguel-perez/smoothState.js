@@ -21,6 +21,7 @@
     $.fn.smoothState = function (options) {
 
         var popedState  = false, // used later to check if we need to update the URL
+            hasPoped    = false,
             cache       = {}, // used to store the contents that we fetch with ajax
             $body       = $("body"),
             $wind       = $(window),
@@ -214,9 +215,12 @@
          */
         function updateState(title, url, id) {
             document.title = title;
-            if (!popedState && history.pushState) {
+            if (!popedState) {
                 // the id is used to know what needs to be updated on the popState event
                 history.pushState({ id: id }, title, url);
+                hasPoped = true;
+            } else {
+                popedState = false;
             }
         }
 
@@ -349,12 +353,12 @@
          */
         function onPopState() {
             var url = window.location.href;
-            if (!isExternal(url) && !isHash(url) && history.state) {
+            if (!isHash(url) && history.state) {
                 // Sets the flag that we've begun to pop states
                 popedState = true;
                 // Update content if we know what needs to be updated
                 load(url, $("#" + history.state.id));
-            } else if (history.state === null && popedState) {
+            } else if (history.state === null && hasPoped) {
                 window.location = url;
             }
         }
