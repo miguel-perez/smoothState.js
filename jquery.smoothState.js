@@ -20,6 +20,9 @@
      */
     $.fn.smoothState = function (options) {
 
+        // Exit out of plugin if browser doesn't support pushstate
+        if(!history.pushState) return;
+
         var popedState  = false, // used later to check if we need to update the URL
             hasPoped    = false,
             cache       = {}, // used to store the contents that we fetch with ajax
