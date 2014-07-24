@@ -154,3 +154,8 @@ A function that runs before the content is replaced. smoothState will pass in tw
 options.onBefore(url, $container);
 ```
 
+## Show your work!
+I'd love to see how this gets used in the wild. [Tweet me](https://twitter.com/tayokoart) with a link and I'll add it to this page. This repo could use some good demos.
+
+## Need help?
+If you find yourself confused, add an issue explaining your problem. Doing so will help me improve the clarity of the documentation and get us thinking about use cases and potential upgrades. I'm all ears.
