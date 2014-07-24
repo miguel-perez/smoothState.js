@@ -29,10 +29,9 @@
 
         // Defaults
         options = $.extend({
-            innerPageSelector   : "",
             prefetch            : false,
             blacklist           : ".no-smoothstate, [rel='nofollow'], [target]",
-            loadingBodyClass    : "loading-cursor",
+            loadingBodyClass    : "loading-cursor", //@todo: We don't need this if we provide right hooks
             development         : false,
             pageCacheSize       : 5,
             frameDelay          : 400,
@@ -164,11 +163,12 @@
         /**
          * Fetches the contents of a url and stores it in the 'cache' varible
          * @param   {string}    url
+         * @todo    $content jquery object should be stored, speed improvment
          * 
          */
         function updatePage(url, $container) {
             var containerId = $container.prop("id"),
-                $content    = (containerId.length) ? $($(cache[url].html).find("#" + containerId).html()) : "";
+                $content    = (containerId.length) ? $($('<div/>').append(cache[url].html).find("#" + containerId).html()) : "";
 
             // We check to see if the container we hope to update is 
             // returned in the request so that we can replace existing
@@ -290,23 +290,6 @@
 
 
         /**
-         * Figures out where the new content should be injected.
-         *
-         * If an element matching a given selector is found
-         * it'll try to load the content in there. If not, it will set
-         * the container to be the element the plugin was init'ed on.
-         *
-         * @param   {page}    url - url being evaluated
-         * 
-         */
-        function getTargetContainer(container, selector) {
-            var $container      = $(container),
-                $childContainer = $(selector, $container).first();
-            return ($childContainer.length) ? $childContainer : $container;
-        }
-
-
-        /**
          * Binds to the hover event of a link, used for prefetching content
          *
          * @param   {object}    event
@@ -335,7 +318,7 @@
 
             var $anchor     = $(event.currentTarget),
                 url         = $anchor.prop("href"),
-                $container  = getTargetContainer(event.delegateTarget, options.innerPageSelector);
+                $container  = $(event.delegateTarget);
 
             if (shouldLoad($anchor)) {
                 event.preventDefault();

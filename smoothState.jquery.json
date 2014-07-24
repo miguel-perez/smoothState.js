@@ -1,7 +1,7 @@
 {
     "name": "smoothState",
     "title": "smoothState",
-    "description": "A jQuery plugin to make page loads nice and smooth",
+    "description": "A jQuery plugin to unobtrusively stop the jankiness of page loads.",
     "keywords": [
         "pjax",
         "animation",
@@ -10,7 +10,7 @@
         "ui",
         "ajaxify"
     ],
-    "version": "0.1.2",
+    "version": "0.2.0",
     "author": {
         "name": "Miguel Angel Perez",
         "url": "http://miguel-perez.com/"
@@ -18,7 +18,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "http://opensource.org/licenses/MIT"
+            "url": "https://github.com/miguel-perez/jquery.smoothState.js/blob/master/LICENSE.md"
         }
     ],
     "bugs": "https://github.com/miguel-perez/jquery.smoothState.js/issues",
