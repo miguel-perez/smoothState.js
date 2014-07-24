@@ -1,7 +1,7 @@
 {
     "name": "smoothState",
     "title": "smoothState",
-    "description": "A jquery plugin that progressively enhances website page loads to behave more like a single-page application.",
+    "description": "A jQuery plugin to make page loads nice and smooth",
     "keywords": [
         "pjax",
         "animation",
@@ -10,7 +10,7 @@
         "ui",
         "ajaxify"
     ],
-    "version": "0.1.1",
+    "version": "0.1.2",
     "author": {
         "name": "Miguel Angel Perez",
         "url": "http://miguel-perez.com/"
