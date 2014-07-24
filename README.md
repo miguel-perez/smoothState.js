@@ -119,8 +119,6 @@ You can see a [demo](http://miguel-perez.com/) of this simple fade effect on my 
 ## Options
 smoothState provides some options that allow you to customize the functionality of the plugin.
 
-### `innerPageSelector`
-A string that is used as a jQuery selector to define sections within the main content that should be treated as it's own page. By default this is set to an empty string. This is useful when dealing to C-layouts where the inner content doesn't effect outer content.
 
 ### `prefetch`
 A boolean, default being `false`, that determines weather or not the plugin should try to prefetch the contents of the page. This is an excellent way to improve perceived performance. I wrote a [blog post](http://miguel-perez.com/articles/hong-kong-gui/) explaining ways you can take advantage of this to make your page feel instant. If you're dealing with a complex database-driven application and you're not using any type of caching, don't try to use this. It will likely destroy your app server since it will increase the number of request each user makes to the server.
