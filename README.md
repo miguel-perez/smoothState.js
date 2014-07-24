@@ -2,6 +2,24 @@ jquery.smoothState.js
 ===============
 This is jQuery plugin that progressively enhances pages to behave more like a single-page application.
 
+* [Usage](#usage)
+	* [The Basics](#the-basics)
+	* [Adding page transistions](#adding-page-transitions)
+* [Options](#options)
+	* [innerPageSelector](#innerpageselector)
+	* [prefetch](#prefetch)
+	* [blacklist](#blacklist)
+	* [loadingBodyClass](#loadingbodyclass)
+	* [development](#development)
+	* [pageCacheSize](#pagecachesize)
+	* [frameDelay](#framedelay)
+	* [renderFrame](#renderframe)
+	* [alterRequestUrl](#alterrequesturl)
+	* [onAfter](#onafter)
+	* [onBefore](#onbefore)
+* [Show your work!](#show-your-work)
+* [Need help?](#need-help)
+
 ## Usage
 smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on [Codrops](http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/) or [AprilZero](http://aprilzero.com/). In order to achieve this on a production site, we need to handle less obvious issues as not to break a user's browsing expectations. By default, smoothState will handle few problems for you:
 
