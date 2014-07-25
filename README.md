@@ -27,7 +27,7 @@ Javascript SPA frameworks are a common way to solve this issue. However, these f
 
 * **Progressive enhancement** - a technique that exemplifies the principles universal design
 * **jQuery** - a library a great many of us are familiar with
-* **`history. pushState()`** - a method that lets us maintain browsing expectations
+* **history.pushState()** - a method that lets us maintain browsing expectations
 * **Ajax** - asynchronous page request that lets us store pages on the user's device
 
 Traditional animators draw out the changes to a scene in an **array of frames** that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.
