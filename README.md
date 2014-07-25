@@ -21,7 +21,7 @@ jquery.smoothState.js
 
 ## About
 
-Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. We’ve accepted the jankiness of page loads as a personality quirk of the web, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.
+Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. **We’ve accepted the jankiness of page loads as a personality quirk of the web**, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.
 
 Javascript SPA frameworks are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that improve beauty of the experience by eliminating the hard cuts of page loads. It does this with:
 
@@ -30,7 +30,7 @@ Javascript SPA frameworks are a common way to solve this issue. However, these f
 * **`history. pushState()`** - a method that lets us maintain browsing expectations
 * **Ajax** - asynchronous page request that lets us store pages on the user's device
 
-Traditional animators draw out the changes to a scene in an array of frames that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.
+Traditional animators draw out the changes to a scene in an **array of frames** that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.
 
 ## Usage
 smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on [Codrops](http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/) or [AprilZero](http://aprilzero.com/). In order to achieve this on a production site, we need to handle less obvious issues as not to break a user's browsing expectations. By default, smoothState will handle few problems for you:
@@ -44,7 +44,7 @@ To achieve this barebones functionality, you can run:
 ```JavaScript
 $('#main').smoothState();
 ```
-This line of code will cause our page to update with the contents of any links inside of the `#main` container without reloading the page. Every link should load a fully functional page and should include the same `#main` container in the response. If you're having issues with this, turn on [development mode](#development) and watch the console for useful warnings.
+This line of code will cause our page to update with the contents of any links inside of the `#main` container without reloading the page. **Every link should return a fully functional page from the server**, at the very least, it should include the same `#main` container in the response. If you're having issues with this, turn on [development mode](#development) and watch the console for useful warnings.
 
 Some links are ignored, this can be configured by using the [blacklist](#blacklist) option. 
 
