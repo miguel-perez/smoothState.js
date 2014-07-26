@@ -23,7 +23,7 @@ jquery.smoothState.js
 
 Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. **We’ve accepted the jankiness of page loads as a personality quirk of the web**, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.
 
-Javascript SPA frameworks are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that improve beauty of the experience by eliminating the hard cuts of page loads. It does this with:
+Javascript SPA frameworks are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that eliminate the hard cuts of page loads to improve the beauty of the experience. It does this with:
 
 * **Progressive enhancement** - a technique that exemplifies the principles universal design
 * **jQuery** - a library a great many of us are familiar with
