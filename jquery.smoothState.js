@@ -1,15 +1,4 @@
 
-/*!
- * jQuery htmlDoc "fixer" - v0.2pre - 8/8/2011
- * http://benalman.com/projects/jquery-misc-plugins/
- *
- * Copyright (c) 2010 "Cowboy" Ben Alman
- * Dual licensed under the MIT and GPL licenses.
- * http://benalman.com/about/license/
- */
- 
-
-
 (function ($) {
 
     "use strict";
