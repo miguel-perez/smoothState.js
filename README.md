@@ -32,7 +32,7 @@ Traditional animators draw out the changes to a scene in an **array of frames** 
 
 ## Demo
 
-Checkout the demo site. If you have an example of smoothState.js in the wild, [let me know](https://twitter.com/tayokoart) about it and I'll add a link to it in this file.
+[Checkout the demo site](http://miguel-perez.github.io/jquery.smoothState.js/index.html). If you have an example of smoothState.js in the wild, [let me know](https://twitter.com/tayokoart) about it and I'll add a link to it in this file.
 
 ## Options
 smoothState provides some options that allow you to customize the functionality of the plugin.
