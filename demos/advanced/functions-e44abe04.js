@@ -1,1 +1,0 @@
-!function(n){"use strict";var e=n("#main"),r=n("body");e.smoothState({renderFrame:[function(n,e){return e.addClass("is-unloading"),e.html()},function(e,r){return r.removeClass("is-unloading"),n("<div/>").append(e).html()}],frameDelay:400,prefetch:!0,onBefore:function(){r.animate({scrollTop:0})}})}(jQuery);

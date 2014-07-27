@@ -1,1 +1,0 @@
-!function(t){t("#main").smoothState()}(jQuery);
