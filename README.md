@@ -1,9 +1,7 @@
 jquery.smoothState.js
 ===============
 * [About](#about)
-* [Usage](#usage)
-	* [The Basics](#the-basics)
-	* [Adding page transistions](#adding-page-transitions)
+* [Demo](#demo)
 * [Options](#options)
 	* [prefetch](#prefetch)
 	* [blacklist](#blacklist)
@@ -23,7 +21,7 @@ jquery.smoothState.js
 
 Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. **We’ve accepted the jankiness of page loads as a personality quirk of the web**, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.
 
-Javascript SPA frameworks are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that eliminate the hard cuts of page loads to improve the beauty of the experience. It does this with:
+Javascript [SPA frameworks](http://en.wikipedia.org/wiki/Single-page_application), sometimes referred to as MVC frameworks, are a common way to solve this issue. However, these frameworks often **lose the benefits of unobtrusive code**, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that eliminate the hard cuts of page loads to improve the beauty of the experience. It does this with:
 
 * **Progressive enhancement** - a technique that exemplifies the principles universal design
 * **jQuery** - a library a great many of us are familiar with
@@ -32,103 +30,9 @@ Javascript SPA frameworks are a common way to solve this issue. However, these f
 
 Traditional animators draw out the changes to a scene in an **array of frames** that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.
 
-## Usage
-smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on [Codrops](http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/) or [AprilZero](http://aprilzero.com/). In order to achieve this on a production site, we need to handle less obvious issues as not to break a user's browsing expectations. By default, smoothState will handle few problems for you:
+## Demo
 
-* Updating your user's URL with [popState](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history)
-* Fetching content from your server via AJAX
-* Replacing the content on your page with the new content
-
-### The basics
-To achieve this barebones functionality, you can run:
-```JavaScript
-$('#main').smoothState();
-```
-This line of code will cause our page to update with the contents of any links inside of the `#main` container without reloading the page. **Every link should return a fully functional page from the server**, at the very least, it should include the same `#main` container in the response. If you're having issues with this, turn on [development mode](#development) and watch the console for useful warnings.
-
-Some links are ignored, this can be configured by using the [blacklist](#blacklist) option. 
-
-### Adding page transitions
-In traditional animation, the changes to a scene need to be drawn out in an array of frames that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This is useful because it allows you to add the needed HTML scaffolding to achieve CSS animations. Here's a basic example of a simple fade effect:
-
-**Javascript:**
-```Javascript
-$('#main').smoothState({
-  renderFrame: [
-    // Frame 1: sets up scaffolding needed for CSS animations
-    function ($content, $container) {
-      var currentHTML = $container.html(),
-          newHTML     = $('<div/>').append($content).html(),
-          html        = [
-            '<div class=\'content\' style=\'height:' + $container.height() +  'px;\'>',
-            '<div class=\'page page--old\'>' + currentHTML + '</div>',
-            '<div class=\'page page--new\'>' + newHTML + '</div>',
-            '</div>'
-          ].join('');
-      return html;
-    },
-    // Frame 2: cleans up extra markup added for CSS animations
-    function ($content) {
-      return $('<div/>').append($content).html();
-    }
-  ]
-});
-```
-
-**CSS:**
-```CSS
-
-/* Page transitions - simple fade effect
-------------------------------------------------- */
-#main .content {
-  position: relative;
-  z-index: 1;
-}
-
-#main .page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-#main .page--old {
-  animation: fadeOut 0.1s ease; /* Don't forget to add vendor prefixes! */
-  opacity: 0;
-  z-index: 1;
-}
-
-#main .page--new {
-  visibility: visible;
-  animation: fadeIn 0.4s ease;
-  z-index: 2;
-}
-
-
-/* Animations classes
-------------------------------------------------- */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 2;
-  }
-}
-
-```
-
-You can see a [demo](http://miguel-perez.com/) of this simple fade effect on my own site. A better demo is in the works, since my site get's refactored and experimented upon almost perpetually. If you have an example of smoothState.js in the wild, [let me know](https://twitter.com/tayokoart) about it.
+Checkout the demo site. If you have an example of smoothState.js in the wild, [let me know](https://twitter.com/tayokoart) about it and I'll add a link to it in this file.
 
 ## Options
 smoothState provides some options that allow you to customize the functionality of the plugin.
