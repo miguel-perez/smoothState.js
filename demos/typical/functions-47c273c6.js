@@ -1,0 +1,1 @@
+!function(e){e("#main").smoothState({frameDelay:300,renderFrame:[function(n,t){var a=t.html(),i=e("<div/>").append(n).html(),d=["<div class='content' style='height:"+t.height()+"px;'>","<div class='page page--old'>"+a+"</div>","<div class='page page--new'>"+i+"</div>","</div>"].join("");return d},function(n){return e("<div/>").append(n).html()}]})}(jQuery);

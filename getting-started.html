@@ -1,0 +1,110 @@
+
+
+
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="javascripts/all-902e025b.js" type="text/javascript" async="true" defer="defer"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>
+        Getting started - jQuery.smoothState.js
+    </title>
+    <link href="stylesheets/all-830855e1.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="getting-started" id="main">
+    	<div class="m-detail-layout">
+		<div class="m-aside">
+			<h3 class="aside_title">
+				<a href="/" class="m-button">
+					<span class="txt">← jquery.smoothState.js</span>
+				</a>
+			</h3>
+		</div>
+		<div class="m-right-panel m-page">
+			<div class="right-panel_top">
+				<div class="m-header">
+					<div class="m-breadcrumb" itemprop="breadcrumb">
+						<a class="breadcrumb_link" href="/">Home</a> →
+						<h1 class="m-type-display-1">
+							Getting started
+						</h1>
+					</div>
+					<p class="m-type-sub-heading-1">An introduction to the fundamentals of smoothState.js, including an explanation of the code's approach, requirements, and default behavior. The benefits of this plugin are also covered here.</p>
+				</div>
+			</div>
+			
+			<div class="m-segment">
+	<h2 class="m-type-heading-1">About</h2>
+	<div class="segment_content">
+		<p>Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. <strong>We’ve accepted the jankiness of page loads as a personality quirk of the web</strong>, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.</p>
+
+		<p>Javascript <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA frameworks</a>, sometimes referred to as MVC frameworks, are a common way to solve this issue. However, <strong>these frameworks often lose the benefits of unobtrusive code</strong>, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that eliminate the hard cuts of page loads to improve the beauty of the experience. It does this with:</p>
+
+		<ul>
+			<li><strong>Progressive enhancement</strong> - a technique that exemplifies the principles universal design</li>
+			<li><strong>jQuery</strong> - a library a great many of us are familiar with</li>
+			<li><strong>history.pushState()</strong> - a method that lets us maintain browsing expectations</li>
+			<li><strong>Ajax</strong> - a way for us to  request and store pages on the user's device without refreshing the page</li>
+		</ul>
+
+		<p>Traditional animators draw out the changes to a scene in an <strong>array of frames</strong> that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.</p>
+	</div>
+</div>
+<div class="m-segment">
+	<h2 class="m-type-heading-1">Requirements</h2>
+	<div class="segment_content">
+		<p>smoothState.js is initialized on containers, not links. The containers can be thought of like small window objects within the page, similar to how you would describe an iframe. <strong>Every container needs to have an id</strong>, this is used as a unique hook to tell the script where the content is coming from and going to.</p>
+
+		<p><strong>Every link should return a fully functional layout, not just an HTML fragment.</strong> This requirement makes the website more resilient since it allows us to abort and redirect the user if an error occurs. Making each link return a fully qualified page also ensures our page transitions are unobtrusive.</p>
+
+		<p>There may be a rare case when returning a full layout is not desired. smoothState.js will still function properly as long as the container being updated is present in the response from the server. If you're having issues with this, turn on <a href="https://github.com/miguel-perez/jquery.smoothState.js#development">development mode</a> and watch the console for useful warnings.</p>
+	</div>
+</div>
+<div class="m-segment">
+	<h2 class="m-type-heading-1">A barebones example</h2>
+	<div class="segment_content">
+		<p>All we need to get started is:</p>
+		<ol>
+			<li>Include a copy of <a href="http://jquery.com/download/">jQuery</a> and <a href="https://github.com/miguel-perez/jquery.smoothState.js">jQuery.smoothState.js</a> on your page</li>
+			<li>Create a new js file and run <code>$('#main').smoothState()</code></li>
+			<li>Add container with an id of "<code>#main</code>" and include some links inside of it</li>
+		</ol>
+		<p>To see a code example, visit the <a href="https://gist.github.com/miguel-perez/15929b47c9664778d6fd">Gist</a>. You can also <a class="no-smoothstate" href="/demos/barebones/">see a demo</a> of the Gist and interact with the pages. By default, smoothState.js will:
+		</p>
+		<ul>
+			<li>Prevent links from triggering a full page load</li>
+			<li>Update the user's URLs and history as to not break browsing expectations</li>
+			<li>Use Ajax to request and cache on the user's device</li>
+		</ul>
+		<p>This default example <strong>will not add page transitions</strong> to your page. See a <a href="/typical-implementation.html">typical implementation</a> for an example of how to add a simple fade effect on your site. If you're feeling ambitious, check out an <a href="/advanced-implementation.html">advanced example</a> or go read the <a href="#">documentation</a>.</p>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+			<div class="m-footer m-segment">
+				<div class="segment_content">
+					Created by <a href="http://miguel-perez.com/">Miguel Ángel Pérez</a> and maintained by <a href="https://github.com/miguel-perez/jquery.smoothState.js/graphs/contributors">contributors</a> under the <a href="https://github.com/miguel-perez/jquery.smoothState.js/blob/master/LICENSE.md">MIT License</a>.
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+
+
