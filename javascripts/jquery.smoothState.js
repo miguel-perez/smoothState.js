@@ -25,7 +25,9 @@
             cache       = {}, // used to store the contents that we fetch with ajax
             $body       = $("body"),
             $wind       = $(window),
-            consl       = (window.console || false);
+            consl       = (window.console || false),
+            matchTag    = /<(\/?)(html|head|body|title|base|meta)(\s+[^>]*)?>/ig,
+            prefix      = 'ss' + Math.round(Math.random() * 100 * 100);
 
         // Defaults
         options = $.extend({
@@ -168,7 +170,8 @@
          */
         function updatePage(url, $container) {
             var containerId = $container.prop("id"),
-                $content    = (containerId.length) ? $($('<div/>').append(cache[url].html).find("#" + containerId).html()) : "";
+                $html       = htmlDoc(cache[url].html),
+                $content    = (containerId.length) ? $html.find("#" + containerId).html() : "";
 
             // We check to see if the container we hope to update is 
             // returned in the request so that we can replace existing
@@ -286,6 +289,52 @@
             var url = $anchor.prop("href");
             // URL will only be loaded if it's not an external link, hash, or blacklisted
             return (!isExternal(url) && !isHash(url) && !$anchor.is(options.blacklist));
+        }
+
+        /**
+         * Prevents jQuery from stripping elements from $(html)
+         * @param   {string}    url - url being evaluated
+         * @author  Ben Alman   http://benalman.com/
+         * @see     https://gist.github.com/cowboy/742952
+         * 
+         */
+        function htmlDoc (html) {
+            var parent,
+                elems = $(),
+                htmlParsed = html.replace(matchTag, function(tag, slash, name, attrs) {
+                    var obj = {};
+                    if (!slash) {
+                        elems = elems.add('<' + name + '/>');
+                        if (attrs) {
+                            $.each($('<div' + attrs + '/>')[0].attributes, function(i, attr) {
+                            obj[attr.name] = attr.value;
+                            });
+                        }
+                        elems.eq(-1).attr(obj);
+                    }
+                    return '<' + slash + 'div' + (slash ? '' : ' id="' + prefix + (elems.length - 1) + '"') + '>';
+                });
+
+            // If no placeholder elements were necessary, just return normal
+            // jQuery-parsed HTML.
+            if (!elems.length) {
+                return $(html);
+            }
+            // Create parent node if it hasn't been created yet.
+            if (!parent) {
+                parent = $('<div/>');
+            }
+            // Create the parent node and append the parsed, place-held HTML.
+            parent.html(htmlParsed);
+            
+            // Replace each placeholder element with its intended element.
+            $.each(elems, function(i) {
+                var elem = parent.find('#' + prefix + i).before(elems[i]);
+                elems.eq(i).html(elem.contents());
+                elem.remove();
+            });
+
+            return parent.children().unwrap();
         }
 
 

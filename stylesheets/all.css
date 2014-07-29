@@ -1,0 +1,736 @@
+/* @mixin respond-to
+------------------------------------------------------------------- */
+@-webkit-keyframes fadeIn {
+  /* line 8, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0; }
+
+  /* line 11, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  /* line 17, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0; }
+
+  /* line 20, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes fadeInLate {
+  /* line 31, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0; }
+
+  /* line 34, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  85% {
+    opacity: 0; }
+
+  /* line 37, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeInLate {
+  /* line 43, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0; }
+
+  /* line 46, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  80% {
+    opacity: 0; }
+
+  /* line 49, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1; } }
+
+@-webkit-keyframes moveToTop {
+  /* line 59, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(100%); }
+
+  /* line 63, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  80% {
+    -webkit-transform: translateY(10%); }
+
+  /* line 66, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  85% {
+    -webkit-transform: translateY(5%); }
+
+  /* line 69, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  90% {
+    -webkit-transform: translateY(4%); }
+
+  /* line 72, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  95% {
+    -webkit-transform: translateY(1%); }
+
+  /* line 75, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0%); } }
+
+@keyframes moveToTop {
+  /* line 82, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0;
+    transform: translateY(100%); }
+
+  /* line 86, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  80% {
+    transform: translateY(10%); }
+
+  /* line 89, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  85% {
+    transform: translateY(5%); }
+
+  /* line 92, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  90% {
+    transform: translateY(4%); }
+
+  /* line 95, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  95% {
+    transform: translateY(1%); }
+
+  /* line 98, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1;
+    transform: translateY(0%); } }
+
+@-webkit-keyframes moveToLeft {
+  /* line 112, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100%); }
+
+  /* line 116, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  80% {
+    -webkit-transform: translateX(10%); }
+
+  /* line 119, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  85% {
+    -webkit-transform: translateX(5%); }
+
+  /* line 122, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  90% {
+    -webkit-transform: translateX(4%); }
+
+  /* line 125, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  95% {
+    -webkit-transform: translateX(1%); }
+
+  /* line 128, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0%); } }
+
+@keyframes moveToLeft {
+  /* line 135, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  0% {
+    opacity: 0;
+    transform: translateX(100%); }
+
+  /* line 139, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  80% {
+    transform: translateX(10%); }
+
+  /* line 142, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  85% {
+    transform: translateX(5%); }
+
+  /* line 145, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  90% {
+    transform: translateX(4%); }
+
+  /* line 148, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  95% {
+    transform: translateX(1%); }
+
+  /* line 151, /Users/mperez/Sites/smoothstate/source/stylesheets/keyframes.css.scss */
+  100% {
+    opacity: 1;
+    transform: translateX(0%); } }
+/* @mixin respond-to
+------------------------------------------------------------------- */
+/* line 23, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+body {
+  font-size: 0.75em;
+  background-color: #e91e63;
+  font-family: 'Roboto', sans-serif;
+  color: #eceff1;
+  line-height: 1.5; }
+
+@media screen and (min-width: 500px) {
+  /* line 32, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  body {
+    font-size: 1em; } }
+/* line 38, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+a {
+  color: #3f51b5;
+  text-decoration: none;
+  transition: color 0.15s ease-in; }
+  /* line 42, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  a:hover {
+    color: #1a237e; }
+  /* line 46, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  a:active, a:focus {
+    color: #e91e63; }
+  /* line 49, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  a:visited {
+    color: #673ab7; }
+
+/* line 54, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+code {
+  font-weight: bold; }
+
+/* line 62, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-type-display-1 {
+  font-size: 2em;
+  font-weight: 300;
+  margin: 16px 0; }
+
+@media screen and (min-width: 768px) {
+  /* line 68, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-type-display-1 {
+    font-size: 4em; } }
+/* line 73, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-type-sub-heading-1 {
+  font-size: 1.13em;
+  font-weight: 400;
+  margin: 16px 0; }
+
+/* line 79, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-type-heading-1 {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin: 16px 0; }
+
+/* line 90, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-header {
+  position: relative;
+  padding: 4.25em 4.25em 2em;
+  max-width: 40em; }
+  /* line 95, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-header .header_actions {
+    margin: 1.25em 0 0; }
+  /* line 99, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-header .header_link {
+    margin-right: 1.25em;
+    margin-top: 4px; }
+
+@media screen and (min-width: 1024px) {
+  /* line 106, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-header {
+    padding: 8.5em 8.5em 4.25em; } }
+/* line 115, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-button {
+  display: inline-block;
+  padding: 0.5em;
+  border: 1px solid #eceff1;
+  overflow: hidden;
+  transition: background-color 0.15s ease-in; }
+  /* line 122, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-button .txt {
+    color: #eceff1;
+    transition: color 0.15s ease-in; }
+  /* line 127, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-button:hover {
+    background-color: #eceff1; }
+    /* line 130, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    .m-button:hover .ico {
+      fill: #e91e63; }
+    /* line 133, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    .m-button:hover .txt {
+      color: #e91e63; }
+
+/* line 144, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-page {
+  background-color: #eceff1;
+  color: #263238; }
+
+/* line 154, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-segment {
+  padding: 1em 4.25em;
+  border-bottom: 1px solid #cfd8dc; }
+  /* line 158, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-segment .segment_content {
+    margin: 16px 0;
+    max-width: 40em; }
+  /* line 163, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-segment .segment_description {
+    margin: 16px 0; }
+
+@media screen and (min-width: 1024px) {
+  /* line 169, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-segment {
+    padding: 2.25em 8.5em; } }
+/* line 179, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-aside-segment {
+  display: none;
+  padding: 2.25em;
+  border-bottom: 1px solid #f8bbd0; }
+  /* line 183, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-aside-segment .segment_description {
+    margin: 16px 0; }
+
+/* line 194, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-landing-layout .m-type-sub-heading-1 {
+  color: #f8bbd0; }
+
+/* line 205, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-detail-layout .m-aside .aside_title {
+  margin: 16px;
+  font-weight: normal; }
+
+@media screen and (min-width: 768px) {
+  /* line 213, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-detail-layout {
+    padding-left: 270px; }
+    /* line 215, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    .m-detail-layout .m-aside {
+      position: absolute;
+      left: 0;
+      width: 270px; }
+      /* line 219, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+      .m-detail-layout .m-aside .aside_title {
+        position: fixed; }
+      /* line 222, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+      .m-detail-layout .m-aside .m-button {
+        display: block; } }
+/* line 236, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-right-panel .m-header,
+.m-right-panel .m-segment .segment_content {
+  max-width: 43em; }
+/* line 240, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-right-panel .right-panel_top {
+  border-bottom: 1px solid #cfd8dc; }
+
+/* line 249, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-breadcrumb .breadcrumb_link {
+  position: relative;
+  top: -2px;
+  font-size: 0.75em; }
+/* line 254, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-breadcrumb .m-type-display-1 {
+  margin-top: 0; }
+
+/* line 262, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-footer {
+  background-color: #cfd8dc; }
+/*! normalize.css v2.0.1 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/*
+ * Corrects `block` display not defined in IE 8/9.
+ */
+/* line 22, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
+  display: block; }
+
+/*
+ * Corrects `inline-block` display not defined in IE 8/9.
+ */
+/* line 32, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+audio,
+canvas,
+video {
+  display: inline-block; }
+
+/*
+ * Prevents modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+/* line 41, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/*
+ * Addresses styling for `hidden` attribute not present in IE 8/9.
+ */
+/* line 50, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+[hidden] {
+  display: none; }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/*
+ * 1. Sets default font family to sans-serif.
+ * 2. Prevents iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+/* line 64, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */ }
+
+/*
+ * Removes default margin.
+ */
+/* line 74, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+body {
+  margin: 0; }
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/*
+ * Addresses `outline` inconsistency between Chrome and other browsers.
+ */
+/* line 86, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+a:focus {
+  outline: thin dotted; }
+
+/*
+ * Improves readability when focused and also mouse hovered in all browsers.
+ */
+/* line 95, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+a:active,
+a:hover {
+  outline: 0; }
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/*
+ * Addresses `h1` font sizes within `section` and `article` in Firefox 4+,
+ * Safari 5, and Chrome.
+ */
+/* line 108, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+h1 {
+  font-size: 2em; }
+
+/*
+ * Addresses styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+/* line 116, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/*
+ * Addresses style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+/* line 125, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+b,
+strong {
+  font-weight: bold; }
+
+/*
+ * Addresses styling not present in Safari 5 and Chrome.
+ */
+/* line 133, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+dfn {
+  font-style: italic; }
+
+/*
+ * Addresses styling not present in IE 8/9.
+ */
+/* line 141, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+mark {
+  background: #ff0;
+  color: #000; }
+
+/*
+ * Corrects font family set oddly in Safari 5 and Chrome.
+ */
+/* line 154, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em; }
+
+/*
+ * Improves readability of pre-formatted text in all browsers.
+ */
+/* line 163, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word; }
+
+/*
+ * Sets consistent quote types.
+ */
+/* line 173, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+/*
+ * Addresses inconsistent and variable font size in all browsers.
+ */
+/* line 181, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+small {
+  font-size: 80%; }
+
+/*
+ * Prevents `sub` and `sup` affecting `line-height` in all browsers.
+ */
+/* line 190, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+/* line 197, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+sup {
+  top: -0.5em; }
+
+/* line 201, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+sub {
+  bottom: -0.25em; }
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/*
+ * Removes border when inside `a` element in IE 8/9.
+ */
+/* line 213, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+img {
+  border: 0; }
+
+/*
+ * Corrects overflow displayed oddly in IE 9.
+ */
+/* line 221, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/*
+ * Addresses margin not present in IE 8/9 and Safari 5.
+ */
+/* line 233, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+figure {
+  margin: 0; }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/*
+ * Define consistent border, margin, and padding.
+ */
+/* line 245, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/*
+ * 1. Corrects color not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+/* line 256, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/*
+ * 1. Corrects font family not being inherited in all browsers.
+ * 2. Corrects font size not being inherited in all browsers.
+ * 3. Addresses margins set differently in Firefox 4+, Safari 5, and Chrome
+ */
+/* line 270, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 2 */
+  margin: 0;
+  /* 3 */ }
+
+/*
+ * Addresses Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+/* line 282, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+button,
+input {
+  line-height: normal; }
+
+/*
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Corrects inability to style clickable `input` types in iOS.
+ * 3. Improves usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+/* line 297, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */ }
+
+/*
+ * Re-set default cursor for disabled elements.
+ */
+/* line 307, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+button[disabled],
+input[disabled] {
+  cursor: default; }
+
+/*
+ * 1. Addresses box sizing set to `content-box` in IE 8/9.
+ * 2. Removes excess padding in IE 8/9.
+ */
+/* line 317, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/*
+ * 1. Addresses `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Addresses `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+/* line 328, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box; }
+
+/*
+ * Removes inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+/* line 341, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/*
+ * Removes inner padding and border in Firefox 4+.
+ */
+/* line 350, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/*
+ * 1. Removes default vertical scrollbar in IE 8/9.
+ * 2. Improves readability and alignment in all browsers.
+ */
+/* line 360, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */ }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/*
+ * Remove most spacing between table cells.
+ */
+/* line 373, /Users/mperez/Sites/smoothstate/source/stylesheets/normalize.css.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+/* @mixin respond-to
+------------------------------------------------------------------- */
+/* line 8, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-landing-layout .m-header {
+  -webkit-animation: fadeIn 0.4s ease-in;
+  animation: fadeIn 0.4s ease-in; }
+/* line 12, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-landing-layout .m-page {
+  -webkit-animation: moveToTop 0.4s ease-in;
+  animation: moveToTop 0.4s ease-in; }
+
+/* line 19, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.is-unloading .m-landing-layout .m-header {
+  -webkit-animation: fadeIn 0.4s ease-in;
+  -webkit-animation-direction: reverse;
+  animation: fadeIn 0.4s ease-in;
+  animation-direction: reverse; }
+/* line 25, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.is-unloading .m-landing-layout .m-page {
+  -webkit-animation: moveToTop 0.4s ease-in;
+  -webkit-animation-direction: reverse;
+  animation: moveToTop 0.4s ease-in;
+  animation-direction: reverse; }
+
+/* line 38, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-detail-layout .m-right-panel {
+  -webkit-animation: moveToTop 0.4s ease-in;
+  animation: moveToTop 0.4s ease-in; }
+/* line 42, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-detail-layout .m-aside {
+  -webkit-animation: fadeInLate 0.4s ease-in;
+  animation: fadeInLate 0.4s ease-in; }
+
+/* line 49, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.is-unloading .m-detail-layout .m-right-panel {
+  -webkit-animation: moveToTop 0.4s ease-in;
+  -webkit-animation-direction: reverse;
+  animation: moveToTop 0.4s ease-in;
+  animation-direction: reverse; }
+/* line 56, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.is-unloading .m-detail-layout .m-aside {
+  -webkit-animation: fadeInLate 0.4s ease-in;
+  -webkit-animation-direction: reverse;
+  animation: fadeInLate 0.4s ease-in;
+  animation-direction: reverse; }
+
+@media screen and (min-width: 768px) {
+  /* line 67, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+  .m-detail-layout .m-right-panel {
+    -webkit-animation: moveToLeft 0.4s ease-in;
+    animation: moveToLeft 0.4s ease-in; }
+  /* line 71, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+  .m-detail-layout .m-aside {
+    -webkit-animation: fadeInLate 0.4s ease-in;
+    animation: fadeInLate 0.4s ease-in; }
+
+  /* line 78, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+  .is-unloading .m-detail-layout .m-right-panel {
+    -webkit-animation: moveToLeft 0.4s ease-in;
+    -webkit-animation-direction: reverse;
+    animation: moveToLeft 0.4s ease-in;
+    animation-direction: reverse; }
+  /* line 85, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+  .is-unloading .m-detail-layout .m-aside {
+    -webkit-animation: fadeInLate 0.4s ease-in;
+    -webkit-animation-direction: reverse;
+    animation: fadeInLate 0.4s ease-in;
+    animation-direction: reverse; } }

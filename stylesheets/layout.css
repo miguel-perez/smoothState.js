@@ -1,0 +1,167 @@
+/* @mixin respond-to
+------------------------------------------------------------------- */
+/* line 23, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+body {
+  font-size: 0.75em;
+  background-color: #e91e63;
+  font-family: 'Roboto', sans-serif;
+  color: #eceff1;
+  line-height: 1.5; }
+
+@media screen and (min-width: 500px) {
+  /* line 32, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  body {
+    font-size: 1em; } }
+/* line 38, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+a {
+  color: #3f51b5;
+  text-decoration: none;
+  transition: color 0.15s ease-in; }
+  /* line 42, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  a:hover {
+    color: #1a237e; }
+  /* line 46, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  a:active, a:focus {
+    color: #e91e63; }
+  /* line 49, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  a:visited {
+    color: #673ab7; }
+
+/* line 54, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+code {
+  font-weight: bold; }
+
+/* line 62, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-type-display-1 {
+  font-size: 2em;
+  font-weight: 300;
+  margin: 16px 0; }
+
+@media screen and (min-width: 768px) {
+  /* line 68, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-type-display-1 {
+    font-size: 4em; } }
+/* line 73, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-type-sub-heading-1 {
+  font-size: 1.13em;
+  font-weight: 400;
+  margin: 16px 0; }
+
+/* line 79, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-type-heading-1 {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin: 16px 0; }
+
+/* line 90, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-header {
+  position: relative;
+  padding: 4.25em 4.25em 2em;
+  max-width: 40em; }
+  /* line 95, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-header .header_actions {
+    margin: 1.25em 0 0; }
+  /* line 99, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-header .header_link {
+    margin-right: 1.25em;
+    margin-top: 4px; }
+
+@media screen and (min-width: 1024px) {
+  /* line 106, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-header {
+    padding: 8.5em 8.5em 4.25em; } }
+/* line 115, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-button {
+  display: inline-block;
+  padding: 0.5em;
+  border: 1px solid #eceff1;
+  overflow: hidden;
+  transition: background-color 0.15s ease-in; }
+  /* line 122, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-button .txt {
+    color: #eceff1;
+    transition: color 0.15s ease-in; }
+  /* line 127, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-button:hover {
+    background-color: #eceff1; }
+    /* line 130, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    .m-button:hover .ico {
+      fill: #e91e63; }
+    /* line 133, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    .m-button:hover .txt {
+      color: #e91e63; }
+
+/* line 144, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-page {
+  background-color: #eceff1;
+  color: #263238; }
+
+/* line 154, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-segment {
+  padding: 1em 4.25em;
+  border-bottom: 1px solid #cfd8dc; }
+  /* line 158, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-segment .segment_content {
+    margin: 16px 0;
+    max-width: 40em; }
+  /* line 163, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-segment .segment_description {
+    margin: 16px 0; }
+
+@media screen and (min-width: 1024px) {
+  /* line 169, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-segment {
+    padding: 2.25em 8.5em; } }
+/* line 179, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-aside-segment {
+  display: none;
+  padding: 2.25em;
+  border-bottom: 1px solid #f8bbd0; }
+  /* line 183, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-aside-segment .segment_description {
+    margin: 16px 0; }
+
+/* line 194, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-landing-layout .m-type-sub-heading-1 {
+  color: #f8bbd0; }
+
+/* line 205, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-detail-layout .m-aside .aside_title {
+  margin: 16px;
+  font-weight: normal; }
+
+@media screen and (min-width: 768px) {
+  /* line 213, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-detail-layout {
+    padding-left: 270px; }
+    /* line 215, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    .m-detail-layout .m-aside {
+      position: absolute;
+      left: 0;
+      width: 270px; }
+      /* line 219, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+      .m-detail-layout .m-aside .aside_title {
+        position: fixed; }
+      /* line 222, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+      .m-detail-layout .m-aside .m-button {
+        display: block; } }
+/* line 236, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-right-panel .m-header,
+.m-right-panel .m-segment .segment_content {
+  max-width: 43em; }
+/* line 240, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-right-panel .right-panel_top {
+  border-bottom: 1px solid #cfd8dc; }
+
+/* line 249, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-breadcrumb .breadcrumb_link {
+  position: relative;
+  top: -2px;
+  font-size: 0.75em; }
+/* line 254, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-breadcrumb .m-type-display-1 {
+  margin-top: 0; }
+
+/* line 262, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-footer {
+  background-color: #cfd8dc; }
