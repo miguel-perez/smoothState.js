@@ -1,3 +1,4 @@
+
 (function ($) {
 
     "use strict";
@@ -19,9 +20,8 @@
      */
     $.fn.smoothState = function (options) {
 
-        var poppedState = false, // used later to check if we need to update the URL
-            hasPopped   = false,
-            curUrl      = window.location.href,
+        var poppedState  = false, // used later to check if we need to update the URL
+            hasPopped    = false,
             cache       = {}, // used to store the contents that we fetch with ajax
             $body       = $("body"),
             $wind       = $(window),
@@ -35,7 +35,7 @@
             blacklist           : ".no-smoothstate, [rel='nofollow'], [target]",
             loadingBodyClass    : "loading-cursor", //@todo: We don't need this if we provide right hooks
             development         : false,
-            pageCacheSize       : 0,
+            pageCacheSize       : 5,
             frameDelay          : 400,
             renderFrame         : [
                 function ($content) {
@@ -178,13 +178,7 @@
             // content with the updated markup.
             if (containerId.length && $content.length) {
                 animateContent($content, $container);
-                
-                if(!poppedState) {
-                    updateState(cache[url].title, url, containerId);
-                } else {
-                    poppedState = false;
-                }
-
+                updateState(cache[url].title, url, containerId);
             } else if (options.development && consl) { // Throw warning to help debug
                 if (!containerId.length) { // No container ID
                     consl.warn("The following container has no ID: ", $container[0]);
@@ -226,8 +220,7 @@
             document.title = title;
             if (!poppedState) {
                 // the id is used to know what needs to be updated on the popState event
-                curUrl = url;
-                history.pushState({ id: id, url: url }, title, url);
+                history.pushState({ id: id }, title, url);
                 hasPopped = true;
             } else {
                 poppedState = false;
@@ -281,7 +274,6 @@
          * 
          */
         function isHash(url) {
-            url = String(url);
             var hasPathname = (url.indexOf(window.location.pathname) > 0) ? true : false,
                 hasHash = (url.indexOf("#") > 0) ? true : false;
             return (hasPathname && hasHash) ? true : false;
@@ -391,16 +383,14 @@
          * @see     https://developer.mozilla.org/en-US/docs/Web/API/Window.onpopstate
          * 
          */
-        function onPopState(event) {
-            if (event.state !== null &&
-                !isHash(event.state.url) &&
-                !poppedState &&
-                curUrl !== event.state.url) {
+        function onPopState() {
+            var url = window.location.href;
+            if (!isHash(url) && history.state) {
                 // Sets the flag that we've begun to pop states
                 poppedState = true;
                 // Update content if we know what needs to be updated
-                load(event.state.url, $("#" + event.state.id));
-            } else if (event.state === null) {
+                load(url, $("#" + history.state.id));
+            } else if (history.state === null && hasPopped) {
                 window.location = url;
             }
         }
@@ -413,7 +403,6 @@
         return this.each(function () {
             //@todo: Handle form submissions
             var $this = $(this);
-            history.replaceState({ id: $this.prop('id'), url: window.location.href }, null, null);
             $this.on("click", "a", clickAnchor);
             if (options.prefetch) {
                 $this.on("mouseover touchstart", "a", hoverAnchor);
