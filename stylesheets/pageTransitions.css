@@ -1,68 +1,44 @@
 /* @mixin respond-to
 ------------------------------------------------------------------- */
-/* line 8, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.m-landing-layout .m-header {
-  -webkit-animation: fadeIn 0.4s ease-in;
-  animation: fadeIn 0.4s ease-in; }
-/* line 12, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.m-landing-layout .m-page {
-  -webkit-animation: moveToTop 0.4s ease-in;
-  animation: moveToTop 0.4s ease-in; }
-
-/* line 19, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.is-unloading .m-landing-layout .m-header {
-  -webkit-animation: fadeIn 0.4s ease-in;
-  -webkit-animation-direction: reverse;
-  animation: fadeIn 0.4s ease-in;
-  animation-direction: reverse; }
-/* line 25, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.is-unloading .m-landing-layout .m-page {
-  -webkit-animation: moveToTop 0.4s ease-in;
-  -webkit-animation-direction: reverse;
-  animation: moveToTop 0.4s ease-in;
-  animation-direction: reverse; }
-
+/* line 6, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene .scene_element {
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
+/* line 17, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene .scene_element--fadein {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn; }
+/* line 22, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene .scene_element--fadeinup {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp; }
+/* line 27, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene .scene_element--fadeinright {
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight; }
+/* line 32, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene .scene_element--delayed {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s; }
 /* line 38, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.m-detail-layout .m-right-panel {
-  -webkit-animation: moveToTop 0.4s ease-in;
-  animation: moveToTop 0.4s ease-in; }
-/* line 42, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.m-detail-layout .m-aside {
-  -webkit-animation: fadeInLate 0.4s ease-in;
-  animation: fadeInLate 0.4s ease-in; }
-
-/* line 49, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.is-unloading .m-detail-layout .m-right-panel {
-  -webkit-animation: moveToTop 0.4s ease-in;
-  -webkit-animation-direction: reverse;
-  animation: moveToTop 0.4s ease-in;
-  animation-direction: reverse; }
-/* line 56, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-.is-unloading .m-detail-layout .m-aside {
-  -webkit-animation: fadeInLate 0.4s ease-in;
-  -webkit-animation-direction: reverse;
-  animation: fadeInLate 0.4s ease-in;
-  animation-direction: reverse; }
+.m-scene.is-exiting .scene_element {
+  -webkit-animation-direction: alternate-reverse;
+  animation-direction: alternate-reverse; }
+/* line 43, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene.is-exiting .scene_element--delayed {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s; }
+/* line 48, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+.m-scene.is-exiting .scene_element--noexiting {
+  -webkit-animation-direction: alternate-reverse;
+  animation-direction: alternate-reverse; }
 
 @media screen and (min-width: 768px) {
-  /* line 67, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-  .m-detail-layout .m-right-panel {
-    -webkit-animation: moveToLeft 0.4s ease-in;
-    animation: moveToLeft 0.4s ease-in; }
-  /* line 71, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-  .m-detail-layout .m-aside {
-    -webkit-animation: fadeInLate 0.4s ease-in;
-    animation: fadeInLate 0.4s ease-in; }
-
-  /* line 78, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-  .is-unloading .m-detail-layout .m-right-panel {
-    -webkit-animation: moveToLeft 0.4s ease-in;
-    -webkit-animation-direction: reverse;
-    animation: moveToLeft 0.4s ease-in;
-    animation-direction: reverse; }
-  /* line 85, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
-  .is-unloading .m-detail-layout .m-aside {
-    -webkit-animation: fadeInLate 0.4s ease-in;
-    -webkit-animation-direction: reverse;
-    animation: fadeInLate 0.4s ease-in;
-    animation-direction: reverse; } }
+  /* line 58, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+  .m-scene .scene_element--fadeinright-wide {
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight; } }
