@@ -11,7 +11,7 @@ jquery.smoothState.js
 * [Callbacks](#callbacks)
 	* [onStart](#onstart)
 	* [onProgress](#onprogress)
-	* [onAfter](#onafter)
+	* [onEnd](#onend)
 * [Methods and properties](#methods-and-properties)
 	* [href](#href)
 	* [cache](#cache)
@@ -80,7 +80,7 @@ onProgress : function (url, $container) {
 ```
 
 
-### `onAfter`
+### `onEnd`
 Ran when requested content is ready to be injected into the page
 ```Javanscript
 onEnd : function (url, $container, $content) {
