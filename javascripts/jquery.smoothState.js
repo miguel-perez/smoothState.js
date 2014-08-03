@@ -415,7 +415,7 @@
                         url         = $anchor.prop("href"),
                         $container  = $(event.delegateTarget);
 
-                    if (utility.shouldLoad($anchor)) {
+                    if (utility.shouldLoad($anchor, options.blacklist)) {
                         event.preventDefault();
                         load(url);
                     }

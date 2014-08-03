@@ -420,7 +420,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                         url         = $anchor.prop("href"),
                         $container  = $(event.delegateTarget);
 
-                    if (utility.shouldLoad($anchor)) {
+                    if (utility.shouldLoad($anchor, options.blacklist)) {
                         event.preventDefault();
                         load(url);
                     }
