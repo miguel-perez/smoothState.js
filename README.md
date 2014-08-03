@@ -12,6 +12,7 @@ jquery.smoothState.js
 	* [onStart](#onstart)
 	* [onProgress](#onprogress)
 	* [onEnd](#onend)
+	* [onAfter](#onafter)
 * [Methods and properties](#methods-and-properties)
 	* [href](#href)
 	* [cache](#cache)
@@ -79,7 +80,6 @@ onProgress : function (url, $container) {
 },
 ```
 
-
 ### `onEnd`
 Ran when requested content is ready to be injected into the page
 ```Javanscript
@@ -87,7 +87,13 @@ onEnd : function (url, $container, $content) {
     $body.css('cursor', 'auto');
     $body.find('a').css('cursor', 'auto');
     $container.html($content);
-}
+},
+```
+
+### `onAfter`
+Ran when content has been injected and all animations are complete
+```Javanscript
+onAfter : function (url, $container, $content) {}
 ```
 
 ## Methods and properties

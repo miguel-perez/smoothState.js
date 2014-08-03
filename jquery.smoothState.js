@@ -45,12 +45,12 @@
             },
             
             /** Run when a link has been activated */
-            onStart : function (url, $container, $content) {
+            onStart : function (url, $container) {
                 $body.scrollTop(0);
             },
 
             /** Run if the page request is still pending and onStart has finished animating */
-            onProgress : function (url, $container, $content) {
+            onProgress : function (url, $container) {
                 $body.css('cursor', 'wait');
                 $body.find('a').css('cursor', 'wait');
             },
@@ -60,7 +60,10 @@
                 $body.css('cursor', 'auto');
                 $body.find('a').css('cursor', 'auto');
                 $container.html($content);
-            }
+            },
+
+            /** Run when content has been injected and all animations are complete  */
+            onAfter : function(url, $container, $content) {}
         },
         
         /** Utility functions that are decoupled from SmoothState */
@@ -271,8 +274,10 @@
         /** Handles the popstate event, like when the user hits 'back' */
         onPopState = function ( e ) {
             if(e.state !== null) {
-                var url  = window.location.href,
-                    page = $('#' + e.state.id).data('smoothState');
+                var url     = window.location.href,
+                    $page   = $('#' + e.state.id),
+                    page    = $page.data('smoothState');
+                
                 if(page.href !== url && !utility.isHash(url)) {
                     page.load(url, true);
                 }
@@ -358,6 +363,9 @@
                     if($content) {
                         utility.triggerCallback($container, function(){
                             options.onEnd(url, $container, $content);
+                            utility.triggerCallback($container, function(){
+                                options.onAfter(url, $container, $content);
+                            });
                         });
                     } else if (!$content && options.development && consl) {
                         // Throw warning to help debug in development mode
