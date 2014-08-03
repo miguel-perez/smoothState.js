@@ -5,14 +5,15 @@ jquery.smoothState.js
 * [Options](#options)
 	* [prefetch](#prefetch)
 	* [blacklist](#blacklist)
-	* [loadingBodyClass](#loadingbodyclass)
 	* [development](#development)
 	* [pageCacheSize](#pagecachesize)
-	* [frameDelay](#framedelay)
-	* [renderFrame](#renderframe)
 	* [alterRequestUrl](#alterrequesturl)
-	* [onAfter](#onafter)
-	* [onBefore](#onbefore)
+* [Methods](#methods)
+	* [href](#href)
+	* [cache](#cache)
+	* [load](#load)
+	* [fetch](#fetch)
+	* [toggleAnimationClass](#toggleAnimationClass)
 * [Show your work!](#show-your-work)
 * [Need help?](#need-help)
 
@@ -28,7 +29,7 @@ Javascript [SPA frameworks](http://en.wikipedia.org/wiki/Single-page_application
 * **history.pushState()** - a method that lets us maintain browsing expectations
 * **Ajax** - a way for us to  request and store pages on the user's device without refreshing the page
 
-Traditional animators draw out the changes to a scene in an **array of frames** that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.
+smoothState.js will [unobtrusively enhance](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript) your website's page loads to behave more like a single-page application framework. This allows you to add page transitions and create a nicer experince for your users.
 
 ## Demo
 
@@ -38,54 +39,46 @@ Traditional animators draw out the changes to a scene in an **array of frames** 
 smoothState provides some options that allow you to customize the functionality of the plugin.
 
 ### `prefetch`
-A boolean, default being `false`, that determines weather or not the plugin should try to prefetch the contents of the page. This is an excellent way to improve perceived performance. I wrote a [blog post](http://miguel-perez.com/articles/hong-kong-gui/) explaining ways you can take advantage of this to make your page feel instant. If you're dealing with a complex database-driven application and you're not using any type of caching, don't try to use this. It will likely destroy your app server since it will increase the number of request each user makes to the server.
+There is a 200ms to 300ms delay between the time that a user hovers over a link and the time they click it. On touch screens, the delay between the touchstart and touchend is even greater. If the prefetch option is set to true, smoothState will begin to preload the contents of the url between that delay.
+
+This technique will dramatically increase the speed of your website.
 
 ### `blacklist`
-A string that is used as a jQuery selector to ignore certain links. By default smoothState will ignore any links that match `".no-smoothstate, [rel='nofollow'], [target]"`. This is useful when defining certain links you always want a page referch for. Such as [deep web links](http://en.wikipedia.org/wiki/Deep_Web), or links with custom javascript functionality around them.
-
-### `loadingBodyClass`
-This is the class that will get applied to the body element when there is a noticeable delay between the time when a user activates a link and when the AJAX request is complete. This can be used to show the user a loading indicator and give the user some feedback that the UI is working. By default it will apply a class of `loading-cursor` to the body. Here's a bit of CSS to go along with it:
-
-```CSS
-.loading-cursor,
-.loading-cursor a{
-  cursor: progress;
-}
-```
+A string that is used as a jQuery selector to ignore certain links. By default smoothState will ignore any links that match `".no-smoothstate, [target]"`. This is useful when defining certain links you always want a page referch for. Such as [deep web links](http://en.wikipedia.org/wiki/Deep_Web), or links with custom javascript functionality around them.
 
 ### `development`
 A boolean, default being `false`, that will tell smoothState to output useful debug info when something goes wrong in console instead of trying to abort and reload the page. 
 
 ### `pageCacheSize`
-A number, default being `5`, that defines the maximum number of pages to store locally in memory. smoothState will store the HTML it requested from the server in a variable for the purpose of avoiding unnecessary requests and improving page load speed. Setting a limit to this is useful for conserving the memory of less capable devices.
-
-### `frameDelay`
-A number, default being `400`, that defines the number of milliseconds smoothState will wait in between each render function inside of the array `renderFrame`. This number should match the delay in your CSS transition.
-
-### `renderFrame`
-An array of functions that return the HTML that will be swapped out. By default smoothState just removes the old content and replaces it with the new content. smoothState will always pass in two jQuery objects to this function as arguments, $content and $container.
-
-```Javascript
-var html = options.renderFrame[i]($content, $container);
-$container.html(html);
-```
+smoothState.js will store pages in memory if pageCacheSize is set to anything greater than 0. This allows a user to avoid having to request pages more than once. Pages that are stored in memory will load instantaneously.
 
 ### `alterRequestUrl`
-A function that defines any alterations needed on the URL that is used to request content from the server. The function should return a string that is a valid URL. This is useful when dealing with applications that have layout controls. You could, for example, append the query parameter of `layout=true` in order to force an application to give you the entire page. smoothState will pass in the URL as an argument to this function.
+A function that defines any alterations needed on the URL that is used to request content from the server. The function should return a string that is a valid URL. This is useful when dealing with applications that have layout controls or when needing to inavlidate the cache.
 
-### `onAfter`
-A function that runs after the content has been replaced. smoothState will pass in two parameters to this function:
-```Javascript
-if (isLastFrame) {
-  options.onAfter($content, $container);
-}
+## Methods
+smoothState provides some methods available by accessing the element's data property.
+
+```javascript
+var content  = $('#main').smoothState().data('smoothState');
+content.load('/newPage.html');
+
 ```
 
-### `onBefore`
-A function that runs before the content is replaced. smoothState will pass in two parameters to this function:
-```Javascript
-options.onBefore(url, $container);
-```
+### href
+Url of the content that is currently displayed.
+
+### cache
+Variable that stores pages after they are requested.
+
+### load
+Loads the contents of a url into our container.
+
+### fetch
+Fetches the contents of a url and stores it in the 'cache' varible.
+
+### toggleAnimationClass
+Used to restart css animations with a class.
+
 
 ## Show your work!
 I'd love to see how this gets used in the wild. [Tweet me](https://twitter.com/tayokoart) with a link and I'll add it to this page. This repo could use some good demos.

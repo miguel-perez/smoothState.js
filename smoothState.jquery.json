@@ -1,7 +1,7 @@
 {
     "name": "smoothState",
     "title": "smoothState",
-    "description": "A jQuery plugin to unobtrusively stop the jankiness of page loads.",
+    "description": "A jQuery plugin to stop the jank of page loads.",
     "keywords": [
         "pjax",
         "animation",
@@ -10,7 +10,7 @@
         "ui",
         "ajaxify"
     ],
-    "version": "0.2.1",
+    "version": "0.3.0",
     "author": {
         "name": "Miguel Angel Perez",
         "url": "http://miguel-perez.com/"
