@@ -8,7 +8,11 @@ jquery.smoothState.js
 	* [development](#development)
 	* [pageCacheSize](#pagecachesize)
 	* [alterRequestUrl](#alterrequesturl)
-* [Methods](#methods)
+* [Callbacks](#callbacks)
+	* [onStart](#onstart)
+	* [onProgress](#onprogress)
+	* [onAfter](#onafter)
+* [Methods and properties](#methods-and-properties)
 	* [href](#href)
 	* [cache](#cache)
 	* [load](#load)
@@ -55,7 +59,38 @@ smoothState.js will store pages in memory if pageCacheSize is set to anything gr
 ### `alterRequestUrl`
 A function that defines any alterations needed on the URL that is used to request content from the server. The function should return a string that is a valid URL. This is useful when dealing with applications that have layout controls or when needing to inavlidate the cache.
 
-## Methods
+## Callbacks
+
+### `onStart`
+Ran when a link has been activated, a "click". Default:
+
+```Javanscript
+onStart : function (url, $container) {
+    $body.scrollTop(0);
+},
+```
+
+### `onProgress`
+Ran if the page request is still pending and onStart has finished animating.Default:
+```Javanscript
+onProgress : function (url, $container) {
+    $body.css('cursor', 'wait');
+    $body.find('a').css('cursor', 'wait');
+},
+```
+
+
+### `onAfter`
+Ran when requested content is ready to be injected into the page
+```Javanscript
+onEnd : function (url, $container, $content) {
+    $body.css('cursor', 'auto');
+    $body.find('a').css('cursor', 'auto');
+    $container.html($content);
+}
+```
+
+## Methods and properties
 smoothState provides some methods available by accessing the element's data property.
 
 ```javascript
@@ -64,24 +99,25 @@ content.load('/newPage.html');
 
 ```
 
-### href
+### `href`
 Url of the content that is currently displayed.
 
-### cache
+### `cache`
 Variable that stores pages after they are requested.
 
-### load
+### `load(url)`
 Loads the contents of a url into our container.
 
-### fetch
+### `fetch(url)`
 Fetches the contents of a url and stores it in the 'cache' varible.
 
-### toggleAnimationClass
+### `toggleAnimationClass(classname)`
 Used to restart css animations with a class.
 
 
 ## Show your work!
 I'd love to see how this gets used in the wild. [Tweet me](https://twitter.com/tayokoart) with a link and I'll add it to this page. This repo could use some good demos.
+
 
 ## Need help?
 If you find yourself confused, add an issue explaining your problem. Doing so will help me improve the clarity of the documentation and get us thinking about use cases and potential upgrades. I'm all ears.

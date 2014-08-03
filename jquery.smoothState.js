@@ -226,6 +226,7 @@
                     eventname           = "ss.allanimationend",
                     unbindHandlers      = function(e){
                         $element.trigger(eventname);
+                        utility.redraw($element);
                     },
                     onAnimationStart    = function (e) {
                         e.stopPropagation();
@@ -249,7 +250,7 @@
              * @param   {function}  callback - function to run
              * 
              */
-            triggerCallback: function($element, callback) {
+            triggerCallback: function ($element, callback) {
                 $element.one("ss.allanimationend", callback);
 
                 // Fires fake animation events in case no animations are used
@@ -257,6 +258,13 @@
                     $element.trigger("animationstart");
                     $element.trigger("animationend");
                 }, 100);
+            },
+
+            /** Forces browser to redraw elements */
+            redraw: function ($element) {
+                $element.hide(0, function() {
+                    $(this).show();
+                });
             }
         },
 
