@@ -46,12 +46,12 @@
             },
             
             /** Run when a link has been activated */
-            onStart : function (url, $container, $content) {
+            onStart : function (url, $container) {
                 $body.scrollTop(0);
             },
 
             /** Run if the page request is still pending and onStart has finished animating */
-            onProgress : function (url, $container, $content) {
+            onProgress : function (url, $container) {
                 $body.css('cursor', 'wait');
                 $body.find('a').css('cursor', 'wait');
             },
@@ -227,6 +227,7 @@
                     eventname           = "ss.allanimationend",
                     unbindHandlers      = function(e){
                         $element.trigger(eventname);
+                        utility.redraw($element);
                     },
                     onAnimationStart    = function (e) {
                         e.stopPropagation();
@@ -250,7 +251,7 @@
              * @param   {function}  callback - function to run
              * 
              */
-            triggerCallback: function($element, callback) {
+            triggerCallback: function ($element, callback) {
                 $element.one("ss.allanimationend", callback);
 
                 // Fires fake animation events in case no animations are used
@@ -258,6 +259,13 @@
                     $element.trigger("animationstart");
                     $element.trigger("animationend");
                 }, 100);
+            },
+
+            /** Forces browser to redraw elements */
+            redraw: function ($element) {
+                $element.hide(0, function() {
+                    $(this).show();
+                });
             }
         },
 
