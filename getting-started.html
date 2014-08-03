@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Use title if it's in the page YAML frontmatter -->
     <title>
-        Getting started - jQuery.smoothState.js
+        Get started with smoothState.js - jQuery.smoothState.js
     </title>
     <meta name="description" content="An introduction to the fundamentals of smoothState.js, including an explanation of the code's approach, requirements, and default behavior. The benefits of this plugin are also covered here.">
     <link href="stylesheets/all.css" rel="stylesheet" type="text/css" />
@@ -30,7 +30,7 @@
 					<div class="m-breadcrumb" itemprop="breadcrumb">
 						<a class="breadcrumb_link" href="index.html">Home</a> →
 						<h1 class="m-type-display-1">
-							Getting started
+							Get started with smoothState.js
 						</h1>
 					</div>
 					<p class="m-type-sub-heading-1">An introduction to the fundamentals of smoothState.js, including an explanation of the code's approach, requirements, and default behavior. The benefits of this plugin are also covered here.</p>
@@ -38,7 +38,7 @@
 			</div>
 			
 			<div class="m-segment">
-	<h2 class="m-type-heading-1">About</h2>
+	<h2 class="m-type-heading-1">Why use smoothState.js?</h2>
 	<div class="segment_content">
 		<p>Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. <strong>We’ve accepted the jankiness of page loads as a personality quirk of the web</strong>, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.</p>
 
@@ -51,15 +51,20 @@
 			<li><strong>Ajax</strong> - a way for us to  request and store pages on the user's device without refreshing the page</li>
 		</ul>
 
-		<p>Traditional animators draw out the changes to a scene in an <strong>array of frames</strong> that get swapped out in rapid succession. Likewise, smoothState allows you to define an array of functions that return the markup that gets swapped out on the page. This gives you the freedom to add the HTML scaffolding needed for CSS animations.</p>
+		<p>smoothState.js will <a href="http://en.wikipedia.org/wiki/Unobtrusive_JavaScript">unobtrusively enhance</a> your website's page loads to behave more like a single-page application framework. This allows you to add page transitions and create a nicer experince for your users.</p>
 	</div>
 </div>
 <div class="m-segment">
 	<h2 class="m-type-heading-1">Requirements</h2>
 	<div class="segment_content">
-		<p>smoothState.js is initialized on containers, not links. The containers can be thought of like small window objects within the page, similar to how you would describe an iframe. <strong>Every container needs to have an id</strong>, this is used as a unique hook to tell the script where the content is coming from and going to.</p>
+		<p>smoothState.js is initialized on containers, not links. The containers can be thought of like small window objects within the page, similar to how you would describe an iframe.</p>
 
-		<p><strong>Every link should return a fully functional layout, not just an HTML fragment.</strong> This requirement makes the website more resilient since it allows us to abort and redirect the user if an error occurs. Making each link return a fully qualified page also ensures our page transitions are unobtrusive.</p>
+		<ol>
+			<li><strong>Every container needs to have an id</strong> - a unique hook to tell the smoothState.js what to update on the page</li>
+			<li><strong>Every link should return a full layout</strong> - not just an HTML fragment</li>
+		</ol>
+
+		<p>This requirement makes the website more resilient since it allows us to abort and redirect the user if an error occurs. Making each link return a fully qualified page also ensures our page transitions are unobtrusive.</p>
 
 		<p>There may be a rare case when returning a full layout is not desired. smoothState.js will still function properly as long as the container being updated is present in the response from the server. If you're having issues with this, turn on <a href="https://github.com/miguel-perez/jquery.smoothState.js#development">development mode</a> and watch the console for useful warnings.</p>
 	</div>
@@ -73,14 +78,48 @@
 			<li>Create a new js file and run <code>$('#main').smoothState()</code></li>
 			<li>Add container with an id of "<code>#main</code>" and include some links inside of it</li>
 		</ol>
-		<p>To see a code example, visit the <a href="https://gist.github.com/miguel-perez/15929b47c9664778d6fd">Gist</a>. You can also <a class="no-smoothstate" href="demos/barebones/">see a demo</a> of the Gist and interact with the pages. By default, smoothState.js will:
+
+	<h3>The HTML</h3>
+<pre><code class="m-code html"><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Home - My Site<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- Every smoothState container needs an id --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- Every link should return a full layout --&gt;</span>
+      <span class="nt">&lt;ul&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"index.html"</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"about.html"</span><span class="nt">&gt;</span>About<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="nt">&lt;/ul&gt;</span>
+      <span class="c">&lt;!-- Contents of the page... --&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="c">&lt;!-- Scripts --&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span> 
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.smoothState.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"functions.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+
+	<h3>The JS</h3>
+<pre><code class="m-code javascript"><span class="c1">// Contents of functions.js</span>
+<span class="p">;(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">'#main'</span><span class="p">).</span><span class="nx">smoothState</span><span class="p">();</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</code></pre>
+
+		<p>You can <a class="no-smoothstate" href="demos/barebones/">see a demo</a> of the this basic example and interact with the pages. By default, smoothState.js will:
 		</p>
 		<ul>
 			<li>Prevent links from triggering a full page load</li>
 			<li>Update the user's URLs and history as to not break browsing expectations</li>
-			<li>Use Ajax to request and cache on the user's device</li>
+			<li>Use Ajax to request pages and replace the appropiate content</li>
 		</ul>
-		<p>This default example <strong>will not add page transitions</strong> to your page. See a <a href="typical-implementation.html">typical implementation</a> for an example of how to add a simple fade effect on your site. If you're feeling ambitious, check out an <a href="advanced-implementation.html">advanced example</a> or go read the <a href="#">documentation</a>.</p>
+		<p>This default example <strong>will not add page transitions</strong> to your page. See a <a href="typical-implementation.html">typical implementation</a> for an example of how to add a simple fade effect on your site. If you're feeling ambitious, check out an <a href="advanced-implementation.html">advanced example</a> or go read the <a href="https://github.com/miguel-perez/jquery.smoothState.js">documentation</a>.</p>
 	</div>
 </div>
 

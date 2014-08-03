@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Use title if it's in the page YAML frontmatter -->
     <title>
-        Typical implementation - jQuery.smoothState.js
+        Add page transitions to your site - jQuery.smoothState.js
     </title>
     <meta name="description" content="This page showcases a demo of what a typical implementation of smoothState.js might look like. It decorates page loads with a simple fade effect by using CSS animations.">
     <link href="stylesheets/all.css" rel="stylesheet" type="text/css" />
@@ -30,7 +30,7 @@
 					<div class="m-breadcrumb" itemprop="breadcrumb">
 						<a class="breadcrumb_link" href="index.html">Home</a> →
 						<h1 class="m-type-display-1">
-							Typical implementation
+							Add page transitions to your site
 						</h1>
 					</div>
 					<p class="m-type-sub-heading-1">This page showcases a demo of what a typical implementation of smoothState.js might look like. It decorates page loads with a simple fade effect by using CSS animations.</p>
@@ -41,39 +41,98 @@
 	<h2 class="m-type-heading-1">What makes this a 'typical' example?</h2>
 	<div class="segment_content">
 		<p>Animations take a lot of time to perfect. Each layout demands a careful choreography of how elements on the page appear and disappear. A simple fade effect, however, is the perfect way to add a slick finish to any site with little effort.</p>
-
-		<p>Aside from a simple fade effect, we'll be exploring how to add a loading indicator that alerts the user when page is working.</p>
 	</div>
 </div>
 <div class="m-segment">
 	<h2 class="m-type-heading-1">Adding page transitions</h2>
 	<div class="segment_content">
-		<p>smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on <a href="http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/">Codrops</a> or <a href="http://aprilzero.com/">AprilZero</a>.</p>
+		<p>smoothState.js was built to allow you to achieve really neat page transitions on your site, such as what you might see on <a href="http://tympanus.net/codrops/2013/05/07/a-collection-of-page-transitions/">Codrops</a> or <a href="http://aprilzero.com/">AprilZero</a>. In order to add these types of transitions, we'll have to override the default callbacks that handle how the content gets injected into the page.</p>
+    
+    <p>For the purpose of this example, we'll only override "<code>onStart</code>".</p>
 
-		<p>In traditional animation, the changes to a scene need to be drawn out in an <strong>array of frames</strong> that get swapped out in rapid succession. Likewise, smoothState allows you to define an <strong>array of functions that return the markup</strong> that gets swapped out on the page. This is useful because it allows you to add the needed HTML scaffolding to achieve CSS animations.</p>
+		<h3>The HTML</h3>
+<pre><code class="m-code html"><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Home - My Site<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"keyframes.css"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"pageTransitions.css"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="c">&lt;!-- Animation class --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span> <span class="na">class=</span><span class="s">"m-scene"</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- Classes that define elment animations --&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"scene_element scene_element--fadein"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- contents... --&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="c">&lt;!-- Scripts --&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.smoothState.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"functions.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+		<h3>The CSS</h3>
+<pre><code class="m-code css"><span class="c">/*
+ * CSS Animations
+ * Don't forget to add vendor prefixes!
+ */</span>
+<span class="nc">.m-scene</span> <span class="nc">.scene_element</span> <span class="p">{</span>
+  <span class="nl">animation-duration</span><span class="p">:</span> <span class="m">0.5s</span><span class="p">;</span>
+  <span class="nl">transition-timing-function</span><span class="p">:</span> <span class="n">ease-in</span><span class="p">;</span>
+  <span class="nl">animation-fill-mode</span><span class="p">:</span> <span class="nb">both</span><span class="p">;</span>
+<span class="p">}</span>
 
-		<p>The <a href="https://github.com/miguel-perez/jquery.smoothState.js#renderframe"><code>renderFrame</code></a> option is an array of functions that get run on a delay set by the <a href="https://github.com/miguel-perez/jquery.smoothState.js#framedelay"><code>frameDelay</code></a>. Each function in the array should <code>return</code> the HTML that will be used to replace the contents of the container.</p>
+<span class="nc">.m-scene</span> <span class="nc">.scene_element--fadein</span> <span class="p">{</span>
+  <span class="nl">animation-name</span><span class="p">:</span> <span class="n">fadeIn</span><span class="p">;</span>
+<span class="p">}</span>
 
-		<p>smoothState.js passes in two arguments to each function in <code>renderFrame</code>, <code>$content</code>, and <code>$container</code>. These are both jQuery objects that can be used to alter the relevant parts of the page. <code>$content</code> stores the new HTML from the link that was activated.</p>
+<span class="nc">.m-scene.is-exiting</span> <span class="nc">.scene_element</span> <span class="p">{</span>
+  <span class="nl">animation-direction</span><span class="p">:</span> <span class="n">alternate-reverse</span><span class="p">;</span>
+<span class="p">}</span>
 
-		See the <a href="https://gist.github.com/miguel-perez/7f7443e50fe89bbc2849">Gist</a>, and play with the <a class="no-smoothstate" href="demos/barebones/">demo</a>.
+<span class="c">/*
+ * Keyframes
+ */</span>
+<span class="k">@keyframes</span> <span class="n">fadeIn</span> <span class="p">{</span>
+  <span class="nt">0</span><span class="o">%</span> <span class="p">{</span> <span class="nl">opacity</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span> <span class="nl">opacity</span><span class="p">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+		<h3>The JS</h3>
+<pre><code class="m-code javascript"><span class="c1">// Contents of functions.js</span>
+<span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+  <span class="s1">'use strict'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">$body</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'html, body'</span><span class="p">),</span>
+      <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#main'</span><span class="p">).</span><span class="nx">smoothState</span><span class="p">({</span>
+        <span class="c1">// Runs when a link has been activated</span>
+        <span class="na">onStart</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">$container</span><span class="p">)</span> <span class="p">{</span>
+          <span class="c1">// toggleAnimationClass() is a public method</span>
+          <span class="c1">// for restarting css animations with a class</span>
+          <span class="nx">content</span><span class="p">.</span><span class="nx">toggleAnimationClass</span><span class="p">(</span><span class="s1">'is-exiting'</span><span class="p">);</span>
+          <span class="c1">// Scroll user to the top</span>
+          <span class="nx">$body</span><span class="p">.</span><span class="nx">animate</span><span class="p">({</span>
+            <span class="s1">'scrollTop'</span><span class="p">:</span> <span class="mi">0</span>
+          <span class="p">});</span>
+        <span class="p">}</span>
+      <span class="p">}).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'smoothState'</span><span class="p">);</span>
+      <span class="c1">//.data('smoothState') makes public methods available</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</code></pre>
+		Play with the <a class="no-smoothstate" href="demos/barebones/">demo</a>.
 	</div>
 </div>
+
 <div class="m-segment">
-	<h2 class="m-type-heading-1">Adding a loading indicator</h2>
-	<div class="segment_content">
-		<p>A class of <code>".loading-cursor"</code> will get applied to the body element when there is a noticeable delay between the time when a user activates a link and when the AJAX request is complete. It can be changed by setting the <code>loadingBodyClass</code> options. This can be used to show the user a loading indicator and give the user some feedback that the UI is working. By default it will apply a class of loading-cursor to the body. Here's a bit of CSS to go along with it:</p>
-
-		<pre><code>
-.loading-cursor,
-.loading-cursor a{
-cursor: progress;
-}
-		</code></pre>
-	</div>
+    <h2 class="m-type-heading-1">Other animation effects</h2>
+    <div class="segment_content">
+        <p>smoothState.js allows for more complex animations, such as what you see on this site. To achieve this, you'll need to define <code>@ketframes</code> that describe the animations we want. <a href="https://twitter.com/_dte">Daniel Eden</a> has written up a small library of predefined css animations we can use called <a href="http://daneden.github.io/animate.css/">animate.css</a>.</p>
+    </div>
 </div>
-
-
 
 
 

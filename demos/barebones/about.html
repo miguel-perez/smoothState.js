@@ -8,13 +8,15 @@
     <body>
         <!-- Container with an id -->
         <div id="main">
-            
+
             <!-- Navigation -->
+            <h2>Navigating between pages wont trigger a page load with smoothState.js</h2>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="about.html">About <strong>[current page]</strong></a></li>
             </ul>
-            
+            <hr/>
+
             <!-- Content -->
             <h1>About</h1>
             <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
@@ -28,7 +30,7 @@
         </div>
         <!-- Scripts -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="jquery.smoothState.js"></script>
+        <script src="../../javascripts/jquery.smoothState.js"></script>
         <script src="functions.js"></script>
     </body>
 </html>

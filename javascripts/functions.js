@@ -1,25 +1,14 @@
 ;(function ($) {
     'use strict';
-    var $main = $('#main'),
-        $body = $('html, body');
-    $main.smoothState({
-        renderFrame: [
-            function ($content, $container) {
-                $container.addClass('is-exiting');
-                return $container.html();
-            },
-            function ($content, $container) {
-                $container.removeClass('is-exiting');
-                return $('<div/>').append($content).html();
+    var $body    = $('html, body'),
+        content  = $('#main').smoothState({
+            prefetch: true,
+            pageCacheSize: 4,
+            onStart : function (url, $container, $content) {
+                content.toggleAnimationClass('is-exiting');
+                $body.animate({
+                    'scrollTop': 0
+                });
             }
-        ],
-        frameDelay: 500,
-        prefetch: true,
-        pageCacheSize: 10,
-        onBefore: function () {
-            $body.animate({
-                scrollTop: 0
-            });
-        }
-    });
+        }).data('smoothState');
 })(jQuery);
