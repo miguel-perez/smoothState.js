@@ -3720,8 +3720,8 @@ table {
 ------------------------------------------------------------------- */
 /* line 6, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
 .m-scene .scene_element {
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
+  -webkit-animation-duration: 0.25s;
+  animation-duration: 0.25s;
   -webkit-transition-timing-function: ease-in;
   transition-timing-function: ease-in;
   -webkit-animation-fill-mode: both;
@@ -3740,8 +3740,8 @@ table {
   animation-name: fadeInRight; }
 /* line 32, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
 .m-scene .scene_element--delayed {
-  -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s; }
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s; }
 /* line 38, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
 .m-scene.is-exiting .scene_element {
   -webkit-animation-direction: alternate-reverse;
