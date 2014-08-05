@@ -423,14 +423,13 @@
                  * 
                  */
                 clickAnchor = function (event) {
-                    // stopPropagation so that event doesn't fire on parent containers.
-                    event.stopPropagation();
-
                     var $anchor     = $(event.currentTarget),
                         url         = $anchor.prop("href"),
                         $container  = $(event.delegateTarget);
 
                     if (utility.shouldLoad($anchor, options.blacklist)) {
+                        // stopPropagation so that event doesn't fire on parent containers.
+                        event.stopPropagation();
                         event.preventDefault();
                         load(url);
                     }
