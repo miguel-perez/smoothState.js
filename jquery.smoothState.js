@@ -27,6 +27,9 @@
         /** Plugin default options */
         defaults    = {
 
+            /** jquery element string to specify which anchors smoothstate should bind too */
+            anchors : "a",
+
             /** If set to true, smoothState will prefetch a link's contents on hover */
             prefetch : false,
             
@@ -444,9 +447,9 @@
                  */
                 bindEventHandlers = function ($element) {
                     //@todo: Handle form submissions
-                    $element.on("click", "a", clickAnchor);
+                    $element.on("click", options.anchors, clickAnchor);
                     if (options.prefetch) {
-                        $element.on("mouseover touchstart", "a", hoverAnchor);
+                        $element.on("mouseover touchstart", options.anchors, hoverAnchor);
                     }
                 },
 
