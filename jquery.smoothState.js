@@ -235,14 +235,18 @@
                         utility.redraw($element);
                     },
                     onAnimationStart    = function (e) {
-                        e.stopPropagation();
-                        animationCount ++;
+                        if ($(e.target).is($element)) {
+                            e.stopPropagation();
+                            animationCount ++;
+                        }
                     },
                     onAnimationEnd      = function (e) {
-                        e.stopPropagation();
-                        animationCount --;
-                        if(animationCount === 0) {
-                            unbindHandlers();
+                        if ($(e.target).is($element)) {
+                            e.stopPropagation();
+                            animationCount --;
+                            if(animationCount === 0) {
+                                unbindHandlers();
+                            }
                         }
                     };
                 
