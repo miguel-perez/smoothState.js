@@ -414,10 +414,10 @@
                  * 
                  */
                 hoverAnchor = function (event) {
-                    event.stopPropagation();
                     var $anchor = $(event.currentTarget),
                         url     = $anchor.prop("href");
                     if (utility.shouldLoad($anchor, options.blacklist)) {
+                        event.stopPropagation();
                         fetch(url);
                     }
                 },
