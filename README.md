@@ -1,9 +1,8 @@
 jquery.smoothState.js
 ===============
-
+[Checkout the demo site](http://miguel-perez.github.io/jquery.smoothState.js/index.html) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
 
 * [About](#about)
-* [Demo](#demo)
 * [Options](#options)
 	* [prefetch](#prefetch)
 	* [blacklist](#blacklist)
@@ -37,10 +36,6 @@ Javascript [SPA frameworks](http://en.wikipedia.org/wiki/Single-page_application
 * **Ajax** - a way for us to  request and store pages on the user's device without refreshing the page
 
 smoothState.js will [unobtrusively enhance](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript) your website's page loads to behave more like a single-page application framework. This allows you to add page transitions and create a nicer experince for your users.
-
-## Demo
-
-[Checkout the demo site](http://miguel-perez.github.io/jquery.smoothState.js/index.html). If you have an example of smoothState.js in the wild, [let me know](https://twitter.com/tayokoart) about it and I'll add a link to it in this file.
 
 ## Options
 smoothState provides some options that allow you to customize the functionality of the plugin.
