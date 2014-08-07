@@ -18,9 +18,9 @@ jquery.smoothState.js
 * [Methods and properties](#methods-and-properties)
 	* [href](#href)
 	* [cache](#cache)
-	* [load](#load-url)
-	* [fetch](#fetch-url)
-	* [toggleAnimationClass](#toggleAnimationClass-classname)
+	* [load](#loadurl)
+	* [fetch](#fetchurl)
+	* [toggleAnimationClass](#toggleanimationclassclassname)
 * [Show your work!](#show-your-work)
 * [Need help?](#need-help)
 
