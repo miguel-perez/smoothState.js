@@ -3756,7 +3756,7 @@ table {
   animation-direction: alternate-reverse; }
 
 @media screen and (min-width: 768px) {
-  /* line 58, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
+  /* line 57, /Users/mperez/Sites/smoothstate/source/stylesheets/pageTransitions.css.scss */
   .m-scene .scene_element--fadeinright-wide {
     -webkit-animation-name: fadeInRight;
     animation-name: fadeInRight; } }

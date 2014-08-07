@@ -84,11 +84,14 @@
         <span class="nx">content</span>  <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#main'</span><span class="p">).</span><span class="nx">smoothState</span><span class="p">({</span>
             <span class="na">prefetch</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
             <span class="na">pageCacheSize</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-            <span class="na">onStart</span> <span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">$container</span><span class="p">,</span> <span class="nx">$content</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">content</span><span class="p">.</span><span class="nx">toggleAnimationClass</span><span class="p">(</span><span class="s1">'is-exiting'</span><span class="p">);</span>
-                <span class="nx">$body</span><span class="p">.</span><span class="nx">animate</span><span class="p">({</span>
-                    <span class="s1">'scrollTop'</span><span class="p">:</span> <span class="mi">0</span>
-                <span class="p">});</span>
+            <span class="na">onStart</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">duration</span><span class="p">:</span> <span class="mi">250</span><span class="p">,</span>
+                <span class="na">render</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">$container</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">content</span><span class="p">.</span><span class="nx">toggleAnimationClass</span><span class="p">(</span><span class="s1">'is-exiting'</span><span class="p">);</span>
+                    <span class="nx">$body</span><span class="p">.</span><span class="nx">animate</span><span class="p">({</span>
+                        <span class="na">scrollTop</span><span class="p">:</span> <span class="mi">0</span>
+                    <span class="p">});</span>
+                <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'smoothState'</span><span class="p">);</span>
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>

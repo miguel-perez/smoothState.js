@@ -4,11 +4,14 @@
         content  = $('#main').smoothState({
             prefetch: true,
             pageCacheSize: 4,
-            onStart : function (url, $container, $content) {
-                content.toggleAnimationClass('is-exiting');
-                $body.animate({
-                    'scrollTop': 0
-                });
+            onStart: {
+                duration: 250,
+                render: function (url, $container) {
+                    content.toggleAnimationClass('is-exiting');
+                    $body.animate({
+                        scrollTop: 0
+                    });
+                }
             }
         }).data('smoothState');
 })(jQuery);

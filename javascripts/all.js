@@ -33,6 +33,9 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         /** Plugin default options */
         defaults    = {
 
+            /** jquery element string to specify which anchors smoothstate should bind to */
+            anchors : "a",
+
             /** If set to true, smoothState will prefetch a link's contents on hover */
             prefetch : false,
             
@@ -51,21 +54,35 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             },
             
             /** Run when a link has been activated */
-            onStart : function (url, $container) {
-                $body.scrollTop(0);
+            onStart : {
+                duration: 0,
+                render: function (url, $container) {
+                    $body.scrollTop(0);
+                }
             },
 
             /** Run if the page request is still pending and onStart has finished animating */
-            onProgress : function (url, $container) {
-                $body.css('cursor', 'wait');
-                $body.find('a').css('cursor', 'wait');
+            onProgress : {
+                duration: 0,
+                render: function (url, $container) {
+                    $body.css('cursor', 'wait');
+                    $body.find('a').css('cursor', 'wait');
+                }
             },
 
             /** Run when requested content is ready to be injected into the page  */
-            onEnd : function (url, $container, $content) {
-                $body.css('cursor', 'auto');
-                $body.find('a').css('cursor', 'auto');
-                $container.html($content);
+            onEnd : {
+                duration: 0,
+                render: function (url, $container, $content) {
+                    $body.css('cursor', 'auto');
+                    $body.find('a').css('cursor', 'auto');
+                    $container.html($content);
+                }
+            },
+
+            /** Run when content has been injected and all animations are complete  */
+            onAfter : function(url, $container, $content) {
+
             }
         },
         
@@ -221,49 +238,37 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             },
 
             /**
-             * Fires a custom event when all animations are complete
+             * Triggers an "allanimationend" event when all animations are complete
              * @param   {object}    $element - jQuery object that should trigger event
              * 
              */
-            triggerAllAnimationEndEvent: function ($element) {
+             triggerAllAnimationEndEvent: function ($element) {
                 var animationCount      = 0,
                     animationstart      = "animationstart webkitAnimationStart oanimationstart MSAnimationStart",
                     animationend        = "animationend webkitAnimationEnd oanimationend MSAnimationEnd",
-                    eventname           = "ss.allanimationend",
-                    unbindHandlers      = function(e){
-                        $element.trigger(eventname);
-                        utility.redraw($element);
-                    },
+                    eventname           = "allanimationend",
                     onAnimationStart    = function (e) {
-                        e.stopPropagation();
-                        animationCount ++;
+                        if ($(e.delegateTarget).is($element)) {
+                            e.stopPropagation();
+                            animationCount ++;
+                        }
                     },
                     onAnimationEnd      = function (e) {
-                        e.stopPropagation();
-                        animationCount --;
-                        if(animationCount === 0) {
-                            unbindHandlers();
+                        if ($(e.delegateTarget).is($element)) {
+                            e.stopPropagation();
+                            animationCount --;
+                            if(animationCount === 0) {
+                                $element.trigger(eventname);
+                            }
                         }
                     };
-                
+
                 $element.on(animationstart, onAnimationStart);
                 $element.on(animationend, onAnimationEnd);
-            },
-
-            /**
-             * Fires a custom callback when all animations are finished
-             * @param   {object}    $element - jQuery object that should trigger event
-             * @param   {function}  callback - function to run
-             * 
-             */
-            triggerCallback: function ($element, callback) {
-                $element.one("ss.allanimationend", callback);
-
-                // Fires fake animation events in case no animations are used
-                setTimeout(function(){
-                    $element.trigger("animationstart");
-                    $element.trigger("animationend");
-                }, 100);
+                $element.on("allanimationend ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(e){
+                    animationCount = 0;
+                    utility.redraw($element);
+                });
             },
 
             /** Forces browser to redraw elements */
@@ -277,8 +282,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         /** Handles the popstate event, like when the user hits 'back' */
         onPopState = function ( e ) {
             if(e.state !== null) {
-                var url  = window.location.href,
-                    page = $('#' + e.state.id).data('smoothState');
+                var url     = window.location.href,
+                    $page   = $('#' + e.state.id),
+                    page    = $page.data('smoothState');
+                
                 if(page.href !== url && !utility.isHash(url)) {
                     page.load(url, true);
                 }
@@ -313,28 +320,51 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     var
                         /** Used to check if the onProgress function has been run */
                         hasRunCallback  = false,
+
+                        callbBackEnded  = false,
                         
                         /** List of responses for the states of the page request */
                         responses       = {
 
                             /** Page is ready, update the content */
                             loaded: function() {
-                                updateContent(url);
+                                var eventName = hasRunCallback ? "ss.onProgressEnd" : "ss.onStartEnd";
+
+                                if(!callbBackEnded || !hasRunCallback) {
+                                    $container.one(eventName, function(){
+                                        updateContent(url);
+                                    });
+                                } else if(callbBackEnded) {
+                                    updateContent(url);
+                                }
+
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
                                 }
+
                                 $container.data('smoothState').href = url;
                             },
 
                             /** Loading, wait 10 ms and check again */
                             fetching: function() {
+                                
+                                if(!hasRunCallback) {
+                                    
+                                    hasRunCallback = true;
+                                    
+                                    // Run the onProgress callback and set trigger
+                                    $container.one("ss.onStartEnd", function(){
+                                        options.onProgress.render(url, $container, null);
+                                        
+                                        setTimeout(function(){
+                                            $container.trigger("ss.onProgressEnd");
+                                            callbBackEnded = true;
+                                        }, options.onStart.duration);
+                                    
+                                    });
+                                }
+                                
                                 setTimeout(function () {
-                                    if(!hasRunCallback) {
-                                        utility.triggerCallback($container, function(){
-                                            options.onProgress(url, $container, null);
-                                        });
-                                        hasRunCallback = true;
-                                    }
                                     responses[cache[url].status]();
                                 }, 10);
                             },
@@ -348,9 +378,14 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     if (!cache.hasOwnProperty(url)) {
                         fetch(url);
                     }
+                    
+                    // Run the onStart callback and set trigger
+                    options.onStart.render(url, $container, null);
+                    setTimeout(function(){
+                        $container.trigger("ss.onStartEnd");
+                    }, options.onStart.duration);
 
-                    options.onStart(url, $container, null);
-
+                    // Start checking for the status of content
                     responses[cache[url].status]();
 
                 },
@@ -362,9 +397,18 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                         $content    = utility.getContentById(containerId, cache[url].html);
 
                     if($content) {
-                        utility.triggerCallback($container, function(){
-                            options.onEnd(url, $container, $content);
+                        // Call the onEnd callback and set trigger
+                        
+                        options.onEnd.render(url, $container, $content);
+
+                        $container.one("ss.onEndEnd", function(){
+                            options.onAfter(url, $container, $content);
                         });
+
+                        setTimeout(function(){
+                            $container.trigger("ss.onEndEnd");
+                        }, options.onEnd.duration);
+
                     } else if (!$content && options.development && consl) {
                         // Throw warning to help debug in development mode
                         consl.warn("No element with an id of " + containerId + "' in response from " + url + " in " + object);
@@ -397,7 +441,6 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                         cache[url].status = "error";
                     });
                 },
-
                 /**
                  * Binds to the hover event of a link, used for prefetching content
                  *
@@ -405,10 +448,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                  * 
                  */
                 hoverAnchor = function (event) {
-                    event.stopPropagation();
                     var $anchor = $(event.currentTarget),
                         url     = $anchor.prop("href");
                     if (utility.shouldLoad($anchor, options.blacklist)) {
+                        event.stopPropagation();
                         fetch(url);
                     }
                 },
@@ -421,14 +464,13 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                  * 
                  */
                 clickAnchor = function (event) {
-                    // stopPropagation so that event doesn't fire on parent containers.
-                    event.stopPropagation();
-
                     var $anchor     = $(event.currentTarget),
                         url         = $anchor.prop("href"),
                         $container  = $(event.delegateTarget);
 
                     if (utility.shouldLoad($anchor, options.blacklist)) {
+                        // stopPropagation so that event doesn't fire on parent containers.
+                        event.stopPropagation();
                         event.preventDefault();
                         load(url);
                     }
@@ -443,22 +485,26 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                  */
                 bindEventHandlers = function ($element) {
                     //@todo: Handle form submissions
-                    $element.on("click", "a", clickAnchor);
+                    $element.on("click", options.anchors, clickAnchor);
+
                     if (options.prefetch) {
-                        $element.on("mouseover touchstart", "a", hoverAnchor);
+                        $element.on("mouseover touchstart", options.anchors, hoverAnchor);
                     }
+
                 },
 
                 /** Used to restart css animations with a class */
-                toggleAnimationClass = function (string) {
-                    var classes = $container.addClass(string).prop('class');
+                toggleAnimationClass = function (classname) {
+                    var classes = $container.addClass(classname).prop('class');
+                    
                     $container.removeClass(classes);
-                    setTimeout(function(){
-                        $container.addClass(classes);
-                        utility.triggerCallback($container, function(){
-                            $container.removeClass(string);
-                        });
-                    }, 0);
+                    $container[0].offsetWidth = $container[0].offsetWidth;
+                    $container.addClass(classes);
+                    
+                    $container.one("ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(){
+                        $container.removeClass(classname);
+                    });
+                    
                 };
 
             /** Override defaults with options passed in */
@@ -473,10 +519,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             utility.storePageIn(cache, currentHref, document.documentElement.outerHTML);
 
             /** Bind all of the event handlers on the container, not anchors */
-            bindEventHandlers($container);
-
-            /** Set to fire our custom event when all animations are complete */
             utility.triggerAllAnimationEndEvent($container);
+
+            /** Bind all of the event handlers on the container, not anchors */
+            bindEventHandlers($container);
 
             /** Public methods */
             return {
@@ -518,11 +564,14 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         content  = $('#main').smoothState({
             prefetch: true,
             pageCacheSize: 4,
-            onStart : function (url, $container, $content) {
-                content.toggleAnimationClass('is-exiting');
-                $body.animate({
-                    'scrollTop': 0
-                });
+            onStart: {
+                duration: 250,
+                render: function (url, $container) {
+                    content.toggleAnimationClass('is-exiting');
+                    $body.animate({
+                        scrollTop: 0
+                    });
+                }
             }
         }).data('smoothState');
 })(jQuery);

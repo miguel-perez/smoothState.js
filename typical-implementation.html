@@ -81,7 +81,7 @@
  * Don't forget to add vendor prefixes!
  */</span>
 <span class="nc">.m-scene</span> <span class="nc">.scene_element</span> <span class="p">{</span>
-  <span class="nl">animation-duration</span><span class="p">:</span> <span class="m">0.5s</span><span class="p">;</span>
+  <span class="nl">animation-duration</span><span class="p">:</span> <span class="m">0.25s</span><span class="p">;</span>
   <span class="nl">transition-timing-function</span><span class="p">:</span> <span class="n">ease-in</span><span class="p">;</span>
   <span class="nl">animation-fill-mode</span><span class="p">:</span> <span class="nb">both</span><span class="p">;</span>
 <span class="p">}</span>
@@ -110,14 +110,17 @@
   <span class="kd">var</span> <span class="nx">$body</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'html, body'</span><span class="p">),</span>
       <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#main'</span><span class="p">).</span><span class="nx">smoothState</span><span class="p">({</span>
         <span class="c1">// Runs when a link has been activated</span>
-        <span class="na">onStart</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">$container</span><span class="p">)</span> <span class="p">{</span>
-          <span class="c1">// toggleAnimationClass() is a public method</span>
-          <span class="c1">// for restarting css animations with a class</span>
-          <span class="nx">content</span><span class="p">.</span><span class="nx">toggleAnimationClass</span><span class="p">(</span><span class="s1">'is-exiting'</span><span class="p">);</span>
-          <span class="c1">// Scroll user to the top</span>
-          <span class="nx">$body</span><span class="p">.</span><span class="nx">animate</span><span class="p">({</span>
-            <span class="s1">'scrollTop'</span><span class="p">:</span> <span class="mi">0</span>
-          <span class="p">});</span>
+        <span class="na">onStart</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">duration</span><span class="p">:</span> <span class="mi">250</span><span class="p">,</span> <span class="c1">// Duration of our animation</span>
+          <span class="na">render</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">$container</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// toggleAnimationClass() is a public method</span>
+            <span class="c1">// for restarting css animations with a class</span>
+            <span class="nx">content</span><span class="p">.</span><span class="nx">toggleAnimationClass</span><span class="p">(</span><span class="s1">'is-exiting'</span><span class="p">);</span>
+            <span class="c1">// Scroll user to the top</span>
+            <span class="nx">$body</span><span class="p">.</span><span class="nx">animate</span><span class="p">({</span>
+              <span class="na">scrollTop</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">});</span>
+          <span class="p">}</span>
         <span class="p">}</span>
       <span class="p">}).</span><span class="nx">data</span><span class="p">(</span><span class="s1">'smoothState'</span><span class="p">);</span>
       <span class="c1">//.data('smoothState') makes public methods available</span>
