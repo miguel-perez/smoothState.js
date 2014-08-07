@@ -1,5 +1,7 @@
 jquery.smoothState.js
 ===============
+
+
 * [About](#about)
 * [Demo](#demo)
 * [Options](#options)
@@ -16,9 +18,9 @@ jquery.smoothState.js
 * [Methods and properties](#methods-and-properties)
 	* [href](#href)
 	* [cache](#cache)
-	* [load](#load)
-	* [fetch](#fetch)
-	* [toggleAnimationClass](#toggleAnimationClass)
+	* [load](#load-url)
+	* [fetch](#fetch-url)
+	* [toggleAnimationClass](#toggleAnimationClass-classname)
 * [Show your work!](#show-your-work)
 * [Need help?](#need-help)
 
@@ -49,7 +51,7 @@ There is a 200ms to 300ms delay between the time that a user hovers over a link 
 This technique will dramatically increase the speed of your website.
 
 ### `blacklist`
-A string that is used as a jQuery selector to ignore certain links. By default smoothState will ignore any links that match `".no-smoothstate, [target]"`. This is useful when defining certain links you always want a page referch for. Such as [deep web links](http://en.wikipedia.org/wiki/Deep_Web), or links with custom javascript functionality around them.
+A string that is used as a jQuery selector to ignore certain links. By default smoothState will ignore any links that match `".no-smoothstate, [target]"`.
 
 ### `development`
 A boolean, default being `false`, that will tell smoothState to output useful debug info when something goes wrong in console instead of trying to abort and reload the page. 
@@ -66,34 +68,45 @@ A function that defines any alterations needed on the URL that is used to reques
 Ran when a link has been activated, a "click". Default:
 
 ```Javanscript
-onStart : function (url, $container) {
-    $body.scrollTop(0);
+onStart : {
+    duration: 0, // Duration of the animations, if any.
+    render: function (url, $container) {
+        $body.scrollTop(0);
+    }
 },
 ```
 
 ### `onProgress`
 Ran if the page request is still pending and onStart has finished animating.Default:
 ```Javanscript
-onProgress : function (url, $container) {
-    $body.css('cursor', 'wait');
-    $body.find('a').css('cursor', 'wait');
+onProgress : {
+    duration: 0, // Duration of the animations, if any.
+    render: function (url, $container) {
+        $body.css('cursor', 'wait');
+        $body.find('a').css('cursor', 'wait');
+    }
 },
 ```
 
 ### `onEnd`
 Ran when requested content is ready to be injected into the page
 ```Javanscript
-onEnd : function (url, $container, $content) {
-    $body.css('cursor', 'auto');
-    $body.find('a').css('cursor', 'auto');
-    $container.html($content);
+onEnd : {
+    duration: 0, // Duration of the animations, if any.
+    render: function (url, $container, $content) {
+        $body.css('cursor', 'auto');
+        $body.find('a').css('cursor', 'auto');
+        $container.html($content);
+    }
 },
 ```
 
 ### `onAfter`
 Ran when content has been injected and all animations are complete
 ```Javanscript
-onAfter : function (url, $container, $content) {}
+onAfter : function(url, $container, $content) {
+
+}
 ```
 
 ## Methods and properties
