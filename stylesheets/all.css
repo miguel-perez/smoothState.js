@@ -3234,138 +3234,138 @@ code {
   margin: 16px 0; }
 
 @media screen and (min-width: 768px) {
-  /* line 68, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 69, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-type-display-1 {
     font-size: 4em; } }
-/* line 73, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 74, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-type-sub-heading-1 {
   font-size: 1.13em;
   font-weight: 400;
   margin: 16px 0; }
 
-/* line 79, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 80, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-type-heading-1 {
   font-size: 1.5em;
   font-weight: 400;
   margin: 16px 0; }
 
-/* line 89, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 90, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-code {
   display: block;
   margin: 1.5em 0;
   padding: 1em;
   border-bottom: 1px solid #cfd8dc; }
 
-/* line 100, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 101, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-header {
   position: relative;
   padding: 4.25em 4.25em 2em;
   max-width: 40em; }
-  /* line 105, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 106, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-header .header_actions {
     margin: 1.25em 0 0; }
-  /* line 109, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 110, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-header .header_link {
     margin-right: 1.25em;
     margin-top: 4px; }
 
 @media screen and (min-width: 1024px) {
-  /* line 116, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 117, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-header {
     padding: 8.5em 8.5em 4.25em; } }
-/* line 125, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 126, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-button {
   display: inline-block;
   padding: 0.5em;
   border: 1px solid #eceff1;
   overflow: hidden;
   transition: background-color 0.15s ease-in; }
-  /* line 132, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 133, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-button .txt {
     color: #eceff1;
     transition: color 0.15s ease-in; }
-  /* line 137, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 138, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-button:hover {
     background-color: #eceff1; }
-    /* line 140, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    /* line 141, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
     .m-button:hover .ico {
       fill: #e91e63; }
-    /* line 143, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    /* line 144, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
     .m-button:hover .txt {
       color: #e91e63; }
 
-/* line 154, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 155, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-page {
   background-color: #eceff1;
   color: #263238; }
 
-/* line 164, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 165, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-segment {
   padding: 1em 4.25em;
   border-bottom: 1px solid #cfd8dc; }
-  /* line 168, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 169, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-segment .segment_content {
     margin: 16px 0;
     max-width: 40em; }
-  /* line 173, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 174, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-segment .segment_description {
     margin: 16px 0; }
 
 @media screen and (min-width: 1024px) {
-  /* line 179, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 180, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-segment {
     padding: 2.25em 8.5em; } }
-/* line 189, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 190, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-aside-segment {
   display: none;
   padding: 2.25em;
   border-bottom: 1px solid #f8bbd0; }
-  /* line 193, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 194, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-aside-segment .segment_description {
     margin: 16px 0; }
 
-/* line 204, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 205, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-landing-layout .m-type-sub-heading-1 {
   color: #f8bbd0; }
 
-/* line 215, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 216, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-detail-layout .m-aside .aside_title {
   margin: 16px;
   font-weight: normal; }
 
 @media screen and (min-width: 768px) {
-  /* line 223, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  /* line 224, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
   .m-detail-layout {
     padding-left: 270px; }
-    /* line 225, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+    /* line 226, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
     .m-detail-layout .m-aside {
       position: absolute;
       left: 0;
       width: 270px; }
-      /* line 229, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+      /* line 230, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
       .m-detail-layout .m-aside .aside_title {
         position: fixed; }
-      /* line 232, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+      /* line 233, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
       .m-detail-layout .m-aside .m-button {
         display: block; } }
-/* line 246, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 247, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-right-panel .m-header,
 .m-right-panel .m-segment .segment_content {
   max-width: 43em; }
-/* line 250, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 251, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-right-panel .right-panel_top {
   border-bottom: 1px solid #cfd8dc; }
 
-/* line 259, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 260, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-breadcrumb .breadcrumb_link {
   position: relative;
   top: -2px;
   font-size: 0.75em; }
-/* line 264, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 265, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-breadcrumb .m-type-display-1 {
   margin-top: 0; }
 
-/* line 272, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+/* line 273, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-footer {
   background-color: #cfd8dc; }
 /*! normalize.css v2.0.1 | MIT License | git.io/normalize */

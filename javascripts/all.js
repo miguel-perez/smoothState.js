@@ -24,12 +24,6 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         /** Used in development mode to console out useful warnings */
         consl       = (window.console || false),
         
-        /** Used to match tags that get removed when trying to do $('html') */
-        matchTag    = /<(\/?)(html|head|body|title|base|meta)(\s+[^>]*)?>/ig,
-        
-        /** Used to protect tags that get removed when trying to do $('html') */
-        prefix      = 'ss' + Math.round(Math.random() * 100000),
-        
         /** Plugin default options */
         defaults    = {
 
@@ -137,8 +131,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
              */
             htmlDoc: function (html) {
                 var parent,
-                    elems = $(),
-                    htmlParsed = html.replace(matchTag, function(tag, slash, name, attrs) {
+                    elems       = $(),
+                    matchTag    = /<(\/?)(html|head|body|title|base|meta)(\s+[^>]*)?>/ig,
+                    prefix      = 'ss' + Math.round(Math.random() * 100000),
+                    htmlParsed  = html.replace(matchTag, function(tag, slash, name, attrs) {
                         var obj = {};
                         if (!slash) {
                             elems = elems.add('<' + name + '/>');
@@ -498,9 +494,11 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     var classes = $container.addClass(classname).prop('class');
                     
                     $container.removeClass(classes);
-                    $container[0].offsetWidth = $container[0].offsetWidth;
-                    $container.addClass(classes);
                     
+                    setTimeout(function(){
+                        $container.addClass(classes);
+                    },0);
+
                     $container.one("ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(){
                         $container.removeClass(classname);
                     });
