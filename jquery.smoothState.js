@@ -330,6 +330,7 @@
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
+                                    document.title = cache[url].title;
                                 }
 
                                 $container.data('smoothState').href = url;
