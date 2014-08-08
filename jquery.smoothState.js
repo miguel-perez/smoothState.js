@@ -488,9 +488,11 @@
                     var classes = $container.addClass(classname).prop('class');
                     
                     $container.removeClass(classes);
-                    $container[0].offsetWidth = $container[0].offsetWidth;
-                    $container.addClass(classes);
                     
+                    setTimeout(function(){
+                        $container.addClass(classes);
+                    },0);
+
                     $container.one("ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(){
                         $container.removeClass(classname);
                     });
