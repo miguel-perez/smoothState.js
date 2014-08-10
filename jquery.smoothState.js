@@ -295,6 +295,20 @@
                 currentHref = window.location.href,
 
                 /**
+                 * are we now prefetching some URL?
+                 *
+                 * @type {boolean}
+                 */
+                 isPrefetching = false,
+
+                /**
+                 * URL that we stored for prefetch in queue
+                 *
+                 * @type {string}
+                 */
+                 queuedPrefetchUrl = false,
+
+                /**
                  * Loads the contents of a url into our container 
                  *
                  * @param   {string}    url
@@ -412,10 +426,11 @@
                 /**
                  * Fetches the contents of a url and stores it in the 'cache' varible
                  * @param   {string}    url
+                 * @param   {function}  finishedCallback
                  * @todo    Rethink cache structure
-                 * 
+                 *
                  */
-                fetch = function (url) {
+                fetch = function (url, finishedCallback) {
                     cache[url] = { status: "fetching" };
                     var requestUrl  = options.alterRequestUrl(url) || url,
                         request     = $.ajax(requestUrl);
@@ -425,25 +440,43 @@
                         // Clear cache varible if it's getting too big
                         cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
                         utility.storePageIn(cache, url, html);
+
+                        if(finishedCallback) {
+                            finishedCallback();
+                        }
                     });
 
                     // Mark as error
                     request.error(function () {
                         cache[url].status = "error";
+
+                        if(finishedCallback) {
+                            finishedCallback();
+                        }
                     });
                 },
                 /**
                  * Binds to the hover event of a link, used for prefetching content
                  *
                  * @param   {object}    event
-                 * 
+                 *
                  */
                 hoverAnchor = function (event) {
                     var $anchor = $(event.currentTarget),
                         url     = $anchor.prop("href");
                     if (utility.shouldLoad($anchor, options.blacklist)) {
                         event.stopPropagation();
-                        fetch(url);
+
+                        // prevent too much prefetching when user move mouse fast over links
+                        if(isPrefetching) {
+                            queuedPrefetchUrl = url;
+                        } else {
+                            isPrefetching = true;
+
+                            fetch(url, function(){
+                                isPrefetching = false;
+                            });
+                        }
                     }
                 },
 
@@ -452,7 +485,7 @@
                  *
                  * @param   {object}    event
                  * @todo    Allow loading from a template in addition to an ajax request
-                 * 
+                 *
                  */
                 clickAnchor = function (event) {
                     var $anchor     = $(event.currentTarget),
