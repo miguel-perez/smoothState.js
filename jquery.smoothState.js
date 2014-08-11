@@ -344,7 +344,6 @@
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
-                                    document.title = cache[url].title;
                                 }
 
                                 $container.data('smoothState').href = url;
@@ -440,6 +439,7 @@
                         // Clear cache varible if it's getting too big
                         cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
                         utility.storePageIn(cache, url, html);
+                        $container.data('smoothState').cache = cache;
 
                         if(finishedCallback) {
                             finishedCallback();
@@ -485,7 +485,7 @@
                  *
                  * @param   {object}    event
                  * @todo    Allow loading from a template in addition to an ajax request
-                 *
+                 * 
                  */
                 clickAnchor = function (event) {
                     var $anchor     = $(event.currentTarget),
