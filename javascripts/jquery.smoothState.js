@@ -331,6 +331,7 @@
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
+                                    document.title = cache[url].title;
                                 }
 
                                 $container.data('smoothState').href = url;
@@ -416,6 +417,10 @@
                  * 
                  */
                 fetch = function (url) {
+
+                    // Don't fetch we have the content already
+                    if(cache.hasOwnProperty(url)) return;
+
                     cache[url] = { status: "fetching" };
                     var requestUrl  = options.alterRequestUrl(url) || url,
                         request     = $.ajax(requestUrl);

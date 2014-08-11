@@ -345,6 +345,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
+                                    document.title = cache[url].title;
                                 }
 
                                 $container.data('smoothState').href = url;
@@ -430,6 +431,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                  * 
                  */
                 fetch = function (url) {
+
+                    // Don't fetch we have the content already
+                    if(cache.hasOwnProperty(url)) return;
+
                     cache[url] = { status: "fetching" };
                     var requestUrl  = options.alterRequestUrl(url) || url,
                         request     = $.ajax(requestUrl);
@@ -571,7 +576,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
     var $body    = $('html, body'),
         content  = $('#main').smoothState({
             prefetch: true,
-            pageCacheSize: 2,
+            pageCacheSize: 4,
             onStart: {
                 duration: 250,
                 render: function (url, $container) {
