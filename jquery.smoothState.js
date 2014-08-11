@@ -344,6 +344,7 @@
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
+                                    document.title = cache[url].title;
                                 }
 
                                 $container.data('smoothState').href = url;
@@ -427,9 +428,12 @@
                  * @param   {string}    url
                  * @param   {function=} [finishedCallback]
                  * @todo    Rethink cache structure
-                 *
+                 * 
                  */
                 fetch = function (url, finishedCallback) {
+
+                    // Don't fetch we have the content already
+                    if(cache.hasOwnProperty(url)) return;
 
                     if(!finishedCallback) {
                         finishedCallback = null;
@@ -464,7 +468,7 @@
                  * Binds to the hover event of a link, used for prefetching content
                  *
                  * @param   {object}    event
-                 *
+                 * 
                  */
                 hoverAnchor = function (event) {
                     var $anchor = $(event.currentTarget),
