@@ -475,6 +475,12 @@
 
                             fetch(url, function(){
                                 isPrefetching = false;
+
+                                // fetch last queued URL
+                                if(queuedPrefetchUrl !== false) {
+                                    fetch(queuedPrefetchUrl);
+                                    queuedPrefetchUrl = false;
+                                }
                             });
                         }
                     }
