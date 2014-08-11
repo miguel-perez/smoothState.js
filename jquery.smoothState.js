@@ -432,11 +432,17 @@
                  */
                 fetch = function (url, finishedCallback) {
 
-                    // Don't fetch we have the content already
-                    if(cache.hasOwnProperty(url)) return;
-
                     if(!finishedCallback) {
                         finishedCallback = null;
+                    }
+
+                    // Don't fetch we have the content already
+                    if(cache.hasOwnProperty(url)) {
+                        if(finishedCallback) {
+                            finishedCallback();
+                        }
+
+                        return;
                     }
 
                     cache[url] = { status: "fetching" };
@@ -465,6 +471,31 @@
                     });
                 },
                 /**
+                 * Prefetch URL
+                 * @param   {string}    url
+                 *
+                 */
+                prefetch = function (url) {
+                    // prevent too much prefetching when user move mouse fast over links
+                    if(isPrefetching) {
+                        queuedPrefetchUrl = url;
+                    } else {
+                        isPrefetching = true;
+
+                        fetch(url, function(){
+                            isPrefetching = false;
+
+                            // fetch last queued URL
+                            if(queuedPrefetchUrl) {
+                                fetch(queuedPrefetchUrl, function() {
+                                    queuedPrefetchUrl = null;
+                                });
+                            }
+                        });
+                    }
+                },
+
+                /**
                  * Binds to the hover event of a link, used for prefetching content
                  *
                  * @param   {object}    event
@@ -477,21 +508,7 @@
                         event.stopPropagation();
 
                         // prevent too much prefetching when user move mouse fast over links
-                        if(isPrefetching) {
-                            queuedPrefetchUrl = url;
-                        } else {
-                            isPrefetching = true;
-
-                            fetch(url, function(){
-                                isPrefetching = false;
-
-                                // fetch last queued URL
-                                if(queuedPrefetchUrl) {
-                                    fetch(queuedPrefetchUrl);
-                                    queuedPrefetchUrl = null;
-                                }
-                            });
-                        }
+                        prefetch(url);
                     }
                 },
 
