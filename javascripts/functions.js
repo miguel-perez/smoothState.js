@@ -3,7 +3,7 @@
     var $body    = $('html, body'),
         content  = $('#main').smoothState({
             prefetch: true,
-            pageCacheSize: 4,
+            pageCacheSize: 2,
             onStart: {
                 duration: 250,
                 render: function (url, $container) {

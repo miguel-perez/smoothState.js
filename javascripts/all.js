@@ -439,6 +439,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                         // Clear cache varible if it's getting too big
                         cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
                         utility.storePageIn(cache, url, html);
+                        $container.data('smoothState').cache = cache;
                     });
 
                     // Mark as error
@@ -570,7 +571,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
     var $body    = $('html, body'),
         content  = $('#main').smoothState({
             prefetch: true,
-            pageCacheSize: 4,
+            pageCacheSize: 2,
             onStart: {
                 duration: 250,
                 render: function (url, $container) {

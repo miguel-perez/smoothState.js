@@ -425,6 +425,7 @@
                         // Clear cache varible if it's getting too big
                         cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
                         utility.storePageIn(cache, url, html);
+                        $container.data('smoothState').cache = cache;
                     });
 
                     // Mark as error
