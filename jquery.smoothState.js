@@ -385,14 +385,13 @@
                     // If the content has been requested and is done:
                     var containerId = '#' + $container.prop('id'),
                         $content    = utility.getContentById(containerId, cache[url].html);
-
                     if($content) {
                         // Call the onEnd callback and set trigger
                         
                         options.onEnd.render(url, $container, $content);
 
                         $container.one("ss.onEndEnd", function(){
-                            options.onAfter(url, $container, $content);
+                            options.onAfter.render(url, $container, $content);
                         });
 
                         setTimeout(function(){
