@@ -304,9 +304,9 @@
                 /**
                  * URL that we stored for prefetch in queue
                  *
-                 * @type {string}
+                 * @type {string} queuedPrefetchUrl
                  */
-                 queuedPrefetchUrl = false,
+                 queuedPrefetchUrl = null,
 
                 /**
                  * Loads the contents of a url into our container 
@@ -425,11 +425,16 @@
                 /**
                  * Fetches the contents of a url and stores it in the 'cache' varible
                  * @param   {string}    url
-                 * @param   {function}  finishedCallback
+                 * @param   {function=} [finishedCallback]
                  * @todo    Rethink cache structure
                  *
                  */
                 fetch = function (url, finishedCallback) {
+
+                    if(!finishedCallback) {
+                        finishedCallback = null;
+                    }
+
                     cache[url] = { status: "fetching" };
                     var requestUrl  = options.alterRequestUrl(url) || url,
                         request     = $.ajax(requestUrl);
@@ -477,9 +482,9 @@
                                 isPrefetching = false;
 
                                 // fetch last queued URL
-                                if(queuedPrefetchUrl !== false) {
+                                if(queuedPrefetchUrl) {
                                     fetch(queuedPrefetchUrl);
-                                    queuedPrefetchUrl = false;
+                                    queuedPrefetchUrl = null;
                                 }
                             });
                         }
