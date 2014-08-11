@@ -368,8 +368,16 @@
                                     
                                     });
                                 }
-                                
+
                                 setTimeout(function () {
+
+                                    /**
+                                     * * @todo    create cache set/get wrappers, to eliminate errors requesting cleared cache
+                                     */
+                                    if(!cache[url]) {
+                                        cache[url] = { status: "fetching" };
+                                    }
+
                                     responses[cache[url].status]();
                                 }, 10);
                             },
