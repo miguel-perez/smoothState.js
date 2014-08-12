@@ -295,6 +295,20 @@
                 currentHref = window.location.href,
 
                 /**
+                 * are we now prefetching some URL?
+                 *
+                 * @type {boolean}
+                 */
+                 isPrefetching = false,
+
+                /**
+                 * URL that we stored for prefetch in queue
+                 *
+                 * @type {string} queuedPrefetchUrl
+                 */
+                 queuedPrefetchUrl = null,
+
+                /**
                  * Loads the contents of a url into our container 
                  *
                  * @param   {string}    url
@@ -354,8 +368,16 @@
                                     
                                     });
                                 }
-                                
+
                                 setTimeout(function () {
+
+                                    /**
+                                     * * @todo    create cache set/get wrappers, to eliminate errors requesting cleared cache
+                                     */
+                                    if(!cache[url]) {
+                                        cache[url] = { status: "fetching" };
+                                    }
+
                                     responses[cache[url].status]();
                                 }, 10);
                             },
@@ -412,13 +434,24 @@
                 /**
                  * Fetches the contents of a url and stores it in the 'cache' varible
                  * @param   {string}    url
+                 * @param   {function} [finishedCallback]
                  * @todo    Rethink cache structure
                  * 
                  */
-                fetch = function (url) {
+                fetch = function (url, finishedCallback) {
+
+                    if(!finishedCallback) {
+                        finishedCallback = null;
+                    }
 
                     // Don't fetch we have the content already
-                    if(cache.hasOwnProperty(url)) return;
+                    if(cache.hasOwnProperty(url)) {
+                        if(finishedCallback) {
+                            finishedCallback();
+                        }
+
+                        return;
+                    }
 
                     cache[url] = { status: "fetching" };
                     var requestUrl  = options.alterRequestUrl(url) || url,
@@ -430,13 +463,48 @@
                         cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
                         utility.storePageIn(cache, url, html);
                         $container.data('smoothState').cache = cache;
+
+                        if(finishedCallback) {
+                            finishedCallback();
+                        }
                     });
 
                     // Mark as error
                     request.error(function () {
                         cache[url].status = "error";
+
+                        if(finishedCallback) {
+                            finishedCallback();
+                        }
                     });
                 },
+                /**
+                 * Prefetch the contents of URL and prevent new prefetch when function is already prefetching.
+                 * When prefetch is not busy, run prefetch of last blocked prefetch.
+                 *
+                 * @param   {string}    url
+                 *
+                 */
+                prefetchOneAtTime = function (url) {
+                    // prevent too much prefetching when user move mouse fast over links
+                    if(isPrefetching) {
+                        queuedPrefetchUrl = url;
+                    } else {
+                        isPrefetching = true;
+
+                        fetch(url, function(){
+                            isPrefetching = false;
+
+                            // fetch last queued URL
+                            if(queuedPrefetchUrl) {
+                                fetch(queuedPrefetchUrl, function() {
+                                    queuedPrefetchUrl = null;
+                                });
+                            }
+                        });
+                    }
+                },
+
                 /**
                  * Binds to the hover event of a link, used for prefetching content
                  *
@@ -448,7 +516,9 @@
                         url     = $anchor.prop("href");
                     if (utility.shouldLoad($anchor, options.blacklist)) {
                         event.stopPropagation();
-                        fetch(url);
+
+                        // prevent too much prefetching when user move mouse fast over links
+                        prefetchOneAtTime(url);
                     }
                 },
 
