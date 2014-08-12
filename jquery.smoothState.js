@@ -330,10 +330,7 @@
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
-                                    document.title = cache[url].title;
                                 }
-
-                                $container.data('smoothState').href = url;
                             },
 
                             /** Loading, wait 10 ms and check again */
@@ -387,9 +384,12 @@
                     var containerId = '#' + $container.prop('id'),
                         $content    = utility.getContentById(containerId, cache[url].html);
 
+
                     if($content) {
-                        // Call the onEnd callback and set trigger
+                        document.title = cache[url].title;
+                        $container.data('smoothState').href = url;
                         
+                        // Call the onEnd callback and set trigger
                         options.onEnd.render(url, $container, $content);
 
                         $container.one("ss.onEndEnd", function(){
