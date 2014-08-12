@@ -13,7 +13,7 @@ jquery.smoothState.js
 	* [onStart](#onstart)
 	* [onProgress](#onprogress)
 	* [onEnd](#onend)
-	* [onAfter](#onafter)
+	* [callback](#callback)
 * [Methods and properties](#methods-and-properties)
 	* [href](#href)
 	* [cache](#cache)
@@ -96,10 +96,10 @@ onEnd : {
 },
 ```
 
-### `onAfter`
-Ran when content has been injected and all animations are complete
+### `callback`
+Ran after the new content has been injected into the page
 ```Javanscript
-onAfter : function(url, $container, $content) {
+callback : function(url, $container, $content) {
 
 }
 ```
