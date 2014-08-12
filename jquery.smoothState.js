@@ -434,7 +434,7 @@
                 /**
                  * Fetches the contents of a url and stores it in the 'cache' varible
                  * @param   {string}    url
-                 * @param   {function=} [finishedCallback]
+                 * @param   {function} [finishedCallback]
                  * @todo    Rethink cache structure
                  * 
                  */
@@ -479,11 +479,13 @@
                     });
                 },
                 /**
-                 * Prefetch URL
+                 * Prefetch the contents of URL and prevent new prefetch when function is already prefetching.
+                 * When prefetch is not busy, run prefetch of last blocked prefetch.
+                 *
                  * @param   {string}    url
                  *
                  */
-                prefetch = function (url) {
+                prefetchOneAtTime = function (url) {
                     // prevent too much prefetching when user move mouse fast over links
                     if(isPrefetching) {
                         queuedPrefetchUrl = url;
@@ -516,7 +518,7 @@
                         event.stopPropagation();
 
                         // prevent too much prefetching when user move mouse fast over links
-                        prefetch(url);
+                        prefetchOneAtTime(url);
                     }
                 },
 
