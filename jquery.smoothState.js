@@ -69,7 +69,7 @@
             },
 
             /** Run when content has been injected and all animations are complete  */
-            onAfter : function(url, $container, $content) {
+            callback : function(url, $container, $content) {
 
             }
         },
@@ -393,7 +393,7 @@
                         options.onEnd.render(url, $container, $content);
 
                         $container.one("ss.onEndEnd", function(){
-                            options.onAfter(url, $container, $content);
+                            options.callback(url, $container, $content);
                         });
 
                         setTimeout(function(){
@@ -412,7 +412,6 @@
                 /**
                  * Fetches the contents of a url and stores it in the 'cache' varible
                  * @param   {string}    url
-                 * @todo    Rethink cache structure
                  * 
                  */
                 fetch = function (url) {
@@ -456,7 +455,6 @@
                  * Binds to the click event of a link, used to show the content
                  *
                  * @param   {object}    event
-                 * @todo    Allow loading from a template in addition to an ajax request
                  * 
                  */
                 clickAnchor = function (event) {
@@ -476,7 +474,6 @@
                  * Binds all events and inits functionality
                  *
                  * @param   {object}    event
-                 * @todo    Allow loading from a template in addition to an ajax request
                  * 
                  */
                 bindEventHandlers = function ($element) {
