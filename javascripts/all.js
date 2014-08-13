@@ -84,7 +84,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             },
 
             /** Run when content has been injected and all animations are complete  */
-            onAfter : function(url, $container, $content) {
+            callback : function(url, $container, $content) {
 
             }
         },
@@ -123,6 +123,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             /**
              * Checks to see if we should be loading this URL
              * @param   {string}    url - url being evaluated
+             * @param   {string}    blacklist - jquery selector
              * 
              */
             shouldLoad: function ($anchor, blacklist) {
@@ -214,13 +215,15 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             },
 
             /**
-             * Grabs the new container's contents from the cache
+             * Finds the inner content of an element, by an ID, from a jQuery object
              * @param   {string}    id
              * @param   {object}    $html
              * 
              */
             getContentById: function (id, $html) {
-                var updatedContainer    = $(id, $html).html(),
+                $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
+                var $insideElem         = $html.find(id),
+                    updatedContainer    = ($insideElem.length) ? $insideElem.html() : $html.filter(id).html(),
                     newContent          = (updatedContainer.length) ? $(updatedContainer) : null;
                 return newContent;
             },
@@ -229,15 +232,15 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
              * Stores html content as jquery object in given object
              * @param   {object}    object - object contents will be stored into
              * @param   {string}    url - url to be used as the prop
-             * @param   {string}    html - contents to store
+             * @param   {jquery}    html - contents to store
              * 
              */
-            storePageIn: function (object, url, html) {
-                var $htmlDoc = utility.htmlDoc(html);
+            storePageIn: function (object, url, $html) {
+                $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
                 object[url] = { // Content is indexed by the url
                     status: "loaded",
-                    title: $htmlDoc.find("title").text(), // Stores the title of the page
-                    html: $htmlDoc // Stores the contents of the page
+                    title: $html.find("title").text(), // Stores the title of the page
+                    html: $html // Stores the contents of the page
                 };
                 return object;
             },
@@ -245,9 +248,13 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             /**
              * Triggers an "allanimationend" event when all animations are complete
              * @param   {object}    $element - jQuery object that should trigger event
+             * @param   {string}    resetOn - which other events to trigger allanimationend on
              * 
              */
-             triggerAllAnimationEndEvent: function ($element) {
+             triggerAllAnimationEndEvent: function ($element, resetOn) {
+
+                resetOn = " " + resetOn || "";
+
                 var animationCount      = 0,
                     animationstart      = "animationstart webkitAnimationStart oanimationstart MSAnimationStart",
                     animationend        = "animationend webkitAnimationEnd oanimationend MSAnimationEnd",
@@ -270,7 +277,8 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
 
                 $element.on(animationstart, onAnimationStart);
                 $element.on(animationend, onAnimationEnd);
-                $element.on("allanimationend ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(e){
+
+                $element.on("allanimationend" + resetOn, function(e){
                     animationCount = 0;
                     utility.redraw($element);
                 });
@@ -345,10 +353,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
 
                                 if(!isPopped) {
                                     history.pushState({ id: $container.prop('id') }, cache[url].title, url);
-                                    document.title = cache[url].title;
                                 }
-
-                                $container.data('smoothState').href = url;
                             },
 
                             /** Loading, wait 10 ms and check again */
@@ -402,13 +407,16 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     var containerId = '#' + $container.prop('id'),
                         $content    = utility.getContentById(containerId, cache[url].html);
 
+
                     if($content) {
-                        // Call the onEnd callback and set trigger
+                        document.title = cache[url].title;
+                        $container.data('smoothState').href = url;
                         
+                        // Call the onEnd callback and set trigger
                         options.onEnd.render(url, $container, $content);
 
                         $container.one("ss.onEndEnd", function(){
-                            options.onAfter(url, $container, $content);
+                            options.callback(url, $container, $content);
                         });
 
                         setTimeout(function(){
@@ -427,7 +435,6 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                 /**
                  * Fetches the contents of a url and stores it in the 'cache' varible
                  * @param   {string}    url
-                 * @todo    Rethink cache structure
                  * 
                  */
                 fetch = function (url) {
@@ -471,7 +478,6 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                  * Binds to the click event of a link, used to show the content
                  *
                  * @param   {object}    event
-                 * @todo    Allow loading from a template in addition to an ajax request
                  * 
                  */
                 clickAnchor = function (event) {
@@ -491,7 +497,6 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                  * Binds all events and inits functionality
                  *
                  * @param   {object}    event
-                 * @todo    Allow loading from a template in addition to an ajax request
                  * 
                  */
                 bindEventHandlers = function ($element) {
@@ -532,7 +537,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             utility.storePageIn(cache, currentHref, document.documentElement.outerHTML);
 
             /** Bind all of the event handlers on the container, not anchors */
-            utility.triggerAllAnimationEndEvent($container);
+            utility.triggerAllAnimationEndEvent($container, "ss.onStartEnd ss.onProgressEnd ss.onEndEnd");
 
             /** Bind all of the event handlers on the container, not anchors */
             bindEventHandlers($container);
