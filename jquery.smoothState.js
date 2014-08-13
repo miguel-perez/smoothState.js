@@ -108,6 +108,7 @@
             /**
              * Checks to see if we should be loading this URL
              * @param   {string}    url - url being evaluated
+             * @param   {string}    blacklist - jquery selector
              * 
              */
             shouldLoad: function ($anchor, blacklist) {
@@ -199,13 +200,15 @@
             },
 
             /**
-             * Grabs the new container's contents from the cache
+             * Finds the inner content of an element, by an ID, from a jQuery object
              * @param   {string}    id
              * @param   {object}    $html
              * 
              */
             getContentById: function (id, $html) {
-                var updatedContainer    = $(id, $html).html(),
+                $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
+                var $insideElem         = $html.find(id),
+                    updatedContainer    = ($insideElem.length) ? $insideElem.html() : $html.filter(id).html(),
                     newContent          = (updatedContainer.length) ? $(updatedContainer) : null;
                 return newContent;
             },
@@ -214,15 +217,15 @@
              * Stores html content as jquery object in given object
              * @param   {object}    object - object contents will be stored into
              * @param   {string}    url - url to be used as the prop
-             * @param   {string}    html - contents to store
+             * @param   {jquery}    html - contents to store
              * 
              */
-            storePageIn: function (object, url, html) {
-                var $htmlDoc = utility.htmlDoc(html);
+            storePageIn: function (object, url, $html) {
+                $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
                 object[url] = { // Content is indexed by the url
                     status: "loaded",
-                    title: $htmlDoc.find("title").text(), // Stores the title of the page
-                    html: $htmlDoc // Stores the contents of the page
+                    title: $html.find("title").text(), // Stores the title of the page
+                    html: $html // Stores the contents of the page
                 };
                 return object;
             },
@@ -230,9 +233,13 @@
             /**
              * Triggers an "allanimationend" event when all animations are complete
              * @param   {object}    $element - jQuery object that should trigger event
+             * @param   {string}    resetOn - which other events to trigger allanimationend on
              * 
              */
-             triggerAllAnimationEndEvent: function ($element) {
+             triggerAllAnimationEndEvent: function ($element, resetOn) {
+
+                resetOn = " " + resetOn || "";
+
                 var animationCount      = 0,
                     animationstart      = "animationstart webkitAnimationStart oanimationstart MSAnimationStart",
                     animationend        = "animationend webkitAnimationEnd oanimationend MSAnimationEnd",
@@ -255,7 +262,8 @@
 
                 $element.on(animationstart, onAnimationStart);
                 $element.on(animationend, onAnimationEnd);
-                $element.on("allanimationend ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(e){
+
+                $element.on("allanimationend" + resetOn, function(e){
                     animationCount = 0;
                     utility.redraw($element);
                 });
@@ -514,7 +522,7 @@
             utility.storePageIn(cache, currentHref, document.documentElement.outerHTML);
 
             /** Bind all of the event handlers on the container, not anchors */
-            utility.triggerAllAnimationEndEvent($container);
+            utility.triggerAllAnimationEndEvent($container, "ss.onStartEnd ss.onProgressEnd ss.onEndEnd");
 
             /** Bind all of the event handlers on the container, not anchors */
             bindEventHandlers($container);
