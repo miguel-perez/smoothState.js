@@ -172,3 +172,15 @@ code {
 /* line 273, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
 .m-footer {
   background-color: #cfd8dc; }
+
+/* line 282, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+.m-image-grid {
+  overflow: hidden;
+  list-style: none;
+  padding-left: 0; }
+  /* line 286, /Users/mperez/Sites/smoothstate/source/stylesheets/layout.css.scss */
+  .m-image-grid .item {
+    display: block;
+    float: left;
+    width: 33%;
+    overflow: hidden; }

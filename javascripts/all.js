@@ -376,7 +376,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                                 }
                                 
                                 setTimeout(function () {
-                                    responses[cache[url].status]();
+                                    // Might of been canceled, better check!
+                                    if(cache.hasOwnProperty(url)){
+                                        responses[cache[url].status]();
+                                    }
                                 }, 10);
                             },
 
@@ -442,14 +445,16 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     // Don't fetch we have the content already
                     if(cache.hasOwnProperty(url)) return;
 
+                    cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
+                    
                     cache[url] = { status: "fetching" };
+
                     var requestUrl  = options.alterRequestUrl(url) || url,
                         request     = $.ajax(requestUrl);
 
                     // Store contents in cache variable if successful
                     request.success(function (html) {
                         // Clear cache varible if it's getting too big
-                        cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
                         utility.storePageIn(cache, url, html);
                         $container.data('smoothState').cache = cache;
                     });
