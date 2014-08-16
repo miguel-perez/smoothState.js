@@ -271,9 +271,9 @@
 
             /** Forces browser to redraw elements */
             redraw: function ($element) {
-                $element.hide(0, function() {
-                    $(this).show();
-                });
+                $element.hide();
+				$element.offsetHeight;
+				$element.show();
             }
         },
 
