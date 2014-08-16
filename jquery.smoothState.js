@@ -208,7 +208,7 @@
             getContentById: function (id, $html) {
                 $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
                 var $insideElem         = $html.find(id),
-                    updatedContainer    = ($insideElem.length) ? $insideElem.html() : $html.filter(id).html(),
+                    updatedContainer    = ($insideElem.length) ? $.trim($insideElem.html()) : $html.filter(id).html(),
                     newContent          = (updatedContainer.length) ? $(updatedContainer) : null;
                 return newContent;
             },
