@@ -286,9 +286,8 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
 
             /** Forces browser to redraw elements */
             redraw: function ($element) {
-                $element.hide(0, function() {
-                    $(this).show();
-                });
+                $element.height(0);
+                setTimeout(function(){$element.height('auto');}, 0);
             }
         },
 
