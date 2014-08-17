@@ -1,0 +1,29 @@
+{
+    "name": "smoothstate",
+    "main": "jquery.smoothState.js",
+    "version": "0.5.0",
+    "description": "A jQuery plugin to stop the jank of page loads.",
+    "keywords": [
+        "pjax",
+        "animation",
+        "turbolinks",
+        "ajax",
+        "ui",
+        "ajaxify"
+    ],
+    "author": [
+        "Miguel Angel Perez"
+    ],
+    "license": "MIT",
+    "homepage": "https://miguel-perez.github.io/jquery.smoothState.js/",
+    "dependencies": {
+        "jquery": ">=1.9"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
