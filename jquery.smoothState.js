@@ -474,7 +474,8 @@
                         url         = $anchor.prop("href"),
                         $container  = $(event.delegateTarget);
 
-                    if (utility.shouldLoad($anchor, options.blacklist)) {
+                    // Ctrl (or Cmd) + click must open a new tab
+                    if (!event.metaKey && !event.ctrlKey && utility.shouldLoad($anchor, options.blacklist)) {
                         // stopPropagation so that event doesn't fire on parent containers.
                         event.stopPropagation();
                         event.preventDefault();
