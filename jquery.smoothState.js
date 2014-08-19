@@ -392,8 +392,7 @@
                 updateContent = function (url) {
                     // If the content has been requested and is done:
                     var containerId = '#' + $container.prop('id'),
-                        $content    = utility.getContentById(containerId, cache[url].html);
-
+                        $content    = cache[url] ? utility.getContentById(containerId, cache[url].html) : null;
 
                     if($content) {
                         document.title = cache[url].title;
@@ -412,7 +411,7 @@
 
                     } else if (!$content && options.development && consl) {
                         // Throw warning to help debug in development mode
-                        consl.warn("No element with an id of " + containerId + "' in response from " + url + " in " + object);
+                        consl.warn("No element with an id of '" + containerId + "' in response from " + url + " in " + cache);
                     } else {
                         // No content availble to update with, aborting...
                         window.location = url;
