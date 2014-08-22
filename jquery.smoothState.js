@@ -36,6 +36,12 @@
             /** The number of pages smoothState will try to store in memory and not request again */
             pageCacheSize : 0,
             
+            /** Meta tags which should be replaced by meta tags of requested page */
+	    metaTags: ['meta[name="description"]','meta[name="keywords"]','meta[name="author"]','meta[name="publisher"]','meta[name="copyright"]','meta[property="og:title"]','meta[property="og:locale"]','meta[property="og:type"]','meta[property="og:site_name"]','meta[property="og:description"]','meta[property="og:image"]','meta[property="og:url"]','meta[name="robots"]'],
+
+	    /** Link tags which should be replaced by link tags of requested page */
+	    linkTags: ['link[rel="canonical"]','link[rel="image_src"]','link[rel="publisher"]'],
+            
             /** A function that can be used to alter urls before they are used to request content */
             alterRequestUrl : function (url) {
                 return url;
@@ -76,6 +82,54 @@
         
         /** Utility functions that are decoupled from SmoothState */
         utility     = {
+        	
+	   /**
+	    * Replace meta tags in current doc with tags from loaded doc
+	    * @param   {obj}       cache - cache object
+	    * @param   {string}    url - cache url
+	    * @param   {array}     metaTags - array of meta tag selectors
+	    *
+	    */
+	   replaceMetaTags: function (cache, url, metaTags) {
+
+		    var $cachedDoc = cache[url].html,
+			$currentDoc = $('html');
+
+		   if (metaTags.length > 0) {
+			   $(metaTags).each(function (key, value) {
+
+				   var metaTag = $cachedDoc.find(value);
+
+				   if (metaTag.length > 0) {
+					   $currentDoc.find(value).attr('content',metaTag.attr('content'));
+			   	   }
+			   });
+		   }
+	   },
+
+	   /**
+	    * Replace link tags in current doc with link from loaded doc
+	    * @param   {obj}       cache - cache object
+	    * @param   {string}    url - cache url
+	    * @param   {array}     linkTags - array of meta tag selectors
+	    *
+	    */
+	    replaceLinkTags: function (cache, url, linkTags) {
+
+		    var $cachedDoc = cache[url].html,
+			$currentDoc = $('html');
+
+		    if (linkTags.length > 0) {
+			    $(linkTags).each(function (key, value) {
+
+				    var linkTag = $cachedDoc.find(value);
+
+				    if (linkTag.length > 0) {
+					    $currentDoc.find(value).attr('href',linkTag.attr('href'));
+				    }
+			    });
+	    	    }
+	    },
 
             /**
              * Checks to see if the url is external
@@ -396,6 +450,8 @@
 
                     if($content) {
                         document.title = cache[url].title;
+                        utility.replaceMetaTags(cache, url, options.metaTags);
+			utility.replaceLinkTags(cache, url, options.linkTags);
                         $container.data('smoothState').href = url;
                         
                         // Call the onEnd callback and set trigger
