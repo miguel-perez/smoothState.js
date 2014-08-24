@@ -36,11 +36,8 @@
             /** The number of pages smoothState will try to store in memory and not request again */
             pageCacheSize : 0,
             
-            /** Meta tags which should be replaced by meta tags of requested page */
-	    metaTags: ['meta[name="description"]','meta[name="keywords"]','meta[name="author"]','meta[name="publisher"]','meta[name="copyright"]','meta[property="og:title"]','meta[property="og:locale"]','meta[property="og:type"]','meta[property="og:site_name"]','meta[property="og:description"]','meta[property="og:image"]','meta[property="og:url"]','meta[name="robots"]'],
-
-	    /** Link tags which should be replaced by link tags of requested page */
-	    linkTags: ['link[rel="canonical"]','link[rel="image_src"]','link[rel="publisher"]'],
+            /** Head tags like meta or link which should be replaced by head tags of requested page */
+	    headTags : ['link[rel="canonical"]','link[rel="image_src"]','link[rel="publisher"]','meta[name="description"]','meta[name="keywords"]','meta[name="author"]','meta[name="publisher"]','meta[name="copyright"]','meta[property="og:title"]','meta[property="og:locale"]','meta[property="og:type"]','meta[property="og:site_name"]','meta[property="og:description"]','meta[property="og:image"]','meta[property="og:url"]','meta[name="robots"]'],
             
             /** A function that can be used to alter urls before they are used to request content */
             alterRequestUrl : function (url) {
@@ -83,52 +80,45 @@
         /** Utility functions that are decoupled from SmoothState */
         utility     = {
         	
-	   /**
-	    * Replace meta tags in current doc with tags from loaded doc
-	    * @param   {obj}       cache - cache object
-	    * @param   {string}    url - cache url
-	    * @param   {array}     metaTags - array of meta tag selectors
-	    *
-	    */
-	   replaceMetaTags: function (cache, url, metaTags) {
+	    /**
+	     * Replace head tags in current doc with tags from loaded doc
+	     * @param   {obj}       cache - cache object
+	     * @param   {string}    url - cache url
+	     * @param   {array}     headTags - array of head tag selectors
+	     *
+	     */
+	    replaceHeadTags: function (cache, url, headTags) {
 
-		    var $cachedDoc = cache[url].html,
-			$currentDoc = $('html');
+		var $cachedDoc = cache[url].html,
+		    $currentDoc = $('html');
 
-		   if (metaTags.length > 0) {
-			   $(metaTags).each(function (key, value) {
+		if (headTags.length > 0) {
+			$(headTags).each(function (key, value) {
 
-				   var metaTag = $cachedDoc.find(value);
+				var headTag = $cachedDoc.find(value),
+				    headTagType = headTag.prop('tagName').toLowerCase(),
+				    headTagAttribute;
 
-				   if (metaTag.length > 0) {
-					   $currentDoc.find(value).attr('content',metaTag.attr('content'));
-			   	   }
-			   });
-		   }
-	   },
-
-	   /**
-	    * Replace link tags in current doc with link from loaded doc
-	    * @param   {obj}       cache - cache object
-	    * @param   {string}    url - cache url
-	    * @param   {array}     linkTags - array of meta tag selectors
-	    *
-	    */
-	    replaceLinkTags: function (cache, url, linkTags) {
-
-		    var $cachedDoc = cache[url].html,
-			$currentDoc = $('html');
-
-		    if (linkTags.length > 0) {
-			    $(linkTags).each(function (key, value) {
-
-				    var linkTag = $cachedDoc.find(value);
-
-				    if (linkTag.length > 0) {
-					    $currentDoc.find(value).attr('href',linkTag.attr('href'));
-				    }
-			    });
-	    	    }
+				if (headTag.length > 0) {
+					
+					switch(headTagType){
+						case 'link':
+							headTagAttribute = 'href';
+						break;
+						case 'meta':
+							headTagAttribute = 'content';
+						break;
+					}
+					
+					if(headTagAttribute.length > 0){
+						$currentDoc.find(value).attr(headTagAttribute,headTag.attr(headTagAttribute));
+					}
+					else {
+						consl.warn("Head tag of type '" + headTagType + "' not supported.");
+					}
+				}
+			});
+		}
 	    },
 
             /**
