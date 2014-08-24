@@ -132,7 +132,7 @@
                     htmlParsed  = html.replace(matchTag, function(tag, slash, name, attrs) {
                         var obj = {};
                         if (!slash) {
-                            elems = elems.add("<" + name + "/>");
+                            $.merge(elems, $("<" + name + "/>"));
                             if (attrs) {
                                 $.each($("<div" + attrs + "/>")[0].attributes, function(i, attr) {
                                 obj[attr.name] = attr.value;
