@@ -144,6 +144,20 @@ QUnit.test( "smoothStateUtility: triggerAllAnimationEndEvent", function( assert 
     assert.ok( triggered, "allanimationend fired" );
 });
 
+/**
+ * Replace head tags in current doc with tags from loaded doc
+ */
+QUnit.test( "smoothStateUtility: replaceHeadTags", function( assert ) {
+    var headTagSelectors = ['link[rel="canonical"]','link[rel="image_src"]','link[rel="publisher"]','meta[name="description"]','meta[name="keywords"]','meta[name="author"]','meta[name="publisher"]','meta[name="copyright"]','meta[property="og:title"]','meta[property="og:locale"]','meta[property="og:type"]','meta[property="og:site_name"]','meta[property="og:description"]','meta[property="og:image"]','meta[property="og:url"]','meta[name="robots"]'],
+        title            = "Test title " + Math.random(),
+        tags             = ['<link rel="image_src" href="replaceHeadTags Test 1">','<meta name="description" content="replaceHeadTags Test 2">','<meta property="og:description" content="replaceHeadTags Test 3">'],
+        cachedDoc        = $.smoothStateUtility.htmlDoc('<!doctype html> <html> <head> <title>' + title + '</title> ' + tags[0] + tags[1] + tags[2] + ' </head> <body id="main"> <div> Content </div> </body> </html>'),
+        currentDoc       = $('head');
 
+    $.smoothStateUtility.replaceHeadTags(cachedDoc,headTagSelectors);
 
-
+    // Should find new tags in current doc head
+    assert.ok( currentDoc.find(headTagSelectors[1]).attr("href") === "replaceHeadTags Test 1", "Tag 1 of 3 was replaced!" );
+    assert.ok( currentDoc.find(headTagSelectors[3]).attr("content") === "replaceHeadTags Test 2", "Tag 2 of 3 was replaced!" );
+    assert.ok( currentDoc.find(headTagSelectors[12]).attr("content") === "replaceHeadTags Test 3", "Tag 3 of 3 was replaced!" );
+});

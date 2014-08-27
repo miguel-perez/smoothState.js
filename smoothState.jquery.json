@@ -10,9 +10,10 @@
         "ui",
         "ajaxify"
     ],
-    "version": "0.5.1",
+    "version": "0.5.2",
     "author": {
         "name": "Miguel Angel Perez",
+        "email": "reachme@miguel-perez.com",
         "url": "http://miguel-perez.com/"
     },
     "licenses": [
