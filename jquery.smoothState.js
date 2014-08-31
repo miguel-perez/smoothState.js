@@ -11,6 +11,9 @@
 ;(function ( $, window, document, undefined ) {
     "use strict";
 
+    /** Abort plugin if browser does not suppost pushState */
+    if(!history.pushState) return;
+
     var
         /** Used later to scroll page to the top */
         $body       = $("html, body"),
