@@ -22,7 +22,8 @@ jquery.smoothState.js
 	* [toggleAnimationClass](#toggleanimationclassclassname)
 * [Show your work!](#show-your-work)
 * [Need help?](#need-help)
-* [How to ask for help](#how-to-ask-for-help)
+	* [How to ask for help](#how-to-ask-for-help)
+	* [FAQs](#faqs)
 
 
 ## About
@@ -138,8 +139,15 @@ I'd love to see how this gets used in the wild. [Tweet me](https://twitter.com/t
 
 If you find yourself confused, add an issue explaining your problem. Doing so will help me improve the clarity of the documentation and get us thinking about use cases and potential upgrades. I'm all ears.
 
-## How to ask for help
-* Make a jsfiddle and use use "echo" to [simulate ajax responses](http://doc.jsfiddle.net/use/echo.html)
+### How to ask for help
 * Create a *reduced* test case
+	* Make a jsfiddle and use use "echo" to [simulate ajax responses](http://doc.jsfiddle.net/use/echo.html)
+	* Alternatively, host your files somewhere publicly accessible
 * Be specific as specific as you can be
 * Search other issues for duplicate questions
+* 
+
+### FAQs
+Coming soon...
+
+
