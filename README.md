@@ -141,7 +141,7 @@ If you find yourself confused, add an issue explaining your problem. Doing so wi
 
 ### How to ask for help
 * Create a *reduced* test case
-	* Make a jsfiddle and use use "echo" to [simulate ajax responses](http://doc.jsfiddle.net/use/echo.html)
+	* Make a [jsfiddle](http://jsfiddle.net/) and use use "echo" to [simulate ajax responses](http://doc.jsfiddle.net/use/echo.html)
 	* Alternatively, host your files somewhere publicly accessible
 * Be specific as specific as you can be
 * Search other issues for duplicate questions
