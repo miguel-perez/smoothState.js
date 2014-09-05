@@ -144,7 +144,7 @@ If you find yourself confused, add an issue explaining your problem. Doing so wi
 2. Create a *reduced* test case
 	* Make a [jsfiddle](http://jsfiddle.net/) and use use "echo" to [simulate ajax responses](http://doc.jsfiddle.net/use/echo.html)
 	* Alternatively, host your files somewhere publicly accessible
-3. Be specific as specific as you can be
+3. Be as specific as you can be
 
 ### FAQs
 Coming soon...
