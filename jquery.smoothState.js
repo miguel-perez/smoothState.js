@@ -521,8 +521,8 @@
                     
                 };
 
-            /** Override defaults with options passed in */
-            options = $.extend(defaults, options);
+            /** Merge defaults and options into current configuration */
+            options = $.extend({}, defaults, options);
 
             /** Sets a default state */
             if(window.history.state === null) {
