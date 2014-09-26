@@ -145,39 +145,39 @@ If you find yourself confused, add an issue explaining your problem. Doing so wi
 2. Create a [Github issue](https://github.com/weblinc/jquery.smoothState.js/issues/).
 To enable us to quickly process, reproduce and fix bugs or give you support we will need to gather from you a few details regarding your environment, steps to reproduce the issue, and a stand-alone test case. To provide all this please use the template below.
 
-    __smoothState.js version tested:__
-     - Version X.X.X
-
-    __Browser versions or Packager version tested against:__
-     - IE10/11
-     - Chrome
-     - Safari
-     - ___
-
-    __Description:__
-     - Describe the problem in greater detail here, summarizing the behavior. 
-     - If you are facing a CSS error please provide screenshots or a online example.
-     - If you are facing a JavaScript error please at the line number and the stacktrace.
-
-    __Steps to reproduce the problem:__
-     - foo
-     - bar
-
-    __The result that was expected:__
-     - foo
-     - bar
-
-    __The result that occurs instead:__
-     - foo
-     - bar
-
-    __The url to testcase:__
-    It's the easiest way for us to debug your problem if you add a minimal test case. 
-    Make a http://jsfiddle.net/ and use use "echo" to simulate ajax responses, 
-    see http://doc.jsfiddle.net/use/echo.html
-
-    __Possible solution:__
-    If you already have debugged the problem and have a solution, please add it here.
+      __smoothState.js version tested:__
+       - Version X.X.X
+      
+      __Browser versions or Packager version tested against:__
+       - IE10/11
+       - Chrome
+       - Safari
+       - ___
+      
+      __Description:__
+       - Describe the problem in greater detail here, summarizing the behavior. 
+       - If you are facing a CSS error please provide screenshots or a online example.
+       - If you are facing a JavaScript error please at the line number and the stacktrace.
+      
+      __Steps to reproduce the problem:__
+       - foo
+       - bar
+      
+      __The result that was expected:__
+       - foo
+       - bar
+      
+      __The result that occurs instead:__
+       - foo
+       - bar
+      
+      __The url to testcase:__
+      It's the easiest way for us to debug your problem if you add a minimal test case. 
+      Make a http://jsfiddle.net/ and use use "echo" to simulate ajax responses, 
+      see http://doc.jsfiddle.net/use/echo.html
+      
+      __Possible solution:__
+      If you already have debugged the problem and have a solution, please add it here.
 
 
 ### FAQs
