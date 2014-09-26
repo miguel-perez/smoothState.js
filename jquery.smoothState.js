@@ -24,7 +24,7 @@
         /** Used in development mode to console out useful warnings */
         consl       = (window.console || false),
         
-        /** Plugin default options */
+        /** Plugin default options, will be exposed as $fn.smoothState.options */
         defaults    = {
 
             /** jquery element string to specify which anchors smoothstate should bind to */
@@ -521,8 +521,8 @@
                     
                 };
 
-            /** Merge defaults and options into current configuration */
-            options = $.extend({}, defaults, options);
+            /** Merge defaults and global options into current configuration */
+            options = $.extend( {}, $.fn.smoothState.options, options );
 
             /** Sets a default state */
             if(window.history.state === null) {
@@ -570,5 +570,8 @@
 
     /** Defines the smoothState plugin */
     $.fn.smoothState = declareSmoothState;
+
+    /* expose the default options */
+    $.fn.smoothState.options = defaults;
 
 })(jQuery, window, document);
