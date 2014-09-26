@@ -12,7 +12,10 @@
     "use strict";
 
     /** Abort plugin if browser does not suppost pushState */
-    if(!history.pushState) return;
+    if(!history.pushState) { return; }
+
+    /** Abort if smoothstate is already present **/
+    if($.fn.smoothState) { return; }
 
     var
         /** Used later to scroll page to the top */
@@ -518,8 +521,8 @@
                     
                 };
 
-            /** Override defaults with options passed in */
-            options = $.extend(defaults, options);
+            /** Merge defaults and options into current configuration */
+            options = $.extend({}, defaults, options);
 
             /** Sets a default state */
             if(window.history.state === null) {
@@ -548,7 +551,7 @@
         /** Returns elements with SmoothState attached to it */
         declareSmoothState = function ( options ) {
             return this.each(function () {
-                // Checks to make sure the smoothState element has an id and isn"t already bound
+                // Checks to make sure the smoothState element has an id and isn't already bound
                 if(this.id && !$.data(this, "smoothState")) {
                     // Makes public methods available via $("element").data("smoothState");
                     $.data(this, "smoothState", new SmoothState(this, options));
