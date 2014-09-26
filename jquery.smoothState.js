@@ -572,6 +572,5 @@
     $.fn.smoothState = declareSmoothState;
 
     /* expose the default options */
-    $.fn.smoothstate.options = defaults;
 
 })(jQuery, window, document);
