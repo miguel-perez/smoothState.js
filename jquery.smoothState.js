@@ -12,7 +12,10 @@
     "use strict";
 
     /** Abort plugin if browser does not suppost pushState */
-    if(!history.pushState) return;
+    if(!history.pushState) { return; }
+
+    /** Abort if smoothstate is already present **/
+    if($.fn.smoothState) { return; }
 
     var
         /** Used later to scroll page to the top */
