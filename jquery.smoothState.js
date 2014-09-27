@@ -141,7 +141,7 @@
                             $.merge(elems, $("<" + name + "/>"));
                             if (attrs) {
                                 $.each($("<div" + attrs + "/>")[0].attributes, function(i, attr) {
-                                obj[attr.name] = attr.value;
+                                    obj[attr.name] = attr.value;
                                 });
                             }
                             elems.eq(-1).attr(obj);
@@ -154,7 +154,7 @@
                 if (!elems.length) {
                     return $(html);
                 }
-                // Create parent node if it hasn"t been created yet.
+                // Create parent node if it hasn't been created yet.
                 if (!parent) {
                     parent = $("<div/>");
                 }
@@ -242,7 +242,7 @@
              * @param   {string}    resetOn - which other events to trigger allanimationend on
              * 
              */
-             triggerAllAnimationEndEvent: function ($element, resetOn) {
+            triggerAllAnimationEndEvent: function ($element, resetOn) {
 
                 resetOn = " " + resetOn || "";
 
@@ -280,7 +280,7 @@
                 $element.height(0);
 			    setTimeout(function(){$element.height("auto");}, 0);
             }
-        },
+        }, // eo utility
 
         /** Handles the popstate event, like when the user hits "back" */
         onPopState = function ( e ) {
