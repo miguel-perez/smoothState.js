@@ -12,7 +12,12 @@
     "use strict";
 
     /** Abort plugin if browser does not suppost pushState */
-    if(!history.pushState) { return; }
+    if(!history.pushState) {
+        // setup a dummy fn, but don't intercept on link clicks
+        $.fn.smoothState = function() { return this; };
+        $.fn.smoothState.options = {};
+        return;
+    }
 
     /** Abort if smoothstate is already present **/
     if($.fn.smoothState) { return; }
