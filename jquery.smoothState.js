@@ -184,7 +184,7 @@
              * 
              */
             clearIfOverCapacity: function (obj, cap) {
-                // Polyfill Object.keys if it doesn"t exist
+                // Polyfill Object.keys if it doesn't exist
                 if (!Object.keys) {
                     Object.keys = function (obj) {
                         var keys = [],
@@ -431,7 +431,7 @@
                  */
                 fetch = function (url) {
 
-                    // Don"t fetch we have the content already
+                    // Don't fetch we have the content already
                     if(cache.hasOwnProperty(url)) {
                         return;
                     }
@@ -482,7 +482,7 @@
 
                     // Ctrl (or Cmd) + click must open a new tab
                     if (!event.metaKey && !event.ctrlKey && utility.shouldLoad($anchor, options.blacklist)) {
-                        // stopPropagation so that event doesn"t fire on parent containers.
+                        // stopPropagation so that event doesn't fire on parent containers.
                         event.stopPropagation();
                         event.preventDefault();
                         load(url);
