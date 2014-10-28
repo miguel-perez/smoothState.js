@@ -282,8 +282,8 @@
 
             /** Forces browser to redraw elements */
             redraw: function ($element) {
-                $element.height(0);
-			    setTimeout(function(){$element.height("auto");}, 0);
+                $element.height();
+                //setTimeout(function(){$element.height("100%");}, 0);
             }
         }, // eo utility
 
