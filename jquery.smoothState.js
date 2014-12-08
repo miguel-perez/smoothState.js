@@ -321,12 +321,14 @@
                  * @param   {string}    url
                  * @param   {bool}      isPopped - used to determine if whe should
                  *                      add a new item into the history object
+                 * @param   {bool}      ignoreCache - whether the cache should be ignored
                  * 
                  */
-                load = function (url, isPopped) {
+                load = function (url, isPopped, ignoreCache) {
                     
                     /** Makes this an optional variable by setting a default */
                     isPopped = isPopped || false;
+                    ignoreCache = ignoreCache || false;
 
                     var
                         /** Used to check if the onProgress function has been run */
@@ -387,7 +389,7 @@
                             }
                         };
                     
-                    if (!cache.hasOwnProperty(url)) {
+                    if (!cache.hasOwnProperty(url) || ignoreCache) {
                         fetch(url);
                     }
                     
@@ -435,12 +437,15 @@
                 /**
                  * Fetches the contents of a url and stores it in the "cache" varible
                  * @param   {string}    url
+                 * @param   {bool}      ignoreCache
                  * 
                  */
-                fetch = function (url) {
+                fetch = function (url, ignoreCache) {
+                    
+                    ignoreCache = ignoreCache || false;
 
                     // Don't fetch we have the content already
-                    if(cache.hasOwnProperty(url)) {
+                    if(cache.hasOwnProperty(url) && !ignoreCache) {
                         return;
                     }
 
