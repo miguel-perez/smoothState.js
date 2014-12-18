@@ -446,7 +446,7 @@
                     cache[url] = { status: "fetching" };
 
                     var requestUrl  = options.alterRequestUrl(url) || url,
-                        request     = $.ajax(requestUrl);
+                        request     = $.ajax(requestUrl, { dataType: "html" });
 
                     // Store contents in cache variable if successful
                     request.success(function (html) {
