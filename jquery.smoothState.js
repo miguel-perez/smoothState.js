@@ -111,7 +111,7 @@
              * 
              */
             isHash: function (url) {
-                var hasPathname = (url.indexOf(window.location.pathname) > 0) ? true : false,
+                var hasPathname = (window.location.href.indexOf(url) > 0) ? true : false,
                     hasHash = (url.indexOf("#") > 0) ? true : false;
                 return (hasPathname && hasHash) ? true : false;
             },
