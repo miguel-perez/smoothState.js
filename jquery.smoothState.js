@@ -108,10 +108,12 @@
             /**
              * Checks to see if the url is an internal hash
              * @param   {string}    url - url being evaluated
+             * @param   {string}    prev - previous url (optional)
              * 
              */
-            isHash: function (url) {
-                var hasPathname = (url.indexOf(window.location.pathname) > 0) ? true : false,
+            isHash: function (url, prev = null) {
+                prev = prev || window.location.pathname;
+                var hasPathname = (url.indexOf(prev) >= 0) ? true : false,
                     hasHash = (url.indexOf("#") > 0) ? true : false;
                 return (hasPathname && hasHash) ? true : false;
             },
@@ -294,7 +296,7 @@
                     $page   = $("#" + e.state.id),
                     page    = $page.data("smoothState");
                 
-                if(page.href !== url && !utility.isHash(url)) {
+                if(page.href !== url && !utility.isHash(url, page.href)) {
                     page.load(url, true);
                 }
             }
