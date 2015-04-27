@@ -1,6 +1,6 @@
 jquery.smoothState.js
 ===============
-[Checkout the demo site](http://weblinc.github.io/jquery.smoothState.js/index.html) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
+[Checkout the demo site]( http://miguel-perez.github.io/smoothState.js) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
 
 * [About](#about)
 * [Options](#options)
