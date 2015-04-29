@@ -1,6 +1,8 @@
 jquery.smoothState.js
 ===============
-[Checkout the demo site](http://weblinc.github.io/jquery.smoothState.js/index.html) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
+
+[![Join the chat at https://gitter.im/miguel-perez/smoothState.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[Checkout the demo site]( http://miguel-perez.github.io/smoothState.js) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
 
 * [About](#about)
 * [Options](#options)
@@ -57,7 +59,7 @@ A boolean, default being `false`, that will tell smoothState to output useful de
 smoothState.js will store pages in memory if pageCacheSize is set to anything greater than 0. This allows a user to avoid having to request pages more than once. Pages that are stored in memory will load instantaneously.
 
 ### `alterRequestUrl`
-A function that defines any alterations needed on the URL that is used to request content from the server. The function should return a string that is a valid URL. This is useful when dealing with applications that have layout controls or when needing to inavlidate the cache.
+A function that defines any alterations needed on the URL that is used to request content from the server. The function should return a string that is a valid URL. This is useful when dealing with applications that have layout controls or when needing to invalidate the cache.
 
 ## Callbacks
 
