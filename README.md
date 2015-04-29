@@ -1,6 +1,9 @@
 jquery.smoothState.js
 ===============
+
 [Checkout the demo site]( http://miguel-perez.github.io/smoothState.js) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 * [About](#about)
 * [Options](#options)
