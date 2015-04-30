@@ -1,12 +1,12 @@
 /**
  * smoothState.js is a jQuery plugin to stop page load jank.
  *
- * This jQuery plugin progressively enhances page loads to 
+ * This jQuery plugin progressively enhances page loads to
  * behave more like a single-page application.
  *
  * @author  Miguel Ángel Pérez   reachme@miguel-perez.com
  * @see     https://github.com/miguel-perez/jquery.smoothState.js
- * 
+ *
  */
 ;(function ( $, window, document, undefined ) {
     "use strict";
@@ -25,33 +25,36 @@
     var
         /** Used later to scroll page to the top */
         $body       = $("html, body"),
-        
+
         /** Used in development mode to console out useful warnings */
         consl       = (window.console || false),
-        
+
         /** Plugin default options, will be exposed as $fn.smoothState.options */
         defaults    = {
 
             /** jquery element string to specify which anchors smoothstate should bind to */
             anchors : "a",
 
+            /** jquery object to specify the root element that `onclick` handlers should be bound to */
+            root : null,
+
             /** If set to true, smoothState will prefetch a link's contents on hover */
             prefetch : false,
-            
+
             /** A selecor that deinfes with links should be ignored by smoothState */
             blacklist : ".no-smoothstate, [target]",
-            
+
             /** If set to true, smoothState will log useful debug information instead of aborting */
             development : false,
-            
+
             /** The number of pages smoothState will try to store in memory and not request again */
             pageCacheSize : 0,
-            
+
             /** A function that can be used to alter urls before they are used to request content */
             alterRequestUrl : function (url) {
                 return url;
             },
-            
+
             /** Run when a link has been activated */
             onStart : {
                 duration: 0,
@@ -84,7 +87,7 @@
 
             }
         },
-        
+
         /** Utility functions that are decoupled from SmoothState */
         utility     = {
 
@@ -92,7 +95,7 @@
              * Checks to see if the url is external
              * @param   {string}    url - url being evaluated
              * @see     http://stackoverflow.com/questions/6238351/fastest-way-to-detect-external-urls
-             * 
+             *
              */
             isExternal: function (url) {
                 var match = url.match(/^([^:\/?#]+:)?(?:\/\/([^\/?#]*))?([^?#]+)?(\?[^#]*)?(#.*)?/);
@@ -108,7 +111,7 @@
             /**
              * Checks to see if the url is an internal hash
              * @param   {string}    url - url being evaluated
-             * 
+             *
              */
             isHash: function (url) {
                 var hasPathname = (url.indexOf(window.location.pathname) > 0) ? true : false,
@@ -120,7 +123,7 @@
              * Checks to see if we should be loading this URL
              * @param   {string}    url - url being evaluated
              * @param   {string}    blacklist - jquery selector
-             * 
+             *
              */
             shouldLoad: function ($anchor, blacklist) {
                 var url = $anchor.prop("href");
@@ -133,7 +136,7 @@
              * @param   {string}    url - url being evaluated
              * @author  Ben Alman   http://benalman.com/
              * @see     https://gist.github.com/cowboy/742952
-             * 
+             *
              */
             htmlDoc: function (html) {
                 var parent,
@@ -165,7 +168,7 @@
                 }
                 // Create the parent node and append the parsed, place-held HTML.
                 parent.html(htmlParsed);
-                
+
                 // Replace each placeholder element with its intended element.
                 $.each(elems, function(i) {
                     var elem = parent.find("#" + prefix + i).before(elems[i]);
@@ -181,12 +184,12 @@
              *
              * This is used to clear the "cache" object that stores
              * all of the html. This would prevent the client from
-             * running out of memory and allow the user to hit the 
+             * running out of memory and allow the user to hit the
              * server for a fresh copy of the content.
              *
              * @param   {object}    obj
              * @param   {number}    cap
-             * 
+             *
              */
             clearIfOverCapacity: function (obj, cap) {
                 // Polyfill Object.keys if it doesn't exist
@@ -214,7 +217,7 @@
              * Finds the inner content of an element, by an ID, from a jQuery object
              * @param   {string}    id
              * @param   {object}    $html
-             * 
+             *
              */
             getContentById: function (id, $html) {
                 $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
@@ -229,7 +232,7 @@
              * @param   {object}    object - object contents will be stored into
              * @param   {string}    url - url to be used as the prop
              * @param   {jquery}    html - contents to store
-             * 
+             *
              */
             storePageIn: function (object, url, $html) {
                 $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
@@ -245,7 +248,7 @@
              * Triggers an "allanimationend" event when all animations are complete
              * @param   {object}    $element - jQuery object that should trigger event
              * @param   {string}    resetOn - which other events to trigger allanimationend on
-             * 
+             *
              */
             triggerAllAnimationEndEvent: function ($element, resetOn) {
 
@@ -293,8 +296,8 @@
                 var url     = window.location.href,
                     $page   = $("#" + e.state.id),
                     page    = $page.data("smoothState");
-                
-                if(page.href !== url && !utility.isHash(url)) {
+
+                if(typeof page !== "undefined" && page.href !== url && !utility.isHash(url)) {
                     page.load(url, true);
                 }
             }
@@ -305,32 +308,34 @@
             var
                 /** Container element smoothState is run on */
                 $container  = $(element),
-                
+
                 /** Variable that stores pages after they are requested */
                 cache       = {},
-                
+
                 /** Url of the content that is currently displayed */
                 currentHref = window.location.href,
 
                 /**
-                 * Loads the contents of a url into our container 
+                 * Loads the contents of a url into our container
                  *
                  * @param   {string}    url
                  * @param   {bool}      isPopped - used to determine if whe should
                  *                      add a new item into the history object
-                 * 
+                 * @param   {bool}      ignoreCache - whether the cache should be ignored
+                 *
                  */
-                load = function (url, isPopped) {
-                    
+                load = function (url, isPopped, ignoreCache) {
+
                     /** Makes this an optional variable by setting a default */
                     isPopped = isPopped || false;
+                    ignoreCache = ignoreCache || false;
 
                     var
                         /** Used to check if the onProgress function has been run */
                         hasRunCallback  = false,
 
                         callbBackEnded  = false,
-                        
+
                         /** List of responses for the states of the page request */
                         responses       = {
 
@@ -353,23 +358,23 @@
 
                             /** Loading, wait 10 ms and check again */
                             fetching: function() {
-                                
+
                                 if(!hasRunCallback) {
-                                    
+
                                     hasRunCallback = true;
-                                    
+
                                     // Run the onProgress callback and set trigger
                                     $container.one("ss.onStartEnd", function(){
                                         options.onProgress.render(url, $container, null);
-                                        
+
                                         setTimeout(function(){
                                             $container.trigger("ss.onProgressEnd");
                                             callbBackEnded = true;
                                         }, options.onStart.duration);
-                                    
+
                                     });
                                 }
-                                
+
                                 setTimeout(function () {
                                     // Might of been canceled, better check!
                                     if(cache.hasOwnProperty(url)){
@@ -383,11 +388,11 @@
                                 window.location = url;
                             }
                         };
-                    
-                    if (!cache.hasOwnProperty(url)) {
-                        fetch(url);
+
+                    if (!cache.hasOwnProperty(url) || ignoreCache) {
+                        fetch(url, ignoreCache);
                     }
-                    
+
                     // Run the onStart callback and set trigger
                     options.onStart.render(url, $container, null);
                     setTimeout(function(){
@@ -408,7 +413,7 @@
                     if($content) {
                         document.title = cache[url].title;
                         $container.data("smoothState").href = url;
-                        
+
                         // Call the onEnd callback and set trigger
                         options.onEnd.render(url, $container, $content);
 
@@ -430,19 +435,22 @@
                 },
 
                 /**
-                 * Fetches the contents of a url and stores it in the "cache" varible
+                 * Fetches the contents of a url and stores it in the "cache" variable
                  * @param   {string}    url
-                 * 
+                 * @param   {bool}      ignoreCache
+                 *
                  */
-                fetch = function (url) {
+                fetch = function (url, ignoreCache) {
+
+                    ignoreCache = ignoreCache || false;
 
                     // Don't fetch we have the content already
-                    if(cache.hasOwnProperty(url)) {
+                    if(cache.hasOwnProperty(url) && !ignoreCache) {
                         return;
                     }
 
                     cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
-                    
+
                     cache[url] = { status: "fetching" };
 
                     var requestUrl  = options.alterRequestUrl(url) || url,
@@ -464,7 +472,7 @@
                  * Binds to the hover event of a link, used for prefetching content
                  *
                  * @param   {object}    event
-                 * 
+                 *
                  */
                 hoverAnchor = function (event) {
                     var $anchor = $(event.currentTarget),
@@ -479,7 +487,7 @@
                  * Binds to the click event of a link, used to show the content
                  *
                  * @param   {object}    event
-                 * 
+                 *
                  */
                 clickAnchor = function (event) {
                     var $anchor     = $(event.currentTarget),
@@ -498,7 +506,7 @@
                  * Binds all events and inits functionality
                  *
                  * @param   {object}    event
-                 * 
+                 *
                  */
                 bindEventHandlers = function ($element) {
                     //@todo: Handle form submissions
@@ -513,9 +521,9 @@
                 /** Used to restart css animations with a class */
                 toggleAnimationClass = function (classname) {
                     var classes = $container.addClass(classname).prop("class");
-                    
+
                     $container.removeClass(classes);
-                    
+
                     setTimeout(function(){
                         $container.addClass(classes);
                     },0);
@@ -523,7 +531,7 @@
                     $container.one("ss.onStartEnd ss.onProgressEnd ss.onEndEnd", function(){
                         $container.removeClass(classname);
                     });
-                    
+
                 };
 
             /** Merge defaults and global options into current configuration */
@@ -541,7 +549,7 @@
             utility.triggerAllAnimationEndEvent($container, "ss.onStartEnd ss.onProgressEnd ss.onEndEnd");
 
             /** Bind all of the event handlers on the container, not anchors */
-            bindEventHandlers($container);
+            bindEventHandlers(options.root ? options.root : $container);
 
             /** Public methods */
             return {
@@ -549,7 +557,8 @@
                 cache: cache,
                 load: load,
                 fetch: fetch,
-                toggleAnimationClass: toggleAnimationClass
+                toggleAnimationClass: toggleAnimationClass,
+                bindEventHandlers: bindEventHandlers
             };
         },
 
