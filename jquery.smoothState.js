@@ -410,10 +410,10 @@
                         $container.data("smoothState").href = url;
                         
                         // Call the onEnd callback and set trigger
-                        options.onEnd.render(url, $container, $content);
+                        options.onEnd.render(url, $container, $content, cache[url].html);
 
                         $container.one("ss.onEndEnd", function(){
-                            options.callback(url, $container, $content);
+                            options.callback(url, $container, $content, cache[url].html);
                         });
 
                         setTimeout(function(){
