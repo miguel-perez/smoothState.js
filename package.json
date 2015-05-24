@@ -7,8 +7,10 @@
         "animation",
         "turbolinks",
         "ajax",
-        "ui",
-        "ajaxify"
+        "ajaxify",
+        "jquery-plugin",
+        "ecosystem:jquery",
+        "page transitions"
     ],
     "homepage": "http://miguel-perez.github.io/smoothState.js/",
     "bugs": {
