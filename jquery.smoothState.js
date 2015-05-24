@@ -111,7 +111,7 @@
              * @param   {string}    prev - previous url (optional)
              * 
              */
-            isHash: function (url, prev = null) {
+            isHash: function (url, prev) {
                 prev = prev || window.location.pathname;
                 var hasPathname = (url.indexOf(prev) >= 0) ? true : false,
                     hasHash = (url.indexOf("#") > 0) ? true : false;
