@@ -1,0 +1,49 @@
+{
+    "name": "smoothState",
+    "version": "0.5.3",
+    "description": "A jQuery plugin to stop the jank of page loads.",
+    "keywords": [
+        "pjax",
+        "animation",
+        "turbolinks",
+        "ajax",
+        "ui",
+        "ajaxify"
+    ],
+    "homepage": "http://miguel-perez.github.io/smoothState.js/",
+    "bugs": {
+        "url": "https://github.com/miguel-perez/smoothState.js/issues?q=is%3Aopen+is%3Aissue+label%3Abug",
+        "email": "reachme@miguel-perez.com"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Miguel Perez",
+        "email": "reachme@miguel-perez.com",
+        "url": "http://miguel-perez.com/"
+    },
+    "main": "dist/jquery.smoothState.js",
+    "directories": {
+        "test": "tests"
+    },
+    "dependencies": {
+        "gulp": "^3.8.11"
+    },
+    "devDependencies": {
+        "gulp-concat": "^2.5.2",
+        "gulp-jshint": "^1.11.0",
+        "gulp-load-plugins": "^0.10.0",
+        "gulp-size": "^1.2.1",
+        "gulp-uglify": "^1.2.0",
+        "jquery": "^2.1.4",
+        "jshint-stylish": "^2.0.0",
+        "node-qunit-phantomjs": "^1.2.0",
+        "qunitjs": "^1.18.0"
+    },
+    "scripts": {
+        "test": "gulp test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:miguel-perez/smoothState.js.git"
+    }
+}

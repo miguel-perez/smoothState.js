@@ -1,49 +1,32 @@
 jquery.smoothState.js
 ===============
 
-[Checkout the demo site]( http://miguel-perez.github.io/smoothState.js) for examples and tutorials. [Let me know](https://twitter.com/tayokoart) if you have any questions.
-
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 * [About](#about)
 * [Options](#options)
-	* [prefetch](#prefetch)
-	* [blacklist](#blacklist)
-	* [development](#development)
-	* [pageCacheSize](#pagecachesize)
-	* [alterRequestUrl](#alterrequesturl)
 * [Callbacks](#callbacks)
-	* [onStart](#onstart)
-	* [onProgress](#onprogress)
-	* [onEnd](#onend)
-	* [callback](#callback)
 * [Methods and properties](#methods-and-properties)
-	* [href](#href)
-	* [cache](#cache)
-	* [load](#loadurl)
-	* [fetch](#fetchurl)
-	* [toggleAnimationClass](#toggleanimationclassclassname)
-* [Show your work!](#show-your-work)
+* [Contribute](#contribute)
 * [Need help?](#need-help)
-	* [How to ask for help](#how-to-ask-for-help)
-	* [FAQs](#faqs)
-
 
 ## About
 
-Hard cuts and white flashes break user focus and create confusion as layouts change or elements rearrange. **We’ve accepted the jankiness of page loads as a personality quirk of the web**, even though there is no technical reason it must exist. We don't need to treat the web like a native app's ugly cousin.
+smoothState.js is a jQuery plugin that progressively enhances page loads to give you control over page transitions.
 
-Javascript [SPA frameworks](http://en.wikipedia.org/wiki/Single-page_application), sometimes referred to as MVC frameworks, are a common way to solve this issue. However, these frameworks often **lose the benefits of unobtrusive code**, such as resilience to errors, performance, and accessibility. smoothState.js lets you start adding transitions that eliminate the hard cuts of page loads to improve the beauty of the experience. It does this with:
-
-* **Progressive enhancement** - a technique that exemplifies the principles universal design
-* **jQuery** - a library a great many of us are familiar with
-* **history.pushState()** - a method that lets us maintain browsing expectations
-* **Ajax** - a way for us to  request and store pages on the user's device without refreshing the page
-
-smoothState.js will [unobtrusively enhance](http://en.wikipedia.org/wiki/Unobtrusive_JavaScript) your website's page loads to behave more like a single-page application framework. This allows you to add page transitions and create a nicer experince for your users.
+* [Checkout the demo site]( http://miguel-perez.github.io/smoothState.js) for examples and tutorials.
+* Learn [How To Add Page Transitions with CSS and smoothState.js](https://css-tricks.com/add-page-transitions-css-smoothstate-js/) on CSSTricks
+* Post sites you've created with smoothState on [/r/smoothState](http://www.reddit.com/r/smoothstate/)
 
 ## Options
+
 smoothState provides some options that allow you to customize the functionality of the plugin.
+
+* [prefetch](#prefetch)
+* [blacklist](#blacklist)
+* [development](#development)
+* [pageCacheSize](#pagecachesize)
+* [alterRequestUrl](#alterrequesturl)
 
 ### `prefetch`
 There is a 200ms to 300ms delay between the time that a user hovers over a link and the time they click it. On touch screens, the delay between the touchstart and touchend is even greater. If the prefetch option is set to true, smoothState will begin to preload the contents of the url between that delay.
@@ -54,7 +37,7 @@ This technique will dramatically increase the speed of your website.
 A string that is used as a jQuery selector to ignore certain links. By default smoothState will ignore any links that match `".no-smoothstate, [target]"`.
 
 ### `development`
-A boolean, default being `false`, that will tell smoothState to output useful debug info when something goes wrong in console instead of trying to abort and reload the page. 
+A boolean, default being `false`, that will tell smoothState to output useful debug info when something goes wrong in console instead of trying to abort.
 
 ### `pageCacheSize`
 smoothState.js will store pages in memory if pageCacheSize is set to anything greater than 0. This allows a user to avoid having to request pages more than once. Pages that are stored in memory will load instantaneously.
@@ -64,10 +47,17 @@ A function that defines any alterations needed on the URL that is used to reques
 
 ## Callbacks
 
+Callbacks allow you to choreograph how elements enter and exit your page.
+
+* [onStart](#onstart)
+* [onProgress](#onprogress)
+* [onEnd](#onend)
+* [callback](#callback)
+
 ### `onStart`
 Ran when a link has been activated, a "click". Default:
 
-```Javanscript
+```js
 onStart : {
     duration: 0, // Duration of the animations, if any.
     render: function (url, $container) {
@@ -78,7 +68,7 @@ onStart : {
 
 ### `onProgress`
 Ran if the page request is still pending and onStart has finished animating.Default:
-```Javanscript
+```js
 onProgress : {
     duration: 0, // Duration of the animations, if any.
     render: function (url, $container) {
@@ -90,7 +80,7 @@ onProgress : {
 
 ### `onEnd`
 Ran when requested content is ready to be injected into the page
-```Javanscript
+```js
 onEnd : {
     duration: 0, // Duration of the animations, if any.
     render: function (url, $container, $content) {
@@ -103,16 +93,23 @@ onEnd : {
 
 ### `callback`
 Ran after the new content has been injected into the page
-```Javanscript
+```js
 callback : function(url, $container, $content) {
 
 }
 ```
 
 ## Methods and properties
+
 smoothState provides some methods available by accessing the element's data property.
 
-```javascript
+* [href](#href)
+* [cache](#cache)
+* [load](#loadurl)
+* [fetch](#fetchurl)
+* [toggleAnimationClass](#toggleanimationclassclassname)
+
+```js
 var content  = $('#main').smoothState().data('smoothState');
 content.load('/newPage.html');
 
@@ -128,65 +125,26 @@ Variable that stores pages after they are requested.
 Loads the contents of a url into our container.
 
 ### `fetch(url)`
-Fetches the contents of a url and stores it in the 'cache' varible.
+Fetches the contents of a url and stores it in the 'cache' variable.
 
 ### `toggleAnimationClass(classname)`
 Used to restart css animations with a class.
 
-
-## Show your work!
-I'd love to see how this gets used in the wild. [Tweet me](https://twitter.com/tayokoart) with a link and I'll add it to this page. This repo could use some good demos.
-
-
 ## Need help?
 
-If you find yourself confused, add an issue explaining your problem. Doing so will help me improve the clarity of the documentation and get us thinking about use cases and potential upgrades. I'm all ears.
+If you need a little help implementing smoothState there are a couple things you could do to get some support:
 
-### How to ask for help
+1. Post on stackoverflow using the [smoothstate.js tag](http://stackoverflow.com/tags/smoothstate.js).
+2. Join the [Gitter room](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and talk to some of the contributors.
+3. Contact [Miguel](http://miguel-perez.com/), he provides training and consultation services.
 
-1. Search existing issues for similar questions.
-1. If you couldn't find anything, create a new [Github issue](https://github.com/weblinc/jquery.smoothState.js/issues/).
-To enable us to quickly process, reproduce and fix bugs or give you support we will need to gather from you a few details regarding your environment, steps to reproduce the issue, and a stand-alone test case. 
+Please **avoid creating a github issue with personal support requests**, we'll want to keep the tracker clear for bugs and pull requests.
 
-Please use the template below:
+## Contribute
 
+We're always looking for:
 
-    __smoothState.js version tested:__
-     - Version X.X.X
-
-    __Browser versions or Packager version tested against:__
-     - IE10/11
-     - Chrome
-     - Safari
-     - ___
-
-    __Description:__
-     - Describe the problem in greater detail here, summarizing the behavior. 
-     - If you are facing a CSS error please provide screenshots or a online example.
-     - If you are facing a JavaScript error please at the line number and the stacktrace.
-
-    __Steps to reproduce the problem:__
-     - foo
-     - bar
-
-    __The result that was expected:__
-     - foo
-     - bar
-
-    __The result that occurs instead:__
-     - foo
-     - bar
-
-    __The url to testcase:__
-    It's the easiest way for us to debug your problem if you add a minimal test case. 
-    Make a http://jsfiddle.net/ and use use "echo" to simulate ajax responses, 
-    see http://doc.jsfiddle.net/use/echo.html
-
-    __Possible solution:__
-    If you already have debugged the problem and have a solution, please add it here.
-
-
-### FAQs
-Coming soon...
-
-
+* Bug reports, especially those with a reduced test case
+* Pull requests, features, spelling errors, clarifications, etc
+* Ideas for enhacements
+* Demos of sites built with smoothState
