@@ -32,6 +32,35 @@ QUnit.test( 'smoothStateUtility: isExternal', function( assert ) {
 });
 
 /**
+ * Checks to see if the url is a hash to the same page
+ */
+QUnit.test( 'smoothStateUtility: isHash', function( assert ) {
+    var hashes = [
+            $('<a href="#foo" />').prop('href'),
+            $('<a href="' + window.location.href + '#foo" />').prop('href')
+        ],
+        nonHashes = [
+            $('<a href="/other/page.html" />').prop('href'),
+            $('<a href="/other/page.html#foo" />').prop('href')
+        ],
+        i, y;
+
+    // Is external
+    for (i = hashes.length - 1; i >= 0; i--) {
+        assert.ok( $.smoothStateUtility.isHash(hashes[i]) === true, 'Hash: ' + hashes[i] );
+    }
+
+    // Is not external
+    for ( y = nonHashes.length - 1; y >= 0; y--) {
+        assert.ok( $.smoothStateUtility.isHash(nonHashes[y]) === false, 'Non hash: ' + nonHashes[y] );
+    }
+
+    // Passing in current href
+    assert.ok( $.smoothStateUtility.isHash(nonHashes[1], nonHashes[0]) === true, 'Passed in current href' );
+
+});
+
+/**
  * Checks to see if we should be loading this URL
  */
 QUnit.test( 'smoothStateUtility: shouldLoad', function( assert ) {
