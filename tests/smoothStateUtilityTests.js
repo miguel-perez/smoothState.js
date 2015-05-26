@@ -43,7 +43,8 @@
             ],
             nonHashes = [
                 $('<a href="/other/page.html" />').prop('href'),
-                $('<a href="/other/page.html#foo" />').prop('href')
+                $('<a href="/other/page.html#foo" />').prop('href'),
+                $('<a href="/other/page.html#bar" />').prop('href')
             ],
             i, y;
 
@@ -59,6 +60,9 @@
 
         // Passing in current href
         assert.ok( $.smoothStateUtility.isHash(nonHashes[1], nonHashes[0]) === true, 'Passed in current href' );
+
+        // After having clicked on a previous hash
+        assert.ok( $.smoothStateUtility.isHash(nonHashes[1], nonHashes[2]) === true, 'Clicked on a hash when a hash is in the current url' );
 
     });
 

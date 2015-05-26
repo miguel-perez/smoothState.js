@@ -135,7 +135,7 @@
         prev = prev || window.location.href;
 
         var hasHash = (href.indexOf('#') > -1) ? true : false,
-          samePath = (href.replace(/#.*/, '') === prev) ? true : false;
+          samePath = (href.replace(/#.*/, '') === prev.replace(/#.*/, '')) ? true : false;
 
         return (hasHash && samePath);
       },
