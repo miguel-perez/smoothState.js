@@ -44,6 +44,11 @@ gulp.task('scripts-dev', function () {
     .pipe(plugins.size({title: 'scripts'}));
 });
 
+/** Watch changes */
+gulp.task('watch', function() {
+  gulp.watch(allScripts, ['jshint', 'test']);
+});
+
 /** Default task */
 gulp.task('default', ['jshint', 'test'], function() {
   gulp.start('scripts-prod');
