@@ -108,7 +108,7 @@ smoothState provides some methods available by accessing the element's data prop
 * [load](#loadurl)
 * [fetch](#fetchurl)
 * [toggleAnimationClass](#toggleanimationclassclassname)
-* [restartCSSAnimations](#restartCSSAnimations)
+* [restartCSSAnimations](#restartcssanimations)
 
 ```js
 var content  = $('#main').smoothState().data('smoothState');
@@ -135,7 +135,7 @@ This method is **deprecated** and will be removed in version 0.6.0. It was used 
 Restarts the CSS animations of the smoothState container.
 
 ```js
-var page = $page.smoothState({
+var smoothState = $page.smoothState({
     onStart: {
       duration: 250,
       render: function (url, $container) {
@@ -143,7 +143,7 @@ var page = $page.smoothState({
         $page.addClass('is-exiting');
 
         // Restart your animation
-        page.restartCSSAnimations();
+        smoothState.restartCSSAnimations();
 
         // anything else
       }
@@ -152,7 +152,7 @@ var page = $page.smoothState({
       duration: 0,
       render: function (url, $container, $content) {
         // Remove your CSS animation reversing class
-        $page.removeClass('is-unloading');
+        $page.removeClass('is-exiting');
 
         // Inject the new content
         $container.html($content);
