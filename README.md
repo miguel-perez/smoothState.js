@@ -108,6 +108,7 @@ smoothState provides some methods available by accessing the element's data prop
 * [load](#loadurl)
 * [fetch](#fetchurl)
 * [toggleAnimationClass](#toggleanimationclassclassname)
+* [restartCSSAnimations](#restartCSSAnimations)
 
 ```js
 var content  = $('#main').smoothState().data('smoothState');
@@ -128,7 +129,37 @@ Loads the contents of a url into our container.
 Fetches the contents of a url and stores it in the 'cache' variable.
 
 ### `toggleAnimationClass(classname)`
-Used to restart css animations with a class.
+This method is **deprecated** and will be removed in version 0.6.0. It was used to restart css animations while toggling a specific class, such as `.is-existing`. This proved to be an unreliable way to handle restarting css animtions since there's no way to define when we want the class to be removed. Use `restartCSSAnimations()` instead, and add or remove the animation classes on the appropiate callbacks.
+
+### `restartCSSAnimations()`
+Restarts the CSS animations of the smoothState container.
+
+```js
+var page = $page.smoothState({
+    onStart: {
+      duration: 250,
+      render: function (url, $container) {
+        // Add your CSS animation reversing class
+        $page.addClass('is-exiting');
+
+        // Restart your animation
+        page.restartCSSAnimations();
+
+        // anything else
+      }
+    },
+    onEnd: {
+      duration: 0,
+      render: function (url, $container, $content) {
+        // Remove your CSS animation reversing class
+        $page.removeClass('is-unloading');
+
+        // Inject the new content
+        $container.html($content);
+      }
+    }
+  }).data('smoothState');
+```
 
 ## Need help?
 

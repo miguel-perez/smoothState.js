@@ -309,6 +309,7 @@
       redraw: function ($element) {
         $element.height();
       }
+
     }, // eo utility
 
     /** Handles the popstate event, like when the user hits 'back' */
@@ -546,7 +547,7 @@
 
         },
 
-        /** Used to restart css animations with a class */
+        /** DEPRECATED: use restartCSSAnimations instead */
         toggleAnimationClass = function (classname) {
           var classes = $container.addClass(classname).prop('class');
 
@@ -560,6 +561,14 @@
             $container.removeClass(classname);
           });
 
+        },
+
+        /** Restart the container's css animations */
+        restartCSSAnimations = function () {
+          var classes = $container.prop('class');
+          $container.removeClass(classes);
+          $container.addClass(classes);
+          utility.redraw($container);
         };
 
       /** Merge defaults and global options into current configuration */
@@ -585,7 +594,8 @@
         cache: cache,
         load: load,
         fetch: fetch,
-        toggleAnimationClass: toggleAnimationClass
+        toggleAnimationClass: toggleAnimationClass,
+        restartCSSAnimations: restartCSSAnimations
       };
     },
 
