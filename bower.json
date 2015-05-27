@@ -1,6 +1,7 @@
 {
     "name": "smoothstate",
     "main": "dist/jquery.smoothState.js",
+    "version": "0.5.4",
     "description": "A jQuery plugin to stop the jank of page loads.",
     "keywords": [
         "pjax",
