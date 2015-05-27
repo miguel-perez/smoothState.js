@@ -475,7 +475,7 @@
                     window.setTimeout(function(){
                       $container.trigger('ss.onProgressEnd');
                       callbBackEnded = true;
-                    }, options.onStart.duration);
+                    }, options.onProgress.duration);
 
                   });
                 }
