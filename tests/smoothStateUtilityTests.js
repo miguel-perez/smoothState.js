@@ -36,6 +36,20 @@
     /**
      * Checks to see if the url is a hash to the same page
      */
+    QUnit.test( 'stripHash', function( assert ) {
+        var hashes = [
+                '/index.html#hash',
+                '/index.html'
+            ];
+
+        assert.equal( $.smoothStateUtility.stripHash(hashes[0]), hashes[1], 'Stripped the hash from a url' );
+        assert.equal( $.smoothStateUtility.stripHash(hashes[1]), hashes[1], 'Url that had no hash stayed the same' );
+
+    });
+
+    /**
+     * Checks to see if the url is a hash to the same page
+     */
     QUnit.test( 'isHash', function( assert ) {
         var hashes = [
                 $('<a href="#foo" />').prop('href'),

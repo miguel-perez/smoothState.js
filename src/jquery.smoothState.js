@@ -126,6 +126,15 @@
       },
 
       /**
+       * Strips the hash from a url and returns the new href
+       * @param   {string}    href - url being evaluated
+       *
+       */
+      stripHash: function(href) {
+        return href.replace(/#.*/, '');
+      },
+
+      /**
        * Checks to see if the url is an internal hash
        * @param   {string}    href - url being evaluated
        * @param   {string}    prev - previous url (optional)
@@ -135,7 +144,7 @@
         prev = prev || window.location.href;
 
         var hasHash = (href.indexOf('#') > -1) ? true : false,
-          samePath = (href.replace(/#.*/, '') === prev.replace(/#.*/, '')) ? true : false;
+          samePath = (utility.stripHash(href) === utility.stripHash(prev)) ? true : false;
 
         return (hasHash && samePath);
       },
@@ -331,6 +340,8 @@
         /** Container element smoothState is run on */
         $container = $(element),
 
+        targetHash = null,
+
         /** Variable that stores pages after they are requested */
         cache = {},
 
@@ -391,6 +402,11 @@
 
             $container.one('ss.onEndEnd', function(){
               options.callback(url, $container, $content, cache[url].html);
+              if(targetHash) {
+                var $targetHashEl = $(targetHash, $container);
+                $body.scrollTop($targetHashEl.offset().top);
+                targetHash = null;
+              }
             });
 
             window.setTimeout(function(){
@@ -527,6 +543,7 @@
             // stopPropagation so that event doesn't fire on parent containers.
             event.stopPropagation();
             event.preventDefault();
+            targetHash = $anchor.prop('hash');
             load(url);
           }
         },
