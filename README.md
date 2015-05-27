@@ -15,6 +15,7 @@ jquery.smoothState.js
 smoothState.js is a jQuery plugin that progressively enhances page loads to give you control over page transitions.
 
 * [Checkout the demo site]( http://miguel-perez.github.io/smoothState.js) for examples and tutorials.
+* View the source of the [typical](http://miguel-perez.github.io/smoothState.js/demos/typical/index.html) or [barebones](http://miguel-perez.github.io/smoothState.js/demos/barebones/index.html) demos.
 * Learn [How To Add Page Transitions with CSS and smoothState.js](https://css-tricks.com/add-page-transitions-css-smoothstate-js/) on CSSTricks
 * Post sites you've created with smoothState on [/r/smoothState](http://www.reddit.com/r/smoothstate/)
 
