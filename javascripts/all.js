@@ -581,8 +581,8 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         restartCSSAnimations = function () {
           var classes = $container.prop('class');
           $container.removeClass(classes);
-          $container.addClass(classes);
           utility.redraw($container);
+          $container.addClass(classes);
         };
 
       /** Merge defaults and global options into current configuration */
@@ -669,4 +669,5 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             }
         },
         smoothState = $main.smoothState(options).data('smoothState');
+    window.smoothstate = smoothState;
 })(jQuery);
