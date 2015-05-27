@@ -567,8 +567,8 @@
         restartCSSAnimations = function () {
           var classes = $container.prop('class');
           $container.removeClass(classes);
-          $container.addClass(classes);
           utility.redraw($container);
+          $container.addClass(classes);
         };
 
       /** Merge defaults and global options into current configuration */
