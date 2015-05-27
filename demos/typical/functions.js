@@ -1,21 +1,29 @@
-// Contents of functions.js
-;(function($) {
-  'use strict';
-  var $body = $('html, body'),
-      content = $('#main').smoothState({
-        // Runs when a link has been activated
-        onStart: {
-          duration: 250, // Duration of our animation
-          render: function (url, $container) {
-            // toggleAnimationClass() is a public method
-            // for restarting css animations with a class
-            content.toggleAnimationClass('is-exiting');
-            // Scroll user to the top
-            $body.animate({
-              scrollTop: 0
-            });
-          }
-        }
-      }).data('smoothState');
-      //.data('smoothState') makes public methods available
+;(function ($) {
+    'use strict';
+    var $body = $('html, body'),
+        $main = $('#main'),
+        options = {
+            prefetch: true,
+            pageCacheSize: 4,
+            onStart: {
+                duration: 250,
+                render: function (url, $container) {
+                    $body.animate({
+                        scrollTop: 0
+                    });
+                    $main.addClass('is-exiting');
+                    smoothState.restartCSSAnimations();
+                }
+            },
+            onEnd: {
+                duration: 0,
+                render: function (url, $container, $content) {
+                    $main.removeClass('is-exiting');
+                    $main.html($content);
+                    $body.css('cursor', 'auto');
+                    $body.find('a').css('cursor', 'auto');
+                }
+            }
+        },
+        smoothState = $main.smoothState(options).data('smoothState');
 })(jQuery);
