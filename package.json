@@ -1,6 +1,6 @@
 {
   "name": "smoothstate",
-  "version": "0.5.43",
+  "version": "0.5.5",
   "description": "A jQuery plugin to stop the jank of page loads.",
   "keywords": [
     "pjax",

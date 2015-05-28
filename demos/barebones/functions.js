@@ -1,5 +1,4 @@
-// Contents of functions.js
-;(function($) {
+$(function() {
   'use strict';
   $('#main').smoothState();
-})(jQuery);
+});

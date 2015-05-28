@@ -1,12 +1,12 @@
 // Contents of functions.js
-;(function($) {
+$(function() {
   'use strict';
   var $body = $('html, body'),
       $page = $('#main'),
       smoothState = $page.smoothState({
         // Runs when a link has been activated
         onStart: {
-          duration: 100, // Duration of our animation
+          duration: 200, // Duration of our animation
           render: function (url, $container) {
             // Add your CSS animation reversing class
             $page.addClass('is-exiting');
@@ -36,4 +36,4 @@
       }
       }).data('smoothState');
       //.data('smoothState') makes public methods available
-})(jQuery);
+});

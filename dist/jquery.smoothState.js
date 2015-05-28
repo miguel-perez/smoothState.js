@@ -162,55 +162,6 @@
       },
 
       /**
-       * Prevents jQuery from stripping elements from $(html)
-       * @param   {string}    url - url being evaluated
-       * @author  Ben Alman   http://benalman.com/
-       * @see     https://gist.github.com/cowboy/742952
-       *
-       */
-      htmlDoc: function (html) {
-        var parent,
-          elems = $(),
-          matchTag = /<(\/?)(html|head|body|title|base|meta|svg)(\s+[^>]*)?>/ig,
-          prefix = 'ss' + Math.round(Math.random() * 100000),
-          htmlParsed = html.replace(matchTag, function(tag, slash, name, attrs) {
-            var obj = {};
-            if (!slash) {
-              $.merge(elems, $('<' + name + '/>'));
-              if (attrs) {
-                $.each($('<div' + attrs + '/>')[0].attributes, function(i, attr) {
-                  obj[attr.name] = attr.value;
-                });
-              }
-              elems.eq(-1).attr(obj);
-            }
-
-            return '<' + slash + 'div' + (slash ? '' : ' id="' + prefix + (elems.length - 1) + '"') + '>';
-          });
-
-        // If no placeholder elements were necessary, just return normal
-        // jQuery-parsed HTML.
-        if (!elems.length) {
-          return $(html);
-        }
-        // Create parent node if it hasn't been created yet.
-        if (!parent) {
-          parent = $('<div/>');
-        }
-        // Create the parent node and append the parsed, place-held HTML.
-        parent.html(htmlParsed);
-
-        // Replace each placeholder element with its intended element.
-        $.each(elems, function(i) {
-          var elem = parent.find('#' + prefix + i).before(elems[i]);
-          elems.eq(i).html(elem.contents());
-          elem.remove();
-        });
-
-        return parent.children().unwrap();
-      },
-
-      /**
        * Resets an object if it has too many properties
        *
        * This is used to clear the 'cache' object that stores
@@ -245,33 +196,30 @@
       },
 
       /**
-       * Finds the inner content of an element, by an ID, from a jQuery object
-       * @param   {string}    id
-       * @param   {object}    $html
+       * Stores a document fragment into an object
+       * @param   {object}    object - object where it will be sotred
+       * @param   {string}    url - name of the entry
+       * @param   {string|document}    doc - entire html
+       * @param   {string}    id - the id of the fragment
        *
        */
-      getContentById: function (id, $html) {
-        $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
-        var $insideElem = $html.find(id),
-          updatedContainer = ($insideElem.length) ? $.trim($insideElem.html()) : $html.filter(id).html(),
-          newContent = (updatedContainer.length) ? $(updatedContainer) : null;
-        return newContent;
-      },
+      storePageIn: function (object, url, doc, id) {
+        var newDoc;
 
-      /**
-       * Stores html content as jquery object in given object
-       * @param   {object}    object - object contents will be stored into
-       * @param   {string}    url - url to be used as the prop
-       * @param   {jquery}    html - contents to store
-       *
-       */
-      storePageIn: function (object, url, $html) {
-        $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
+        if(doc instanceof HTMLDocument) {
+          newDoc = doc;
+        } else {
+          newDoc = document.implementation.createHTMLDocument('');
+          newDoc.open();
+          newDoc.write(doc);
+          newDoc.close();
+        }
+
         object[url] = { // Content is indexed by the url
           status: 'loaded',
           // Stores the title of the page, .first() prevents getting svg titles
-          title: $html.find('title').first().text(),
-          html: $html // Stores the contents of the page
+          title: newDoc.title,
+          html: $(newDoc.getElementById(id)), // Stores the contents of the page
         };
         return object;
       },
@@ -341,6 +289,8 @@
         /** Container element smoothState is run on */
         $container = $(element),
 
+        elementId = $container.prop('id'),
+
         /** If a hash was clicked, we'll store it here so we
          *  can scroll to it once the new page has been fully
          *  loaded.
@@ -382,7 +332,7 @@
           // Store contents in cache variable if successful
           request.success(function (html) {
             // Clear cache varible if it's getting too big
-            utility.storePageIn(cache, url, html);
+            utility.storePageIn(cache, url, html, elementId);
             $container.data('smoothState').cache = cache;
           });
 
@@ -399,12 +349,10 @@
         /** Updates the contents from cache[url] */
         updateContent = function (url) {
           // If the content has been requested and is done:
-          var containerId = '#' + $container.prop('id'),
-              $content = cache[url] ? utility.getContentById(containerId, cache[url].html) : null;
+          var containerId = '#' + elementId,
+              $content = cache[url] ? $(cache[url].html.html()) : null;
 
           if($content) {
-
-            // cache[url].status = 'current';
 
             document.title = cache[url].title;
 
@@ -417,10 +365,13 @@
               isTransitioning = false;
 
               options.callback(url, $container, $content, cache[url].html);
-              // cache[url].status = 'loaded';
+
               if(targetHash) {
-                var $targetHashEl = $(targetHash, $container);
-                $body.scrollTop($targetHashEl.offset().top);
+                var $targetHashEl = $(targetHash, $container),
+                    newPosition = $targetHashEl.offset().top;
+                $body.animate({
+                  scrollTop: newPosition
+                }, 250);
                 targetHash = null;
               }
             });
@@ -473,7 +424,7 @@
                 }
 
                 if(!isPopped) {
-                  window.history.pushState({ id: $container.prop('id') }, cache[url].title, url);
+                  window.history.pushState({ id: elementId }, cache[url].title, url);
                 }
               },
 
@@ -609,11 +560,11 @@
 
       /** Sets a default state */
       if(window.history.state === null) {
-        window.history.replaceState({ id: $container.prop('id') }, document.title, currentHref);
+        window.history.replaceState({ id: elementId }, document.title, currentHref);
       }
 
       /** Stores the current page in cache variable */
-      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML);
+      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId);
 
       /** Bind all of the event handlers on the container, not anchors */
       utility.triggerAllAnimationEndEvent($container, 'ss.onStartEnd ss.onProgressEnd ss.onEndEnd');

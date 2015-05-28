@@ -112,22 +112,6 @@
     });
 
     /**
-     * Prevents jQuery from stripping elements from $(html)
-     */
-     QUnit.test( 'htmlDoc', function( assert ) {
-        var html  = '<!doctype html> <html> <head> <meta charset="utf-8"> <title> Home - jQuery.smoothState.js </title> <link href="/stylesheets/all.css" rel="stylesheet" type="text/css" /> <base href="http://www.example.com/"> </head> <body class="index m-scene" id="main"></body> </html>',
-            $html = $.smoothStateUtility.htmlDoc(html);
-
-        // Should find html|head|body|title|base|meta
-        assert.ok( $html.filter('html').length === 1, 'HTML element found!');
-        assert.ok( $html.find('head').length === 1, 'head element found!');
-        assert.ok( $html.find('body').length === 1, 'body element found!');
-        assert.ok( $html.find('title').length === 1, 'title element found!');
-        assert.ok( $html.find('base').length === 1, 'base element found!');
-        assert.ok( $html.find('meta').length === 1, 'meta element found!');
-    });
-
-    /**
      * Resets an object if it has too many properties
      */
      QUnit.test( 'clearIfOverCapacity', function( assert ) {
@@ -139,21 +123,6 @@
         assert.ok( Object.keys(objOver).length === 0, 'Is a blank object' );
         assert.ok( Object.keys(objEq).length === 2, 'Returns the same object' );
         assert.ok( Object.keys(objUnder).length === 1, 'Returns the same object' );
-    });
-
-    /**
-     * Finds the inner content of an element, by an ID, from a jQuery object
-     */
-    QUnit.test( 'getContentById', function( assert ) {
-        var id                   = '#main',
-            $htmlWithIdOnBody    = '<!doctype html> <html> <head> <title></title> </head> <body id="main"> <div> Content </div> </body> </html>',
-            $htmlWithIdInContent = '<!doctype html> <html> <head> <title></title> </head> <body> <div id="main"> Content </div> </body> </html>',
-            $htmlWithIdOnHtml    = '<!doctype html> <html id="main"> <head> <title></title> </head> <body> <div> Content </div> </body> </html>';
-
-        assert.ok( $.smoothStateUtility.getContentById(id, $htmlWithIdOnBody), 'Html with id on the body element' );
-        assert.ok( $.smoothStateUtility.getContentById(id, $htmlWithIdInContent), 'Html with id on a div inside the body' );
-        assert.ok( $.smoothStateUtility.getContentById(id, $htmlWithIdOnHtml), 'Html with id on the HTML element' );
-
     });
 
     /**

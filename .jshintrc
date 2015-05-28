@@ -3,6 +3,9 @@
   "browser": true,
   "jquery": true,
   "qunit": true,
+  "globals": {
+    "HTMLDocument": false
+  },
   "esnext": true,
   "bitwise": true,
   "camelcase": true,
