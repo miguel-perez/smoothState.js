@@ -340,7 +340,17 @@
         /** Container element smoothState is run on */
         $container = $(element),
 
+        /** If a hash was clicked, we'll store it here so we
+         *  can scroll to it once the new page has been fully
+         *  loaded.
+         */
         targetHash = null,
+
+        /** Used to prevent fetching while we transition so
+         *  that we don't mistakenly override a cache entry
+         *  we need.
+         */
+        isTransitioning = false,
 
         /** Variable that stores pages after they are requested */
         cache = {},
@@ -389,9 +399,11 @@
         updateContent = function (url) {
           // If the content has been requested and is done:
           var containerId = '#' + $container.prop('id'),
-            $content = cache[url] ? utility.getContentById(containerId, cache[url].html) : null;
+              $content = cache[url] ? utility.getContentById(containerId, cache[url].html) : null;
 
           if($content) {
+
+            // cache[url].status = 'current';
 
             document.title = cache[url].title;
 
@@ -401,7 +413,10 @@
             options.onEnd.render(url, $container, $content, cache[url].html);
 
             $container.one('ss.onEndEnd', function(){
+              isTransitioning = false;
+
               options.callback(url, $container, $content, cache[url].html);
+              // cache[url].status = 'loaded';
               if(targetHash) {
                 var $targetHashEl = $(targetHash, $container);
                 $body.scrollTop($targetHashEl.offset().top);
@@ -520,11 +535,10 @@
          *
          */
         hoverAnchor = function (event) {
-          var $anchor = $(event.currentTarget),
-            url = $anchor.prop('href');
-          if (utility.shouldLoad($anchor, options.blacklist)) {
+          var $anchor = $(event.currentTarget);
+          if (utility.shouldLoad($anchor, options.blacklist) && !isTransitioning) {
             event.stopPropagation();
-            fetch(url);
+            fetch($anchor.prop('href'));
           }
         },
 
@@ -541,6 +555,7 @@
           // Ctrl (or Cmd) + click must open a new tab
           if (!event.metaKey && !event.ctrlKey && utility.shouldLoad($anchor, options.blacklist)) {
             // stopPropagation so that event doesn't fire on parent containers.
+            isTransitioning = true;
             event.stopPropagation();
             event.preventDefault();
             targetHash = $anchor.prop('hash');
