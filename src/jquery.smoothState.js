@@ -171,7 +171,7 @@
       htmlDoc: function (html) {
         var parent,
           elems = $(),
-          matchTag = /<(\/?)(html|head|body|title|base|meta)(\s+[^>]*)?>/ig,
+          matchTag = /<(\/?)(html|head|body|title|base|meta|svg)(\s+[^>]*)?>/ig,
           prefix = 'ss' + Math.round(Math.random() * 100000),
           htmlParsed = html.replace(matchTag, function(tag, slash, name, attrs) {
             var obj = {};
@@ -269,7 +269,8 @@
         $html = ($html instanceof jQuery) ? $html : utility.htmlDoc($html);
         object[url] = { // Content is indexed by the url
           status: 'loaded',
-          title: $html.find('title').text(), // Stores the title of the page
+          // Stores the title of the page, .first() prevents getting svg titles
+          title: $html.find('title').first().text(),
           html: $html // Stores the contents of the page
         };
         return object;

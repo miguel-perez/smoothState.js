@@ -162,7 +162,7 @@
     QUnit.test( 'storePageIn', function( assert ) {
         var url     = window.location.href,
             title   = 'Test title ' + Math.random(),
-            $html   = '<!doctype html> <html> <head> <title>' + title + '</title> </head> <body id="main"> <div> Content </div> </body> </html>',
+            $html   = '<!doctype html> <html> <head> <title>' + title + '</title> </head> <body id="main"> <div> Content <svg><title>svg title</title></svg></div> </body> </html>',
             cache   = {};
 
         $.smoothStateUtility.storePageIn(cache, url, $html);
