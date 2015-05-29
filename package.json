@@ -29,12 +29,11 @@
     "gulp-concat": "^2.5.2",
     "gulp-jshint": "^1.11.0",
     "gulp-load-plugins": "^0.10.0",
+    "gulp-qunit": "^1.2.1",
     "gulp-size": "^1.2.1",
     "gulp-uglify": "^1.2.0",
     "jquery": "^2.1.4",
-    "jquery.mockjax": "^2.0.0-beta",
     "jshint-stylish": "^2.0.0",
-    "node-qunit-phantomjs": "^1.2.0",
     "qunitjs": "^1.18.0"
   },
   "repository": {

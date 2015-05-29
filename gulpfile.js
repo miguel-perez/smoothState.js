@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-    qunit = require('node-qunit-phantomjs'),
+    qunit = require('gulp-qunit'),
     plugins = require('gulp-load-plugins')();
 
 var scripts = [
@@ -14,7 +14,8 @@ var scripts = [
 
 /** Run all unit tests */
 gulp.task('test', function() {
-  return qunit('./tests/index.html');
+  return gulp.src('./tests/index.html')
+        .pipe(qunit({'phantomjs-options': ['--remote-debugger-port=9000']}));
 });
 
 /** Lint JavaScript */

@@ -1,0 +1,26 @@
+
+.m-scene .scene_element {
+  animation-duration: 0.2s;
+  transition-timing-function: ease-in;
+  animation-fill-mode: both; }
+
+.m-scene .scene_element--fadein {
+  animation-name: fadeIn; }
+
+.m-scene .scene_element--fadeinup {
+  animation-name: fadeInUp; }
+
+.m-scene .scene_element--fadeinright {
+  animation-name: fadeInRight; }
+
+.m-scene .scene_element--delayed {
+  animation-delay: 0.25s; }
+
+.m-scene.is-exiting .scene_element {
+  animation-direction: alternate-reverse; }
+
+.m-scene.is-exiting .scene_element--delayed {
+  animation-delay: 0s; }
+
+.m-scene.is-exiting .scene_element--noexiting {
+  animation-direction: alternate-reverse; }
