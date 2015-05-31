@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp'),
-    qunit = require('node-qunit-phantomjs'),
     plugins = require('gulp-load-plugins')();
 
 var scripts = [
@@ -14,7 +13,8 @@ var scripts = [
 
 /** Run all unit tests */
 gulp.task('test', function() {
-  return qunit('./tests/index.html');
+  return gulp.src('./tests/index.html')
+        .pipe(plugins.qunit());
 });
 
 /** Lint JavaScript */
@@ -26,21 +26,11 @@ gulp.task('jshint', function () {
 });
 
 /** Concatenate and minify JavaScript */
-gulp.task('scripts-prod', function () {
+gulp.task('uglify', function () {
   return gulp.src(scripts)
     .pipe(plugins.concat('jquery.smoothState.min.js'))
     .pipe(plugins.uglify({preserveComments: 'some'}))
-    // Output files
-    .pipe(gulp.dest('dist/'))
-    .pipe(plugins.size({title: 'scripts'}));
-});
-
-/** Concatenate and move a dev version to distribution */
-gulp.task('scripts-dev', function () {
-  return gulp.src(scripts)
-    .pipe(plugins.concat('jquery.smoothState.js'))
-    // Output files
-    .pipe(gulp.dest('dist/'))
+    .pipe(gulp.dest('./'))
     .pipe(plugins.size({title: 'scripts'}));
 });
 
@@ -51,6 +41,5 @@ gulp.task('watch', function() {
 
 /** Default task */
 gulp.task('default', ['jshint', 'test'], function() {
-  gulp.start('scripts-prod');
-  gulp.start('scripts-dev');
+  gulp.start('uglify');
 });

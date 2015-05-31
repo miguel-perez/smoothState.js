@@ -278,7 +278,7 @@
           page = $page.data('smoothState');
 
         if(page.href !== url && !utility.isHash(url, page.href)) {
-          page.load(url, true);
+          page.load(url, false);
         }
       }
     },
@@ -393,14 +393,14 @@
          * Loads the contents of a url into our container
          *
          * @param   {string}    url
-         * @param   {bool}      isPopped - used to determine if whe should
+         * @param   {bool}      push - used to determine if whe should
          *                      add a new item into the history object
          *
          */
-        load = function (url, isPopped) {
+        load = function (url, push) {
 
           /** Makes this an optional variable by setting a default */
-          isPopped = isPopped || false;
+          push = push || true;
 
           var
             /** Used to check if the onProgress function has been run */
@@ -423,7 +423,7 @@
                   updateContent(url);
                 }
 
-                if(!isPopped) {
+                if(push) {
                   window.history.pushState({ id: elementId }, cache[url].title, url);
                 }
               },

@@ -2,50 +2,14 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>QUnit $.smoothStateUtility() tests</title>
+  <title>Smoothstate unit tests</title>
   <link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
 </head>
 <body>
   <div id="qunit"></div>
-  <div id="qunit-fixture">
-
-    <script id="page-nav" type="text/x-template">
-      <ul>
-        <li><a href="page-one.html">Page One</a></li>
-        <li><a href="page-two.html">Page Two</a></li>
-      </ul>
-    </script>
-
-    <script id="page-one" type="text/x-template">
-      <!DOCTYPE html>
-      <html>
-      <head><title>Page One</title></head>
-      <body>
-        <div id="page">
-          {{nav}}
-          <h1 id="page-title">Page One</h1>
-        </div>
-      </body>
-      </html>
-    </script>
-
-    <script id="page-two" type="text/x-template">
-      <!DOCTYPE html>
-      <html>
-      <head><title>Page Two</title></head>
-      <body>
-        <div id="page">
-          {{nav}}
-          <h1 id="page-title">Page Two</h1>
-        </div>
-      </body>
-      </html>
-    </script>
-
-  </div>
+  <div id="qunit-fixture"></div>
   <script src="../node_modules/jquery/dist/jquery.js"></script>
   <script src="../node_modules/qunitjs/qunit/qunit.js"></script>
-  <script src="../node_modules/jquery.mockjax/dist/jquery.mockjax.js"></script>
   <script src="../src/jquery.smoothState.js"></script>
   <script src="smoothStateUtilityTests.js"></script>
   <script src="smoothStateTests.js"></script>
