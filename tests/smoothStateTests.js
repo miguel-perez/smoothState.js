@@ -71,4 +71,30 @@ $(function() {
 
   });
 
+  QUnit.test('cache.clear(url)', function(assert){
+    assert.expect(2);
+    var frameWin = this.frameWin,
+        _$ = frameWin.$,
+        url = _$('#page-about').prop('href'),
+        done = assert.async(),
+        options = {
+          development: true,
+          pageCacheSize: 2
+        },
+        secondCallback = function(){
+          smoothState.clear();
+          assert.ok($.isEmptyObject(smoothState.cache), 'Clears the entire cache when no url provided');
+          done();
+        },
+        firstCallback = function(){
+          smoothState.clear(url);
+          assert.notOk(smoothState.cache[url], 'Clears contents in cache[url]');
+          smoothState.fetch(url, secondCallback);
+        },
+        smoothState = _$('#main').smoothState(options).data('smoothState');
+
+    smoothState.fetch(url, firstCallback);
+
+  });
+
 });
