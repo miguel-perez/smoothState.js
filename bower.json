@@ -1,6 +1,6 @@
 {
     "name": "smoothstate",
-    "main": "dist/jquery.smoothState.js",
+    "main": "./src/jquery.smoothState.js",
     "version": "0.5.5",
     "description": "A jQuery plugin to stop the jank of page loads.",
     "keywords": [

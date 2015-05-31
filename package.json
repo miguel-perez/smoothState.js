@@ -22,8 +22,10 @@
     "email": "reachme@miguel-perez.com",
     "url": "http://miguel-perez.com/"
   },
-  "main": "dist/jquery.smoothState.js",
-  "dependencies": {},
+  "main": "./src/jquery.smoothState.js",
+  "dependencies": {
+    "jquery": ">=1.9"
+  },
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-concat": "^2.5.2",

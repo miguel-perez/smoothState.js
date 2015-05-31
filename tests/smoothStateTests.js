@@ -5,17 +5,16 @@ $(function() {
 
   QUnit.module('smoothState', {
     beforeEach: function(assert) {
-      var
+      var id = 'frame-' + new Date().getTime(),
           test = this,
           done = assert.async(),
-          frameReady = function(frameWin) {
-            test.frameWin = frameWin;
-            window.frameReady = $.noop;
+          frameReady = function() {
+            var frame = document.getElementById(id);
+            test.frameWin = frame.contentWindow;
             done();
           };
-
       window.frameReady = frameReady;
-      $('#qunit-fixture').append('<iframe src="views/home.html">');
+      $('#qunit-fixture').append('<iframe id="' + id + '" src="views/home.html" onload="frameReady()">');
     },
     afterEach: function(assert) {
       delete window.frameReady;
@@ -29,8 +28,7 @@ $(function() {
 
   QUnit.test('load(url)', function(assert){
     assert.expect(3);
-    var
-        frameWin = this.frameWin,
+    var frameWin = this.frameWin,
         frameDoc = frameWin.document,
         _$ = frameWin.jQuery,
         url = _$('#page-about').prop('href'),
@@ -52,8 +50,7 @@ $(function() {
 
   QUnit.test('fetch(url, callback)', function(assert){
     assert.expect(5);
-    var
-        frameWin = this.frameWin,
+    var frameWin = this.frameWin,
         _$ = frameWin.$,
         url = _$('#page-about').prop('href'),
         done = assert.async(),
