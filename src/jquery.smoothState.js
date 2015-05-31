@@ -310,6 +310,22 @@
         currentHref = window.location.href,
 
         /**
+         * Clears a given page from the cache, if no url is provided
+         * it will clear the entire cache.
+         * @param  {String} url entry that is to be deleted.
+         * @return {[type]}     [description]
+         */
+        clear = function(url) {
+          url = url || false;
+          if(url && cache.hasOwnProperty(url)) {
+            delete cache[url];
+          } else {
+            cache = {};
+          }
+          $container.data('smoothState').cache = cache;
+        },
+
+        /**
          * Fetches the contents of a url and stores it in the 'cache' varible
          * @param   {string}    url
          *
@@ -576,6 +592,7 @@
       return {
         href: currentHref,
         cache: cache,
+        clear: clear,
         load: load,
         fetch: fetch,
         toggleAnimationClass: toggleAnimationClass,

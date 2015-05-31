@@ -105,9 +105,10 @@ callback : function(url, $container, $content) {
 smoothState provides some methods available by accessing the element's data property.
 
 * [href](#href)
-* [cache](#cache)
 * [load](#loadurl)
+* [cache](#cache)
 * [fetch](#fetchurl)
+* [clear](#clearurl)
 * [toggleAnimationClass](#toggleanimationclassclassname)
 * [restartCSSAnimations](#restartcssanimations)
 
@@ -120,14 +121,17 @@ content.load('/newPage.html');
 ### `href`
 Url of the content that is currently displayed.
 
-### `cache`
-Variable that stores pages after they are requested.
-
 ### `load(url)`
 Loads the contents of a url into our container.
 
+### `cache`
+Variable that stores pages after they are requested.
+
 ### `fetch(url)`
-Fetches the contents of a url and stores it in the 'cache' variable.
+Fetches the contents of a url and stores it.
+
+### `clear(url)`
+Clears a given page from the cache, if no url is provided it will clear the entire cache.
 
 ### `toggleAnimationClass(classname)`
 This method is **deprecated** and will be removed in version 0.6.0. It was used to restart css animations while toggling a specific class, such as `.is-existing`. This proved to be an unreliable way to handle restarting css animtions since there's no way to define when we want the class to be removed. Use `restartCSSAnimations()` instead, and add or remove the animation classes on the appropiate callbacks.
