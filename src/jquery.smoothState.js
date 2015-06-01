@@ -32,8 +32,11 @@
     /** Plugin default options, will be exposed as $fn.smoothState.options */
     defaults = {
 
-      /** jquery element string to specify which anchors smoothstate should bind to */
+      /** jquery selector to specify which anchors smoothstate should bind to */
       anchors: 'a',
+
+      /** jquery selector to specify which forms smoothstate should bind to */
+      forms: 'form',
 
       /** If set to true, smoothState will prefetch a link's contents on hover */
       prefetch: false,
@@ -330,31 +333,44 @@
          * @param   {string}    url
          *
          */
-        fetch = function (url, callback) {
+        fetch = function (settings, callback) {
           callback = callback || null;
 
+          var defaults = {
+            dataType: 'html',
+            type: 'GET'
+          };
+
+          // Checks if we're only passing in a url
+          if(typeof settings === 'string') {
+            settings = $.extend({}, defaults, { url: settings });
+          } else {
+            settings = $.extend({}, defaults, settings);
+          }
+
           // Don't fetch we have the content already
-          if(cache.hasOwnProperty(url)) {
+          if(cache.hasOwnProperty(settings.url) && settings.type === 'GET') {
             return;
           }
 
           cache = utility.clearIfOverCapacity(cache, options.pageCacheSize);
 
-          cache[url] = { status: 'fetching' };
+          cache[settings.url] = { status: 'fetching' };
 
-          var requestUrl = options.alterRequestUrl(url) || url,
-            request = $.ajax(requestUrl, { dataType: 'html' });
+          settings.url = options.alterRequestUrl(settings.url) || settings.url;
+
+          var request = $.ajax(settings);
 
           // Store contents in cache variable if successful
           request.success(function (html) {
             // Clear cache varible if it's getting too big
-            utility.storePageIn(cache, url, html, elementId);
+            utility.storePageIn(cache, settings.url, html, elementId);
             $container.data('smoothState').cache = cache;
           });
 
           // Mark as error
           request.error(function () {
-            cache[url].status = 'error';
+            cache[settings.url].status = 'error';
           });
 
           if(callback) {
@@ -413,10 +429,24 @@
          *                      add a new item into the history object
          *
          */
-        load = function (url, push) {
+        load = function (settings, push) {
+
+          var defaults = {
+            dataType: 'html',
+            type: 'GET'
+          };
+
+          // Checks if we're only passing in a url
+          if(typeof settings === 'string') {
+            settings = $.extend({}, defaults, { url: settings });
+          } else {
+            settings = $.extend({}, defaults, settings);
+          }
 
           /** Makes this an optional variable by setting a default */
-          push = push || true;
+          if(typeof push === 'undefined'){
+            push = true;
+          }
 
           var
             /** Used to check if the onProgress function has been run */
@@ -433,14 +463,14 @@
 
                 if(!callbBackEnded || !hasRunCallback) {
                   $container.one(eventName, function(){
-                    updateContent(url);
+                    updateContent(settings.url);
                   });
                 } else if(callbBackEnded) {
-                  updateContent(url);
+                  updateContent(settings.url);
                 }
 
                 if(push) {
-                  window.history.pushState({ id: elementId }, cache[url].title, url);
+                  window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
                 }
               },
 
@@ -453,7 +483,7 @@
 
                   // Run the onProgress callback and set trigger
                   $container.one('ss.onStartEnd', function(){
-                    options.onProgress.render(url, $container, null);
+                    options.onProgress.render(settings.url, $container, null);
 
                     window.setTimeout(function(){
                       $container.trigger('ss.onProgressEnd');
@@ -465,8 +495,8 @@
 
                 window.setTimeout(function () {
                   // Might of been canceled, better check!
-                  if(cache.hasOwnProperty(url)){
-                    responses[cache[url].status]();
+                  if(cache.hasOwnProperty(settings.url)){
+                    responses[cache[settings.url].status]();
                   }
                 }, 10);
               },
@@ -474,25 +504,25 @@
               /** Error, abort and redirect */
               error: function(){
                 if(options.development && consl) {
-                  consl.log('There was an error loading: ' + url);
+                  consl.log('There was an error loading: ' + settings.url);
                 } else {
-                  window.location = url;
+                  window.location = settings.url;
                 }
               }
             };
 
-          if (!cache.hasOwnProperty(url)) {
-            fetch(url);
+          if (!cache.hasOwnProperty(settings.url)) {
+            fetch(settings);
           }
 
           // Run the onStart callback and set trigger
-          options.onStart.render(url, $container, null);
+          options.onStart.render(settings.url, $container, null);
           window.setTimeout(function(){
             $container.trigger('ss.onStartEnd');
           }, options.onStart.duration);
 
           // Start checking for the status of content
-          responses[cache[url].status]();
+          responses[cache[settings.url].status]();
 
         },
 
@@ -518,7 +548,7 @@
          */
         clickAnchor = function (event) {
           var $anchor = $(event.currentTarget),
-            url = $anchor.prop('href');
+              url = $anchor.prop('href');
 
           // Ctrl (or Cmd) + click must open a new tab
           if (!event.metaKey && !event.ctrlKey && utility.shouldLoad($anchor, options.blacklist)) {
@@ -532,14 +562,42 @@
         },
 
         /**
+         * Binds to form submissions
+         * @param  {Event} event
+         */
+        submitForm = function (event) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          var $form = $(event.currentTarget),
+              action = $form.prop('action'),
+              method = $form.prop('method'),
+              data = $form.serialize(),
+              settings = {};
+
+            if(method === 'get') {
+              settings.url = action + '?' + data;
+            } else {
+              settings.url = action;
+              settings.data = data;
+              settings.type = 'POST';
+            }
+
+            isTransitioning = true;
+            load(settings);
+        },
+
+        /**
          * Binds all events and inits functionality
          *
          * @param   {object}    event
          *
          */
         bindEventHandlers = function ($element) {
-          //@todo: Handle form submissions
           $element.on('click', options.anchors, clickAnchor);
+
+          $element.on('submit', options.forms, submitForm);
 
           if (options.prefetch) {
             $element.on('mouseover touchstart', options.anchors, hoverAnchor);

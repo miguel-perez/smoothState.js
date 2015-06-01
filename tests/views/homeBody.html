@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Home - My Site</title>
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../../src/jquery.smoothState.js"></script>
+    </head>
+    <body id="main">
+        <ul>
+            <li><a id="page-home" href="home.html">Home <strong>[current page]</strong></a></li>
+            <li><a id="page-about" href="about.html">About</a></li>
+            <li><a id="page-about-hash" href="about.html#hash">About#hash</a></li>
+        </ul>
+        <hr/>
+        <h1 id="page-title">Home</h1>
+        <h2>Post</h2>
+        <form id="form-post" method="post" action="submit.html">
+            <input type="text" id="post-text" name="post-text" value="String" />
+            <button type="submit" id="submit-post">submit</button>
+        </form>
+        <h2>Get</h2>
+        <form id="form-get" method="get" action="submit.html">
+            <input type="text" id="get-text" name="get-text" value="String" />
+            <button type="submit" id="submit-get">submit</button>
+        </form>
+    </body>
+</html>
