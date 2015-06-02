@@ -78,7 +78,7 @@
         duration: 0,
         render: function () {
           $body.css('cursor', 'wait');
-          $body.find('a').css('cursor', 'wait');
+          $body.css('pointer-events', 'none');
         }
       },
 
@@ -87,7 +87,7 @@
         duration: 0,
         render: function (url, $container, $content) {
           $body.css('cursor', 'auto');
-          $body.find('a').css('cursor', 'auto');
+          $body.css('pointer-events', 'auto');
           $container.html($content);
         }
       },
