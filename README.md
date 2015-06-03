@@ -111,16 +111,16 @@ If set to true, smoothState will log useful debug information instead of abortin
 No element with an id of “#main” in response from “/about.html”.
 ```
 
-#### Default
 ```js
-$(‘#main’).smoothState({ debug:true });
+// Default
+$(‘#main’).smoothState({ debug:false });
 ```
 
 ### `anchors`
 A jQuery selector to specify which anchors within the smoothState element we should listen should bind to.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({ anchors:’a’ });
 ```
 
@@ -128,8 +128,8 @@ $(‘#main’).smoothState({ anchors:’a’ });
 
 A jQuery selector to specify which forms within the smoothState element we should listen should bind to.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({ forms:’form’ });
 ```
 
@@ -137,8 +137,8 @@ $(‘#main’).smoothState({ forms:’form’ });
 
 A jQuery selector to specify which elements within the smoothState element we should completely ignore. This will apply for both forms and anchors.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({ blacklist:’.no-smoothState’ });
 ```
 
@@ -148,8 +148,8 @@ There is a 200ms to 300ms delay between the time that a user hovers over a link 
 
 This technique will increase the perceived performance of your website.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({ prefetch:false });
 ```
 
@@ -159,8 +159,8 @@ smoothState.js will store pages in memory if cacheLength is set to anything grea
 
 Pages that are stored will load instantaneously.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({ cacheLength:0 });
 ```
 
@@ -168,8 +168,8 @@ $(‘#main’).smoothState({ cacheLength:0 });
 
 Class that will be applied to the body while the page is loading. We we get the page before the animations are complete, however, the loadingClass will never be added.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({ loadingClass:’is-loading’ });
 ```
 
@@ -177,8 +177,8 @@ $(‘#main’).smoothState({ loadingClass:’is-loading’ });
 
 A function that can be used to alter the [ajax settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it is requested. This is useful when dealing with applications that have layout controls or when needing to invalidate the cache.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({
   // Param `request` is an `Object` that is currently set to be used 
   alterRequest: function(request) {
@@ -192,8 +192,8 @@ $(‘#main’).smoothState({
 
 This function runs before a page load has been activated.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({
   // `$currentTarget` is a `jQuery Object` of the element, anchor or form, that triggered the load
   // `$container` is a `jQuery Object` of the the current smooth state container
@@ -205,8 +205,8 @@ $(‘#main’).smoothState({
 
 This function runs when a page load has been activated. This is an ideal time to animate elements that exit the page and set up for a loading state.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({
   onStart: {
     // How long this animation takes
@@ -221,8 +221,8 @@ $(‘#main’).smoothState({
 
 Run only if the page request is still pending and onStart has finished animating. This is a good place to add something like a  loading indicator.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({
   onProgress: {
     // How long this animation takes
@@ -239,8 +239,8 @@ $(‘#main’).smoothState({
 
 Run when requested content is ready to be injected into the page. This is when we’ll want to update the page’s content.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({
   onReady: {
     duration: 0,
@@ -258,8 +258,8 @@ $(‘#main’).smoothState({
 
 This function runs when content has been injected and all animations are complete. This is when we want to re-initialize any plugins on the page.
 
-#### Default
 ```js
+// Default
 $(‘#main’).smoothState({
   onAfter: function($container, $newContent) {}
 });
