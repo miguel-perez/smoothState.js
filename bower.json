@@ -21,15 +21,15 @@
         }
     ],
     "license": "MIT",
-    "homepage": "http://miguel-perez.github.io/smoothstate.js/",
+    "homepage": "http://miguel-perez.github.io/smoothState.js/",
     "repository": {
         "type": "git",
-        "url": "git@github.com:miguel-perez/smoothstate.js.git"
+        "url": "git@github.com:miguel-perez/smoothState.js.git"
     },
     "dependencies": {
         "jquery": ">=1.9"
     },
-    "bugs": "https://github.com/miguel-perez/smoothstate.js/issues?q=is%3Aopen+is%3Aissue+label%3Abug",
+    "bugs": "https://github.com/miguel-perez/smoothState.js/issues?q=is%3Aopen+is%3Aissue+label%3Abug",
     "ignore": [
         "**/.*",
         "node_modules",
