@@ -11,9 +11,9 @@
     "jquery-plugin",
     "page transitions"
   ],
-  "homepage": "http://miguel-perez.github.io/smoothState.js/",
+  "homepage": "http://miguel-perez.github.io/smoothstate.js/",
   "bugs": {
-    "url": "https://github.com/miguel-perez/smoothState.js/issues?q=is%3Aopen+is%3Aissue+label%3Abug",
+    "url": "https://github.com/miguel-perez/smoothstate.js/issues?q=is%3Aopen+is%3Aissue+label%3Abug",
     "email": "reachme@miguel-perez.com"
   },
   "license": "MIT",
@@ -22,7 +22,7 @@
     "email": "reachme@miguel-perez.com",
     "url": "http://miguel-perez.com/"
   },
-  "main": "./src/jquery.smoothState.js",
+  "main": "./src/jquery.smoothstate.js",
   "dependencies": {
     "jquery": ">=1.9"
   },
@@ -40,6 +40,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:miguel-perez/smoothState.js.git"
+    "url": "git@github.com:miguel-perez/smoothstate.js.git"
   }
 }

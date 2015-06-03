@@ -3,7 +3,7 @@
 
   QUnit.module('utility');
 
-  var util = $.smoothStateUtility;
+  var util = $.smoothstateUtility;
 
   /**
    * Checks to see if the url is external
@@ -83,9 +83,24 @@
   });
 
   /**
+   * Translates a url string into a $.ajax settings obj
+   */
+  QUnit.test( 'translate', function( assert ) {
+    var expectedObject = JSON.stringify({
+          dataType: 'html',
+          type: 'GET',
+          url: 'hello.html'
+        });
+    assert.equal( JSON.stringify(util.translate('hello.html')), expectedObject, 'Turned string into request object' );
+    assert.equal( JSON.stringify(util.translate({ url: 'hello.html' })), expectedObject, 'Maintained original request object' );
+    assert.notEqual( JSON.stringify(util.translate({ url: 'hello.html', type: 'POST' })), expectedObject, 'Does not override set params' );
+
+  });
+
+  /**
    * Checks to see if we should be loading this URL
    */
-  QUnit.test( 'shouldLoad', function( assert ) {
+  QUnit.test( 'shouldLoadAnchor', function( assert ) {
     var blacklist   = '.no-smoothstate, [target]',
       badAnchors  = [
         $('<a href="intex.html" class="no-smoothstate"/>'),
@@ -103,12 +118,12 @@
 
     // Invalid anchors
     for (i = badAnchors.length - 1; i >= 0; i--) {
-      assert.ok( util.shouldLoad(badAnchors[i], blacklist) === false, 'Bad: ' + $('<div/>').append(badAnchors[i]).html() );
+      assert.ok( util.shouldLoadAnchor(badAnchors[i], blacklist) === false, 'Bad: ' + $('<div/>').append(badAnchors[i]).html() );
     }
 
     // Valid anchors
     for ( y = goodAnchors.length - 1; y >= 0; y--) {
-      assert.ok( util.shouldLoad(goodAnchors[y], blacklist) === true, 'Good: ' + $('<div/>').append(goodAnchors[y]).html() );
+      assert.ok( util.shouldLoadAnchor(goodAnchors[y], blacklist) === true, 'Good: ' + $('<div/>').append(goodAnchors[y]).html() );
     }
 
   });

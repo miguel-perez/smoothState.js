@@ -1,5 +1,3 @@
-
-
 /**
 * Forms
 */
@@ -7,7 +5,7 @@
 $(function() {
   'use strict';
 
-  QUnit.smoothStateModule('forms');
+  QUnit.smoothstateModule('form');
 
   QUnit.test('Submit a form using get', function(assert){
     assert.expect(3);
@@ -20,7 +18,7 @@ $(function() {
         done = assert.async(),
         options = {
           development: true,
-          callback: function(){
+          onAfter: function(){
             assert.ok(_$('#page-title').text() === 'Submitted', 'Updates the title of the page');
             assert.equal(frameDoc.title, 'Submit - My Site', 'Replaces the contents of the page');
             assert.equal(frameWin.location.href, url, 'Updates the url');
@@ -28,7 +26,7 @@ $(function() {
           }
         };
 
-    _$('#main').smoothState(options);
+    _$('#main').smoothstate(options);
     $submit.click();
   });
 
@@ -43,7 +41,7 @@ $(function() {
         done = assert.async(),
         options = {
           development: true,
-          callback: function(){
+          onAfter: function(){
             assert.ok(_$('#page-title').text() === 'Submitted', 'Updates the title of the page');
             assert.equal(frameDoc.title, 'Submit - My Site', 'Replaces the contents of the page');
             assert.equal(frameWin.location.href, url, 'Updates the url');
@@ -51,7 +49,7 @@ $(function() {
           }
         };
 
-    _$('#main').smoothState(options);
+    _$('#main').smoothstate(options);
     $submit.click();
   });
 });

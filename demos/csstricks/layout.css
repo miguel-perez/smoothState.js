@@ -1,0 +1,174 @@
+/* @mixin respond-to
+------------------------------------------------------------------- */
+/* line 23, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+body {
+  font-size: 0.75em;
+  background-color: #222;
+  font-family: 'Open Sans', sans-serif;
+  color: #eceff1;
+  line-height: 1.5; }
+
+@media screen and (min-width: 500px) {
+  /* line 32, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  body {
+    font-size: 1em; } }
+/* line 38, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+a {
+  color: #4472B9;
+  text-decoration: none;
+  transition: color 0.15s ease-in; }
+  /* line 42, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  a:hover {
+    color: #3D67A6; }
+  /* line 45, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  a:active, a:focus {
+    color: #222; }
+  /* line 49, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  a:visited {
+    color: #673ab7; }
+
+/* line 54, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+code {
+  font-weight: bold; }
+
+/* line 62, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-type-display-1 {
+  font-size: 2em;
+  font-weight: 300;
+  margin: 16px 0; }
+
+@media screen and (min-width: 768px) {
+  /* line 69, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-type-display-1 {
+    font-size: 4em; } }
+/* line 74, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-type-sub-heading-1 {
+  font-size: 1.13em;
+  font-weight: 400;
+  margin: 16px 0; }
+
+/* line 80, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-type-heading-1 {
+  font-size: 1.5em;
+  font-weight: 400;
+  margin: 16px 0; }
+
+/* line 86, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-lorem {
+  background-color: #eceff1;
+  display: inline; }
+
+/* line 95, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-code {
+  display: block;
+  margin: 1.5em 0;
+  padding: 1em;
+  border-bottom: 1px solid #cfd8dc; }
+
+/* line 106, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-header {
+  position: relative;
+  padding: 4.25em 4.25em 2em;
+  max-width: 40em; }
+  /* line 111, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-header .header_actions {
+    margin: 1.25em 0 0; }
+  /* line 115, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-header .header_link {
+    margin-right: 1.25em;
+    margin-top: 4px; }
+  /* line 120, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-header .header_intro {
+    color: #737373; }
+
+@media screen and (min-width: 1024px) {
+  /* line 126, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-header {
+    padding: 8.5em 8.5em 4.25em; } }
+/* line 135, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-button {
+  display: block;
+  padding: 0.5em;
+  overflow: hidden;
+  background-color: #4472B9;
+  min-width: 92px;
+  box-model: border-box; }
+  /* line 143, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-button .txt {
+    color: #eceff1;
+    transition: background-color 0.15s ease-in; }
+  /* line 148, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-button:hover {
+    background-color: #3D67A6; }
+
+/* line 158, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-page {
+  background-color: #eceff1;
+  color: #263238; }
+
+/* line 163, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-page--alt {
+  background-color: #fff;
+  color: #E18728; }
+
+/* line 174, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-segment {
+  padding: 1em 4.25em;
+  border-bottom: 1px solid #cfd8dc; }
+  /* line 178, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-segment .segment_content {
+    margin: 16px 0;
+    max-width: 40em; }
+  /* line 183, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-segment .segment_description {
+    margin: 16px 0; }
+
+@media screen and (min-width: 1024px) {
+  /* line 189, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-segment {
+    padding: 2.25em 8.5em; } }
+/* line 201, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-detail-layout .m-aside .aside_title {
+  margin: 0;
+  font-weight: normal; }
+
+@media screen and (min-width: 768px) {
+  /* line 209, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-detail-layout {
+    padding-left: 110px; }
+    /* line 211, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+    .m-detail-layout .m-aside {
+      position: absolute;
+      left: 0;
+      width: 110px; }
+      /* line 215, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+      .m-detail-layout .m-aside .aside_title {
+        position: fixed; }
+      /* line 218, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+      .m-detail-layout .m-aside .m-button {
+        display: block; } }
+/* line 231, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-right-panel .m-header,
+.m-right-panel .m-segment .segment_content {
+  max-width: 43em; }
+/* line 236, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-right-panel .right-panel_top {
+  border-bottom: 1px solid #cfd8dc; }
+
+/* line 245, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-breadcrumb .breadcrumb_link {
+  position: relative;
+  top: -2px;
+  font-size: 0.75em; }
+/* line 250, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-breadcrumb .m-type-display-1 {
+  margin-top: 0; }
+
+/* line 258, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+.m-highlight {
+  background-color: #E18728;
+  color: #eceff1; }
+  /* line 261, /Users/miguelperez/Sites/csstricks/source/stylesheets/layout.css.scss */
+  .m-highlight a {
+    color: #eceff1;
+    text-decoration: underline; }

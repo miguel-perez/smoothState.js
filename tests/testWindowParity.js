@@ -17,5 +17,5 @@
 */
 $(function() {
   'use strict';
-  QUnit.smoothStateModule('window parity');
+  QUnit.smoothstateModule('window parity');
 });

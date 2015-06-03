@@ -1,4 +1,4 @@
 $(function() {
   'use strict';
-  $('#main').smoothState();
+  $('#main').smoothstate( { prefetch: true } );
 });
