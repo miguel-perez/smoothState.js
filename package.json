@@ -24,7 +24,7 @@
   },
   "main": "./src/jquery.smoothState.js",
   "dependencies": {
-    "jquery": ">=1.9"
+    "jquery": ">=1.8"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
@@ -34,7 +34,6 @@
     "gulp-qunit": "^1.2.1",
     "gulp-size": "^1.2.1",
     "gulp-uglify": "^1.2.0",
-    "jquery": "^2.1.4",
     "jshint-stylish": "^2.0.0",
     "qunitjs": "^1.18.0"
   },

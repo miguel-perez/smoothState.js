@@ -68,7 +68,7 @@ $(function(){
           }
         }
       },
-      smoothState = $(‘#main’).smoothState(options).data(‘smooth state’);
+      smoothState = $(‘#main’).smoothState(options).data(‘smoothState’);
 });
 ```
 
@@ -129,7 +129,7 @@ Pages that are stored will load instantaneously.
 
 Class that will be applied to the body while the page is loading. We we get the page before the animations are complete, however, the loadingClass will never be added.
 
-### `alterRequest(request)`
+### `alterRequest`
 
 * Type: `Function`
 * Param: `request` is an `Object` that is currently set to be used to make the ajax request
@@ -143,7 +143,7 @@ alterRequest: function (request) {
 
 A function that can be used to alter the [ajax settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it is requested. This is useful when dealing with applications that have layout controls or when needing to invalidate the cache.
 
-### `onBefore($currentTarget, $container)`
+### `onBefore`
 
 * Type: `Function`
 * Param: `$currentTarget` is a `jQuery Object` of the element, anchor or form, that triggered the load
@@ -156,7 +156,7 @@ alterRequest: function ($currentTarget, $container) {}
 
 This function runs before a page load has been activated.
 
-### `onStart(settings)`
+### `onStart`
 
 * Type: `Object`
 * Param: `settings` is a `Object` with two properties, `duration` and `render`
@@ -164,7 +164,7 @@ This function runs before a page load has been activated.
 
 ```js
 onStart: {
-	// How long the animation takes
+  // How long the animation takes
   duration: 0,
   // A function that dictates the changes on the page
   render: function ($container) {}
@@ -173,14 +173,14 @@ onStart: {
 
 This function runs when a page load has been activated. This is an ideal time to animate elements that exit the page and set up for a loading state.
 
-### `onProgress(settings)`
+### `onProgress`
 * Type: `Object`
 * Param: `settings` is a `Object` with two properties, `duration` and `render`
 * Default:
 
 ```js
 onProgress: {
-	// How long the animation takes
+  // How long the animation takes
   duration: 0,
   // A function that dictates the changes on the page
   render: function ($container) {}
@@ -189,18 +189,18 @@ onProgress: {
 
 Run only if the page request is still pending and onStart has finished animating. This is a good place to add something like a  loading indicator.
 
-### `onReady(settings)`
+### `onReady`
 * Type: `Object`
 * Param: `settings` is a `Object` with two properties, `duration` and `render`
 * Default:
 
 ```js
-onProgress: {
-	// How long the animation takes
+onReady: {
+  // How long the animation takes
   duration: 0,
   // A function that dictates the changes on the page
   render: function ($container, $newContent) {
-		// Update the page’s content
+    // Update the page’s content
     $container.html($newContent);
   }
 }
@@ -208,7 +208,7 @@ onProgress: {
 
 Run when requested content is ready to be injected into the page. This is when we’ll want to update the page’s content.
 
-### `onAfter($container, $newContent)`
+### `onAfter`
 * Type: `Function`
 * Param: `$container` is a `jQuery Object` of the the current smooth state container
 * Param: `$newContent` is a `jQuery Object` of the HTML that should replace the existing container’s HTML.
