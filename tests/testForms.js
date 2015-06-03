@@ -5,7 +5,7 @@
 $(function() {
   'use strict';
 
-  QUnit.smoothstateModule('form');
+  QUnit.smoothStateModule('form');
 
   QUnit.test('Submit a form using get', function(assert){
     assert.expect(3);
@@ -26,7 +26,7 @@ $(function() {
           }
         };
 
-    _$('#main').smoothstate(options);
+    _$('#main').smoothState(options);
     $submit.click();
   });
 
@@ -49,7 +49,7 @@ $(function() {
           }
         };
 
-    _$('#main').smoothstate(options);
+    _$('#main').smoothState(options);
     $submit.click();
   });
 });

@@ -3,7 +3,7 @@
 
   QUnit.module('utility');
 
-  var util = $.smoothstateUtility;
+  var util = $.smoothStateUtility;
 
   /**
    * Checks to see if the url is external
@@ -101,9 +101,9 @@
    * Checks to see if we should be loading this URL
    */
   QUnit.test( 'shouldLoadAnchor', function( assert ) {
-    var blacklist   = '.no-smoothstate, [target]',
+    var blacklist   = '.no-smoothState, [target]',
       badAnchors  = [
-        $('<a href="intex.html" class="no-smoothstate"/>'),
+        $('<a href="intex.html" class="no-smoothState"/>'),
         $('<a href="index.html" target="_blank" />'),
         $('<a href="//google.com" />'),
         $('<a href="#hash" />'),

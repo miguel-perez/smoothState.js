@@ -10,7 +10,7 @@ $(function(){
             // Add your CSS animation reversing class
             $container.addClass('is-exiting');
             // Restart your animation
-            smoothstate.restartCSSAnimations();
+            smoothState.restartCSSAnimations();
           }
         },
         onReady: {
@@ -24,5 +24,5 @@ $(function(){
           }
         }
       },
-      smoothstate = $page.smoothstate(options).data('smoothstate');
+      smoothState = $page.smoothState(options).data('smoothState');
 });

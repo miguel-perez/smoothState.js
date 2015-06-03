@@ -28,7 +28,7 @@ gulp.task('jshint', function () {
 /** Concatenate and minify JavaScript */
 gulp.task('uglify', function () {
   return gulp.src(scripts)
-    .pipe(plugins.concat('jquery.smoothstate.min.js'))
+    .pipe(plugins.concat('jquery.smoothState.min.js'))
     .pipe(plugins.uglify({preserveComments: 'some'}))
     .pipe(gulp.dest('./'))
     .pipe(plugins.size({title: 'scripts'}));

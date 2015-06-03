@@ -1,7 +1,7 @@
 $(function() {
   'use strict';
 
-  var smoothstateModule = function(name, view){
+  var smoothStateModule = function(name, view){
     view = view || './views/home.html';
     QUnit.module(name, {
       beforeEach: function(assert) {
@@ -23,5 +23,5 @@ $(function() {
     });
   };
 
-  QUnit.extend(QUnit, { smoothstateModule: smoothstateModule });
+  QUnit.extend(QUnit, { smoothStateModule: smoothStateModule });
 });

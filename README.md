@@ -1,7 +1,7 @@
-jquery.smoothstate.js
+jquery.smoothState.js
 ===============
 [![Build Status](https://travis-ci.org/miguel-perez/smoothState.js.svg?branch=master)](https://travis-ci.org/miguel-perez/smoothState.js)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothstate.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 * [About](#about)
 * [Options](#options)
@@ -11,17 +11,17 @@ jquery.smoothstate.js
 
 ## About
 
-smoothstate.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the [user’s browser](http://caniuse.com/#search=pushstate) does not have the needed features, it quietly fades into the background and never runs. 
+smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the [user’s browser](http://caniuse.com/#search=pushstate) does not have the needed features, it quietly fades into the background and never runs.
 
 ### Why add page transitions at all?
 
 Imagine, for a second, how disorienting it would be if touching a doorknob teleported you to the other side of the door. Navigating the web feels like using a teleporting doorknob. Layouts change, elements rearrange or disappear, and it takes time time for the user to adjust. Smooth transitions reduce the effort it takes for users to get settled into a new environment.
 
-Javascript SPA frameworks, sometimes referred to as MVC frameworks, are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility. 
+Javascript SPA frameworks, sometimes referred to as MVC frameworks, are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility.
 
-### Hows does smoothstate.js work?
+### Hows does smoothState.js work?
 
-smoothstate.js **gives you hooks** that you can use in order to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time in between animations to fetch content via Ajax.
+smoothState.js **gives you hooks** that you can use in order to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time in between animations to fetch content via Ajax.
 
 This project doesn’t dictate how you should animate things on the page. You can use CSS Animations, or any popular JS Animation libra like [velocity.js](http://julian.com/research/velocity/).
 
@@ -29,7 +29,7 @@ This project doesn’t dictate how you should animate things on the page. You ca
 
 It’s our main goal to allow us to add page transitions without having to add any logic to the backend. We keep things unobtrusive at all times.
 
-smoothstate.js is initialized on **containers, not links**. The containers can be thought of like small window objects within the page, similar to how you would describe an iframe.
+smoothState.js is initialized on **containers, not links**. The containers can be thought of like small window objects within the page, similar to how you would describe an iframe.
 
 1. Every url on your site should return a full layout - not just an HTML fragment
 2. The smoothState container needs to have an id - a unique hook to tell us what to update on the page
@@ -39,7 +39,7 @@ These requirements makes the website more resilient since it allows us to abort 
 
 ## Options
 
-smoothstate provides some options that allow you to customize the functionality of the plugin. You can change the default options by passing in an object into the smooth state function.
+smoothState provides some options that allow you to customize the functionality of the plugin. You can change the default options by passing in an object into the smooth state function.
 For example:
 
 ```js
@@ -54,7 +54,7 @@ $(function(){
             // Add your CSS animation reversing class
             $container.addClass(‘is-exiting’);
             // Restart your animation
-            smoothstate.restartCSSAnimations();
+            smoothState.restartCSSAnimations();
           }
         },
         onReady: {
@@ -68,7 +68,7 @@ $(function(){
           }
         }
       },
-      smoothstate = $(‘#main’).smoothstate(options).data(‘smooth state’);
+      smoothState = $(‘#main’).smoothState(options).data(‘smooth state’);
 });
 ```
 
@@ -77,70 +77,63 @@ $(function(){
 * Type: `Boolean`
 * Default: `false`
 
-If set to true, smoothstate will log useful debug information instead of aborting. For example, instead of redirecting the user to a page on an error, it might say:
+If set to true, smoothState will log useful debug information instead of aborting. For example, instead of redirecting the user to a page on an error, it might say:
 
 ```
 No element with an id of “#main” in response from “/about.html”.
 ```
-
 
 ### `anchors`
 
 * Type: `String`
 * Default: `’a’`
 
-A jQuery selector to specify which anchors within the smoothstate element we should listen should bind to.
-
+A jQuery selector to specify which anchors within the smoothState element we should listen should bind to.
 
 ### `forms`
 
 * Type: `String`
 * Default: `’form’`
 
-A jQuery selector to specify which forms within the smoothstate element we should listen should bind to.
-
+A jQuery selector to specify which forms within the smoothState element we should listen should bind to.
 
 ### `blacklist`
 
 * Type: `String`
-* Default: `’.no-smoothstate’`
+* Default: `’.no-smoothState’`
 
-A jQuery selector to specify which elements within the smoothstate element we should completely ignore. This will apply for both forms and anchors.
-
+A jQuery selector to specify which elements within the smoothState element we should completely ignore. This will apply for both forms and anchors.
 
 ### `prefetch`
 
 * Type: `Boolean`
 * Default: `false`
 
-There is a 200ms to 300ms delay between the time that a user hovers over a link and the time they click it. On touch screens, the delay between the `touchstart` and `touchend` is even greater. If the `prefetch` option is set to `true`, smoothstate will begin to preload the contents of the url between that delay.
+There is a 200ms to 300ms delay between the time that a user hovers over a link and the time they click it. On touch screens, the delay between the `touchstart` and `touchend` is even greater. If the `prefetch` option is set to `true`, smoothState will begin to preload the contents of the url between that delay.
 
 This technique will increase the perceived performance of your website.
-
 
 ### `cacheLength`
 
 * Type: `Number`
 * Default: `0`
 
-smoothstate.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
+smoothState.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
 
 Pages that are stored will load instantaneously.
 
-
-### `loadingClass`  
+### `loadingClass`
 
 * Type: `String`
 * Default: `’is-loading’`
 
 Class that will be applied to the body while the page is loading. We we get the page before the animations are complete, however, the loadingClass will never be added.
 
-
 ### `alterRequest(request)`
 
 * Type: `Function`
 * Param: `request` is an `Object` that is currently set to be used to make the ajax request
-* Return: The `Object` that will be used to make the request 
+* Return: The `Object` that will be used to make the request
 * Default:
 ```js
 alterRequest: function (request) {
@@ -149,7 +142,6 @@ alterRequest: function (request) {
 ```
 
 A function that can be used to alter the [ajax settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it is requested. This is useful when dealing with applications that have layout controls or when needing to invalidate the cache.
-
 
 ### `onBefore($currentTarget, $container)`
 
@@ -164,7 +156,6 @@ alterRequest: function ($currentTarget, $container) {}
 
 This function runs before a page load has been activated.
 
-
 ### `onStart(settings)`
 
 * Type: `Object`
@@ -174,7 +165,7 @@ This function runs before a page load has been activated.
 ```js
 onStart: {
 	// How long the animation takes
-  duration: 0, 
+  duration: 0,
   // A function that dictates the changes on the page
   render: function ($container) {}
 }
@@ -190,7 +181,7 @@ This function runs when a page load has been activated. This is an ideal time to
 ```js
 onProgress: {
 	// How long the animation takes
-  duration: 0, 
+  duration: 0,
   // A function that dictates the changes on the page
   render: function ($container) {}
 }
@@ -206,7 +197,7 @@ Run only if the page request is still pending and onStart has finished animating
 ```js
 onProgress: {
 	// How long the animation takes
-  duration: 0, 
+  duration: 0,
   // A function that dictates the changes on the page
   render: function ($container, $newContent) {
 		// Update the page’s content
@@ -231,7 +222,7 @@ This function runs when content has been injected and all animations are complet
 
 ## Methods and properties
 
-smoothstate provides some methods available by accessing the element's data property.
+smoothState provides some methods available by accessing the element's data property.
 
 * [href](#href)
 * [load](#loadurl)
@@ -241,7 +232,7 @@ smoothstate provides some methods available by accessing the element's data prop
 * [restartCSSAnimations](#restartcssanimations)
 
 ```js
-var content  = $('#main').smoothstate().data('smoothstate');
+var content  = $('#main').smoothState().data('smoothState');
 content.load('/newPage.html');
 
 ```
@@ -262,14 +253,14 @@ Fetches the contents of a url and stores it.
 Clears a given page from the cache, if no url is provided it will clear the entire cache.
 
 ### `restartCSSAnimations()`
-Restarts the CSS animations of the smoothstate container.
+Restarts the CSS animations of the smoothState container.
 
 ## Need help?
 
-If you need a little help implementing smoothstate there are a couple things you could do to get some support:
+If you need a little help implementing smoothState there are a couple things you could do to get some support:
 
-1. Post on stackoverflow using the [smoothstate.js tag](http://stackoverflow.com/tags/smoothstate.js).
-2. Join the [Gitter room](https://gitter.im/miguel-perez/smoothstate.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and talk to some of the contributors.
+1. Post on stackoverflow using the [smoothState.js tag](http://stackoverflow.com/tags/smoothState.js).
+2. Join the [Gitter room](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and talk to some of the contributors.
 3. Contact [Miguel](http://miguel-perez.com/), he provides training and consultation services.
 
 Please **avoid creating a Github issue with personal support requests**, we'll want to keep the tracker clear for bugs and pull requests.
@@ -281,4 +272,4 @@ We're always looking for:
 * Bug reports, especially those with a reduced test case
 * Pull requests, features, spelling errors, clarifications, etc
 * Ideas for enhancements
-* Demos and links to sites built with smoothstate.js
+* Demos and links to sites built with smoothState.js

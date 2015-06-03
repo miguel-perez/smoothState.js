@@ -5,11 +5,11 @@
 $(function() {
   'use strict';
 
-  QUnit.smoothstateModule('apiBody', './views/homeBody.html');
+  QUnit.smoothStateModule('apiBody', './views/homeBody.html');
 
   QUnit.test('should be defined on jquery object', function (assert) {
     assert.expect(1);
-    assert.ok(this.frameWin.jQuery.fn.smoothstate, 'smoothstate method is defined');
+    assert.ok(this.frameWin.jQuery.fn.smoothState, 'smoothState method is defined');
   });
 
   QUnit.test('load(url)', function (assert){
@@ -29,12 +29,12 @@ $(function() {
           debug: true,
           onAfter: testContent
         },
-        smoothstate = _$('#main').smoothstate(options).data('smoothstate');
+        smoothState = _$('#main').smoothState(options).data('smoothState');
 
-    smoothstate.load(url);
+    smoothState.load(url);
   });
 
-  QUnit.smoothstateModule('api');
+  QUnit.smoothStateModule('api');
 
   QUnit.test('load(requestObject), onBefore, onStart, onProgress, onReady, onAfter', function (assert){
     assert.expect(12);
@@ -110,9 +110,9 @@ $(function() {
           }
         },
         $main = _$('#main'),
-        smoothstate = $main.smoothstate(options).data('smoothstate');
+        smoothState = $main.smoothState(options).data('smoothState');
 
-    smoothstate.load(requestObject);
+    smoothState.load(requestObject);
   });
 
   QUnit.test('fetch(request, callback)', function (assert){
@@ -125,16 +125,16 @@ $(function() {
           debug: true,
         },
         callback = function(){
-          assert.ok(smoothstate.cache[url], 'Stores contents in cache[url]');
-          assert.equal(smoothstate.cache[url].title, 'About - My Site', 'Stores the title of the page in cache[url].title');
-          assert.ok(smoothstate.cache[url].html instanceof frameWin.jQuery, 'Stores contents as a jquery object in cache[url].html');
-          assert.ok(smoothstate.cache[url].html.is('#main'), 'Stores only the smoothstate container in cache[url].html');
-          assert.ok(smoothstate.cache[url].html.find('#page-about'), 'Stores new contents in cache[url].html');
+          assert.ok(smoothState.cache[url], 'Stores contents in cache[url]');
+          assert.equal(smoothState.cache[url].title, 'About - My Site', 'Stores the title of the page in cache[url].title');
+          assert.ok(smoothState.cache[url].html instanceof frameWin.jQuery, 'Stores contents as a jquery object in cache[url].html');
+          assert.ok(smoothState.cache[url].html.is('#main'), 'Stores only the smoothState container in cache[url].html');
+          assert.ok(smoothState.cache[url].html.find('#page-about'), 'Stores new contents in cache[url].html');
           done();
         },
-        smoothstate = _$('#main').smoothstate(options).data('smoothstate');
+        smoothState = _$('#main').smoothState(options).data('smoothState');
 
-    smoothstate.fetch(url, callback);
+    smoothState.fetch(url, callback);
   });
 
   QUnit.test('cache.clear(url)', function (assert){
@@ -148,18 +148,18 @@ $(function() {
           pageCacheSize: 2
         },
         secondCallback = function(){
-          smoothstate.clear();
-          assert.ok($.isEmptyObject(smoothstate.cache), 'Clears the entire cache when no url provided');
+          smoothState.clear();
+          assert.ok($.isEmptyObject(smoothState.cache), 'Clears the entire cache when no url provided');
           done();
         },
         firstCallback = function(){
-          smoothstate.clear(url);
-          assert.notOk(smoothstate.cache[url], 'Clears contents in cache[url]');
-          smoothstate.fetch(url, secondCallback);
+          smoothState.clear(url);
+          assert.notOk(smoothState.cache[url], 'Clears contents in cache[url]');
+          smoothState.fetch(url, secondCallback);
         },
-        smoothstate = _$('#main').smoothstate(options).data('smoothstate');
+        smoothState = _$('#main').smoothState(options).data('smoothState');
 
-    smoothstate.fetch(url, firstCallback);
+    smoothState.fetch(url, firstCallback);
   });
 
 });

@@ -13,6 +13,6 @@
 $(function() {
   'use strict';
 
-  QUnit.smoothstateModule('anchors');
+  QUnit.smoothStateModule('anchors');
 
 });

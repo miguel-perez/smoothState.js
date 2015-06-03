@@ -11,6 +11,6 @@
 $(function() {
   'use strict';
 
-  QUnit.smoothstateModule('caching');
+  QUnit.smoothStateModule('caching');
 
 });

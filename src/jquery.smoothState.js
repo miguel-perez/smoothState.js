@@ -1,11 +1,11 @@
 /**
- * smoothstate.js is a jQuery plugin to stop page load jank.
+ * smoothState.js is a jQuery plugin to stop page load jank.
  *
  * This jQuery plugin progressively enhances page loads to
  * behave more like a single-page application.
  *
  * @author  Miguel Ángel Pérez   reachme@miguel-perez.com
- * @see     https://github.com/miguel-perez/jquery.smoothstate.js
+ * @see     https://github.com/miguel-perez/jquery.smoothState.js
  *
  */
 ;(function ( $, window, document, undefined ) {
@@ -14,13 +14,13 @@
   /** Abort plugin if browser does not suppost pushState */
   if(!window.history.pushState) {
     // setup a dummy fn, but don't intercept on link clicks
-    $.fn.smoothstate = function() { return this; };
-    $.fn.smoothstate.options = {};
+    $.fn.smoothState = function() { return this; };
+    $.fn.smoothState.options = {};
     return;
   }
 
-  /** Abort if smoothstate is already present **/
-  if($.fn.smoothstate) { return; }
+  /** Abort if smoothState is already present **/
+  if($.fn.smoothState) { return; }
 
   var
     /** Used later to scroll page to the top */
@@ -29,25 +29,25 @@
     /** Used in debug mode to console out useful warnings */
     consl = (window.console || false),
 
-    /** Plugin default options, will be exposed as $fn.smoothstate.options */
+    /** Plugin default options, will be exposed as $fn.smoothState.options */
     defaults = {
 
-      /** If set to true, smoothstate will log useful debug information instead of aborting */
+      /** If set to true, smoothState will log useful debug information instead of aborting */
       debug: false,
 
-      /** jquery selector to specify which anchors smoothstate should bind to */
+      /** jquery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
-      /** jquery selector to specify which forms smoothstate should bind to */
+      /** jquery selector to specify which forms smoothState should bind to */
       forms: 'form',
 
-      /** A selector that defines what should be ignored by smoothstate */
-      blacklist: '.no-smoothstate',
+      /** A selector that defines what should be ignored by smoothState */
+      blacklist: '.no-smoothState',
 
-      /** If set to true, smoothstate will prefetch a link's contents on hover */
+      /** If set to true, smoothState will prefetch a link's contents on hover */
       prefetch: false,
 
-      /** The number of pages smoothstate will try to store in memory */
+      /** The number of pages smoothState will try to store in memory */
       cacheLength: 0,
 
       /** Class that will be applied to the body while the page is loading */
@@ -89,7 +89,7 @@
       onAfter: function($container, $newContent) {}
     },
 
-    /** Utility functions that are decoupled from smoothstate */
+    /** Utility functions that are decoupled from smoothState */
     utility = {
 
       /**
@@ -279,7 +279,7 @@
       if(e.state !== null) {
         var url = window.location.href,
           $page = $('#' + e.state.id),
-          page = $page.data('smoothstate');
+          page = $page.data('smoothState');
 
         if(page.href !== url && !utility.isHash(url, page.href)) {
           page.load(url, false);
@@ -290,7 +290,7 @@
     /** Constructor function */
     Smoothstate = function ( element, options ) {
       var
-        /** Container element smoothstate is run on */
+        /** Container element smoothState is run on */
         $container = $(element),
 
         /** ID of the main container */
@@ -326,7 +326,7 @@
           } else {
             cache = {};
           }
-          $container.data('smoothstate').cache = cache;
+          $container.data('smoothState').cache = cache;
         },
 
         /**
@@ -359,7 +359,7 @@
           // Store contents in cache variable if successful
           ajaxRequest.success(function (html) {
             utility.storePageIn(cache, settings.url, html, elementId);
-            $container.data('smoothstate').cache = cache;
+            $container.data('smoothState').cache = cache;
           });
 
           // Mark as error to be acted on later
@@ -397,7 +397,7 @@
             document.title = cache[url].title;
 
             // Update current url
-            $container.data('smoothstate').href = url;
+            $container.data('smoothState').href = url;
 
             // Remove loading class
             if(options.loadingClass) {
@@ -630,7 +630,7 @@
         };
 
       /** Merge defaults and global options into current configuration */
-      options = $.extend( {}, $.fn.smoothstate.options, options );
+      options = $.extend( {}, $.fn.smoothState.options, options );
 
       /** Sets a default state */
       if(window.history.state === null) {
@@ -657,16 +657,16 @@
       };
     },
 
-    /** Returns elements with smoothstate attached to it */
-    declaresmoothstate = function ( options ) {
+    /** Returns elements with smoothState attached to it */
+    declaresmoothState = function ( options ) {
       return this.each(function () {
-        // Checks to make sure the smoothstate element has an id and isn't already bound
-        if(this.id && !$.data(this, 'smoothstate')) {
-          // Makes public methods available via $('element').data('smoothstate');
-          $.data(this, 'smoothstate', new Smoothstate(this, options));
+        // Checks to make sure the smoothState element has an id and isn't already bound
+        if(this.id && !$.data(this, 'smoothState')) {
+          // Makes public methods available via $('element').data('smoothState');
+          $.data(this, 'smoothState', new Smoothstate(this, options));
         } else if (!this.id && consl) {
           // Throw warning if in debug mode
-          consl.warn('Every smoothstate container needs an id but the following one does not have one:', this);
+          consl.warn('Every smoothState container needs an id but the following one does not have one:', this);
         }
       });
     };
@@ -675,12 +675,12 @@
   window.onpopstate = onPopState;
 
   /** Makes utility functions public for unit tests */
-  $.smoothstateUtility = utility;
+  $.smoothStateUtility = utility;
 
-  /** Defines the smoothstate plugin */
-  $.fn.smoothstate = declaresmoothstate;
+  /** Defines the smoothState plugin */
+  $.fn.smoothState = declaresmoothState;
 
   /* expose the default options */
-  $.fn.smoothstate.options = defaults;
+  $.fn.smoothState.options = defaults;
 
 })(jQuery, window, document);
