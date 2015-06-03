@@ -2,6 +2,7 @@ $(function(){
   'use strict';
   var $page = $('#main'),
       options = {
+        debug: true,
         prefetch: true,
         pageCacheSize: 2,
         onStart: {
@@ -20,7 +21,6 @@ $(function(){
             $container.removeClass('is-exiting');
             // Inject the new content
             $container.html($newContent);
-
           }
         }
       },

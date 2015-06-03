@@ -8,10 +8,11 @@
  * @see     https://github.com/miguel-perez/jquery.smoothState.js
  *
  */
+
 ;(function ( $, window, document, undefined ) {
   'use strict';
 
-  /** Abort plugin if browser does not suppost pushState */
+  /** Abort if browser does not support pushState */
   if(!window.history.pushState) {
     // setup a dummy fn, but don't intercept on link clicks
     $.fn.smoothState = function() { return this; };
@@ -27,7 +28,7 @@
     $body = $('html, body'),
 
     /** Used in debug mode to console out useful warnings */
-    consl = (window.console || false),
+    consl = window.console,
 
     /** Plugin default options, will be exposed as $fn.smoothState.options */
     defaults = {
@@ -35,10 +36,10 @@
       /** If set to true, smoothState will log useful debug information instead of aborting */
       debug: false,
 
-      /** jquery selector to specify which anchors smoothState should bind to */
+      /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
-      /** jquery selector to specify which forms smoothState should bind to */
+      /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
 
       /** A selector that defines what should be ignored by smoothState */
@@ -55,7 +56,7 @@
 
       /**
        * A function that can be used to alter the ajax request settings before it is called
-       * @param  {Object} request jQuery.ajax seetings object that will be used to make the request
+       * @param  {Object} request jQuery.ajax settings object that will be used to make the request
        * @return {Object}         Altered request object
        */
       alterRequest: function (request) {
@@ -131,7 +132,7 @@
         prev = prev || window.location.href;
 
         var hasHash = (href.indexOf('#') > -1) ? true : false,
-          samePath = (utility.stripHash(href) === utility.stripHash(prev)) ? true : false;
+            samePath = (utility.stripHash(href) === utility.stripHash(prev)) ? true : false;
 
         return (hasHash && samePath);
       },
@@ -209,22 +210,13 @@
        *
        */
       storePageIn: function (object, url, doc, id) {
-        var newDoc;
-
-        if(doc instanceof HTMLDocument) {
-          newDoc = doc;
-        } else {
-          newDoc = document.implementation.createHTMLDocument('');
-          newDoc.open();
-          newDoc.write(doc);
-          newDoc.close();
-        }
+        var $newDoc = $(doc);
 
         object[url] = { // Content is indexed by the url
           status: 'loaded',
           // Stores the title of the page, .first() prevents getting svg titles
-          title: newDoc.title,
-          html: $(newDoc.getElementById(id)), // Stores the contents of the page
+          title: $newDoc.filter('title').first().text(),
+          html: $newDoc.filter('#' + id), // Stores the contents of the page
         };
         return object;
       },
@@ -330,7 +322,7 @@
         },
 
         /**
-         * Fetches the contents of a url and stores it in the 'cache' varible
+         * Fetches the contents of a url and stores it in the 'cache' variable
          * @param  {String|Object}   request  url or request settings object
          * @param  {Function} callback function that will run as soon as it finishes
          */
@@ -435,7 +427,7 @@
         /**
          * Loads the contents of a url into our container
          * @param   {string}    url
-         * @param   {bool}      push - used to determine if whe should
+         * @param   {bool}      push - used to determine if we should
          *                      add a new item into the history object
          */
         load = function (request, push) {
@@ -660,13 +652,17 @@
     /** Returns elements with smoothState attached to it */
     declaresmoothState = function ( options ) {
       return this.each(function () {
+        var tagname = this.tagName.toLowerCase();
         // Checks to make sure the smoothState element has an id and isn't already bound
-        if(this.id && !$.data(this, 'smoothState')) {
+        if(this.id && tagname !== 'body' && tagname !== 'html' && !$.data(this, 'smoothState')) {
           // Makes public methods available via $('element').data('smoothState');
           $.data(this, 'smoothState', new Smoothstate(this, options));
         } else if (!this.id && consl) {
           // Throw warning if in debug mode
           consl.warn('Every smoothState container needs an id but the following one does not have one:', this);
+        } else if ((tagname === 'body' || tagname === 'html') && consl) {
+          // We dont support making th html or the body element the smoothstate container
+          consl.warn('The smoothstate container cannot be the ' + this.tagName + ' tag');
         }
       });
     };

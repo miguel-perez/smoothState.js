@@ -5,7 +5,7 @@
 $(function() {
   'use strict';
 
-  QUnit.smoothStateModule('apiBody', './views/homeBody.html');
+  QUnit.smoothStateModule('api');
 
   QUnit.test('should be defined on jquery object', function (assert) {
     assert.expect(1);
@@ -33,8 +33,6 @@ $(function() {
 
     smoothState.load(url);
   });
-
-  QUnit.smoothStateModule('api');
 
   QUnit.test('load(requestObject), onBefore, onStart, onProgress, onReady, onAfter', function (assert){
     assert.expect(12);
