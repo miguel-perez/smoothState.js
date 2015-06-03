@@ -391,7 +391,7 @@
           var containerId = '#' + elementId,
               $newContent = cache[url] ? $(cache[url].html.html()) : null;
 
-          if($newContent) {
+          if($newContent.length) {
 
             // Update the title
             document.title = cache[url].title;
