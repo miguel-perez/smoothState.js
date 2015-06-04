@@ -48,6 +48,9 @@
       /** If set to true, smoothState will prefetch a link's contents on hover */
       prefetch: false,
 
+      /** The name of the event we will listen to from anchors if we're prefetching */
+      prefetchOn: 'mouseover touchstart',
+
       /** The number of pages smoothState will try to store in memory */
       cacheLength: 0,
 
@@ -609,7 +612,7 @@
           $element.on('submit', options.forms, submitForm);
 
           if (options.prefetch) {
-            $element.on('mouseover touchstart', options.anchors, hoverAnchor);
+            $element.on(options.prefetchOn, options.anchors, hoverAnchor);
           }
         },
 

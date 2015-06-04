@@ -42,7 +42,7 @@ These requirements makes the website resilient, since it allows us to abort and 
 All we need to get started is:
 
 1. Include a copy of jQuery and jQuery.smoothState.js on your page
-2. Create a new js file and run `$(‘#main’).smoothState()` 
+2. Create a new js file and run `$(‘#main’).smoothState()`
 3. Add container with an id of `#main` and include some links inside of it
 
 ```js
@@ -63,7 +63,6 @@ This default example **will not** add page transitions to your page. You’ll ne
 * [onProgress](#onprogress) - Runs if the page request is still pending and onStart has finished animating
 * [onReady](#onready) - Run when requested content is ready to be injected into the page and the previous animations have finished
 * [onAfter](#onafter) - Runs after content has been injected into the page and all animations are complete
-
 
 ## Options
 
@@ -92,7 +91,7 @@ $(function(){
           render: function ($container, $newContent) {
             // Remove your CSS animation reversing class
             $container.removeClass(‘is-exiting’);
-            
+
             // Inject the new content
             $container.html($newContent);
 
@@ -153,6 +152,15 @@ This technique will increase the perceived performance of your website.
 $(‘#main’).smoothState({ prefetch:false });
 ```
 
+### `prefetchOn`
+
+The name of the events we will listen to from anchors if we're prefetching. If you would like to throttle the prefetch, do so by using firing custom events.
+
+```js
+// Default
+$(‘#main’).smoothState({ prefetchOn:'mouseover touchstart' });
+```
+
 ### `cacheLength`
 
 smoothState.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
@@ -180,10 +188,10 @@ A function that can be used to alter the [ajax settings](http://api.jquery.com/j
 ```js
 // Default
 $(‘#main’).smoothState({
-  // Param `request` is an `Object` that is currently set to be used 
+  // Param `request` is an `Object` that is currently set to be used
   alterRequest: function(request) {
     // Must return and `Object` that will be used to make the request
-    return request; 
+    return request;
   }
 });
 ```
@@ -285,7 +293,6 @@ The methods and properties available are:
 * [fetch](#fetchurl)
 * [clear](#clearurl)
 * [restartCSSAnimations](#restartcssanimations)
-
 
 ### `href`
 Url of the content that is currently displayed.
