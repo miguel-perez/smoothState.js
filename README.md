@@ -161,6 +161,18 @@ The name of the events we will listen to from anchors if we're prefetching. If y
 $(‘#main’).smoothState({ prefetchOn:'mouseover touchstart' });
 ```
 
+In order to add a smart throttle, you can use a lirbary like @tristen's [hoverintent](https://github.com/tristen/hoverintent) and trigger a custom 'intent' event. Then, you just add that to the `prefetchOn` option.
+
+```js
+$(‘#main’).smoothState({ prefetchOn:'intent' });
+```
+
+Or, if you want to get a little crazy, you could go the opotsite way and use @cihadturhan's [jQuery.aim](https://github.com/cihadturhan/jquery-aim) and add spider sense-like prefetching to smoothState.
+
+```js
+$(‘#main’).smoothState({ prefetchOn:'aim' });
+```
+
 ### `cacheLength`
 
 smoothState.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
