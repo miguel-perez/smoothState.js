@@ -4,7 +4,7 @@ $(function(){
       options = {
         debug: true,
         prefetch: true,
-        pageCacheSize: 2,
+        cacheLength: 2,
         onStart: {
           duration: 250, // Duration of our animation
           render: function ($container) {
