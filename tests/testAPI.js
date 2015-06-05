@@ -143,7 +143,7 @@ $(function() {
         done = assert.async(),
         options = {
           debug: true,
-          pageCacheSize: 2
+          cacheLength: 2
         },
         secondCallback = function(){
           smoothState.clear();
