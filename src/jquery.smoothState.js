@@ -1,11 +1,9 @@
-/**
- * smoothState.js is a jQuery plugin to stop page load jank.
- *
- * This jQuery plugin progressively enhances page loads to
- * behave more like a single-page application.
+/*!
+ * smoothState.js is jQuery plugin that progressively enhances
+ * page loads to behave more like a single-page application.
  *
  * @author  Miguel Ángel Pérez   reachme@miguel-perez.com
- * @see     https://github.com/miguel-perez/jquery.smoothState.js
+ * @see     http://smoothstate.com
  *
  */
 

@@ -6,22 +6,24 @@ jquery.smoothState.js
 * [About](#about)
 * [Options](#options)
 * [Methods and properties](#methods-and-properties)
-* [Contribute](#contribute)
 * [Need help?](#need-help)
+* [FAQ](#faq)
+* [Contribute](#contribute)
+
 
 ## About
 
-smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the [user’s browser](http://caniuse.com/#search=pushstate) does not have the needed features, it quietly fades into the background and never runs.
+smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the [user’s browser](http://caniuse.com/#search=pushstate) does not have the needed features, it fades into the background and never runs.
 
 ### Why add page transitions at all?
 
 Imagine, for a second, how disorienting it would be if touching a doorknob teleported you to the other side of the door. Navigating the web feels like using a teleporting doorknob. Layouts change, elements rearrange or disappear, and it takes time time for the user to adjust. Smooth transitions reduce the effort it takes for users to get settled into a new environment.
 
-Javascript SPA frameworks, sometimes referred to as MVC frameworks, are a common way to solve this issue. However, these frameworks often lose the benefits of unobtrusive code, such as resilience to errors, performance, and accessibility.
+Javascript SPA frameworks, sometimes referred to as MVC frameworks, are a common way to solve this issue. These frameworks often lose the benefits of unobtrusive code. Writing unobtrusive javascript gives us more resilience to errors, performance, and accessibility.
 
 ### Hows does smoothState.js work?
 
-smoothState.js **gives you hooks** that you can use in order to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time in between animations to fetch content via Ajax.
+smoothState.js **gives you hooks** that you can use to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time between animations to fetch content via Ajax.
 
 This project doesn’t dictate how you should animate things on the page. It supports CSS Animations, and allows for any popular JS animation library like [velocity.js](http://julian.com/research/velocity/).
 
@@ -29,13 +31,13 @@ This project doesn’t dictate how you should animate things on the page. It sup
 
 It’s our main goal to allow us to add page transitions without having to add any logic to the backend. We keep things unobtrusive at all times.
 
-smoothState.js is initialized on **containers, not links**. The containers can be thought of like small window objects within the page, similar to how you would describe an iframe.
+**smoothState.js initializes on containers, not links.** Think of  containers of like small window object within the page.
 
 1. Every url on your site should return a full layout - not just an HTML fragment
 2. The smoothState container needs to have an id - a unique hook to tell us what to update on the page
-3. All links and forms on the page should reside within the container
+3. All links and forms on the page should live within the container
 
-These requirements makes the website resilient, since it allows us to abort and redirect the user if an error occurs. Making each link return a fully qualified page also ensures our page transitions are unobtrusive.
+These requirements makes the website resilient, since it allows us to abort and redirect the user if an error occurs. Making each link return a full page also ensures our we’re creating pages with progressive enhancement in mind.
 
 ## Getting started
 
@@ -53,7 +55,7 @@ $(function() {
 ```
 By default, smoothState.js will:
 * Prevent links and forms from triggering a full page load
-* Update the user’s URLs and history as to not break browsing expectations
+* Update URLs and browsing history so that we do not break browsing expectations
 * Use Ajax to request pages and replace the appropriate content
 
 This default example **will not** add page transitions to your page. You’ll need to define the animations you’ll want to run using the hooks smoothState provides.
@@ -134,7 +136,7 @@ $(‘#main’).smoothState({ forms:’form’ });
 
 ### `blacklist`
 
-A jQuery selector to specify which elements within the smoothState element we should completely ignore. This will apply for both forms and anchors.
+A jQuery selector to specify which elements within the smoothState container we should ignore. This will apply for both forms and anchors.
 
 ```js
 // Default
@@ -177,7 +179,7 @@ $(‘#main’).smoothState({ prefetchOn:'aim' });
 
 smoothState.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
 
-Pages that are stored will load instantaneously.
+Stored pages will load instantaneously.
 
 ```js
 // Default
@@ -186,7 +188,7 @@ $(‘#main’).smoothState({ cacheLength:0 });
 
 ### `loadingClass`
 
-Class that will be applied to the body while the page is loading. We we get the page before the animations are complete, however, the loadingClass will never be added.
+We apply this class to the body while a page is still loading. We won’t apply the `loadingClass` if get the page before the animations are complete.
 
 ```js
 // Default
@@ -195,7 +197,7 @@ $(‘#main’).smoothState({ loadingClass:’is-loading’ });
 
 ### `alterRequest`
 
-A function that can be used to alter the [ajax settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it is requested. This is useful when dealing with applications that have layout controls or when needing to invalidate the cache.
+A function that can alter the a request’s [ajax settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it we call it. We can use this to alter the url we’re requesting.
 
 ```js
 // Default
@@ -332,7 +334,17 @@ If you need a little help implementing smoothState there are a couple things you
 2. Join the [Gitter room](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and talk to some of the contributors.
 3. Contact [Miguel](http://miguel-perez.com/), he provides training and consultation services.
 
-Please **avoid creating a Github issue with personal support requests**, we'll want to keep the tracker clear for bugs and pull requests.
+Please **avoid creating a Github issue** with personal support requests. We keep the tracker clear for bugs and pull requests.
+
+## FAQ
+
+> Help! My `$(document).ready()` plugins work fine when I refresh but break on the second page load.
+
+smoothState provides the [onAfter](https://github.com/miguel-perez/smoothState.js#onafter) callback function that would allow you to re-run your plugins. This can be tricky if you’re unfamiliar with how Ajax works.
+
+When you run a plugin on `$(document).ready()`, it’s going to register *only* on elements that are currently on the page. Since we’re injecting new elements every load, we need to run the plugins again, scoping it to *just* the new stuff. 
+
+A good way to do this is to wrap your plugin initializations in a function that we call on both `$.fn.ready()` and `onAfter`. You’ll want to specify the [context](http://api.jquery.com/jQuery/#jQuery-selector-context) each time you init the plugins so that you don’t double-bind the plugins. We call this a “module execution controller”.
 
 ## Contribute
 
