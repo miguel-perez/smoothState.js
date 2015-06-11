@@ -177,7 +177,7 @@ $(‘#main’).smoothState({ prefetchOn:'aim' });
 
 ### `cacheLength`
 
-smoothState.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
+The number of pages to cache. smoothState.js will store pages in memory if cacheLength is set to anything greater than 0. This allows a user to avoid having to request pages more than once.
 
 Stored pages will load instantaneously.
 
