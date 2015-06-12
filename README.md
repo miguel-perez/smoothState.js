@@ -18,11 +18,11 @@ smoothState.js is a jQuery plugin that [progressively enhances](http://www.smash
 
 ### Why add page transitions at all?
 
-Imagine, for a second, how disorienting it would be if touching a doorknob teleported you to the other side of the door. Navigating the web feels like using a teleporting doorknob. Layouts change, elements rearrange or disappear, and it takes time time for the user to adjust. Smooth transitions reduce the effort it takes for users to get settled into a new environment.
+Imagine, for a second, how disorienting it would be if touching a doorknob teleported you to the other side of the door. Navigating the web feels like using a teleporting doorknob. Layouts change, elements rearrange or disappear, and it takes time for the user to adjust. Smooth transitions reduce the effort it takes for users to get settled into a new environment.
 
 Javascript SPA frameworks, sometimes referred to as MVC frameworks, are a common way to solve this issue. These frameworks often lose the benefits of unobtrusive code. Writing unobtrusive javascript gives us more resilience to errors, performance, and accessibility.
 
-### Hows does smoothState.js work?
+### How does smoothState.js work?
 
 smoothState.js **gives you hooks** that you can use to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time between animations to fetch content via AJAX.
 
@@ -52,8 +52,8 @@ All we need to get started is:
 $(function() {
   $(‘#main’).smoothState();
 });
-
 ```
+
 By default, smoothState.js will:
 * Prevent links and forms from triggering a full page load
 * Update URLs and browsing history so that we do not break browsing expectations
