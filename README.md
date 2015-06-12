@@ -9,6 +9,7 @@ jquery.smoothState.js
 * [Need help?](#need-help)
 * [FAQ](#faq)
 * [Contribute](#contribute)
+* [Built with smoothState](#built-with-smoothstate)
 
 
 ## About
@@ -37,7 +38,7 @@ It’s our main goal to allow us to add page transitions without having to add a
 2. The smoothState container needs to have an id - a unique hook to tell us what to update on the page
 3. All links and forms on the page should live within the container
 
-These requirements makes the website resilient, since it allows us to abort and redirect the user if an error occurs. Making each link return a full page also ensures our we’re creating pages with progressive enhancement in mind.
+These requirements makes the website resilient, since it allows us to abort and redirect the user if an error occurs. Making each link return a full page also ensures our we are creating pages with progressive enhancement in mind.
 
 ## Getting started
 
@@ -56,7 +57,7 @@ $(function() {
 By default, smoothState.js will:
 * Prevent links and forms from triggering a full page load
 * Update URLs and browsing history so that we do not break browsing expectations
-* Use Ajax to request pages and replace the appropriate content
+* Use AJAX to request pages and replace the content appropriately
 
 This default example **will not** add page transitions to your page. You’ll need to define the animations you’ll want to run using the hooks smoothState provides.
 
@@ -354,3 +355,12 @@ We're always looking for:
 * Pull requests, features, spelling errors, clarifications, etc
 * Ideas for enhancements
 * Demos and links to sites built with smoothState.js
+
+## Built with smoothState
+
+Below are some really cool sites built with smoothState. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/tayokoart) with a link.
+
+* [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
+* [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
+* [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
+
