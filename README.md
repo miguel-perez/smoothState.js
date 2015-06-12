@@ -24,7 +24,7 @@ Javascript SPA frameworks, sometimes referred to as MVC frameworks, are a common
 
 ### Hows does smoothState.js work?
 
-smoothState.js **gives you hooks** that you can use to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time between animations to fetch content via Ajax.
+smoothState.js **gives you hooks** that you can use to choreograph how the elements on your page enter and exit the page. It allows you to specify how long your animations take, and it uses the time between animations to fetch content via AJAX.
 
 This project doesn’t dictate how you should animate things on the page. It supports CSS Animations, and allows for any popular JS animation library like [velocity.js](http://julian.com/research/velocity/).
 
@@ -38,7 +38,7 @@ It’s our main goal to allow us to add page transitions without having to add a
 2. The smoothState container needs to have an id - a unique hook to tell us what to update on the page
 3. All links and forms on the page should live within the container
 
-These requirements makes the website resilient, since it allows us to abort and redirect the user if an error occurs. Making each link return a full page also ensures our we are creating pages with progressive enhancement in mind.
+These requirements makes the website resilient, since it allows us to abort and redirect the user if an error occurs. Making each link return a full page also ensures that we are creating pages with progressive enhancement in mind.
 
 ## Getting started
 
@@ -69,7 +69,7 @@ This default example **will not** add page transitions to your page. You’ll ne
 
 ## Options
 
-smoothState provides some options that allow you to customize the functionality of the plugin. You can change the default options by passing in an object into the smooth state function.
+smoothState provides some options that allow you to customize the functionality of the plugin. You can change the default options by passing an object into the smooth state function.
 
 #### Options example
 
@@ -119,7 +119,7 @@ $(‘#main’).smoothState({ debug:false });
 ```
 
 ### `anchors`
-A jQuery selector to specify which anchors within the smoothState element we should listen should bind to.
+A jQuery selector to specify to which anchors within the smoothState element we should bind.
 
 ```js
 // Default
@@ -128,7 +128,7 @@ $(‘#main’).smoothState({ anchors:’a’ });
 
 ### `forms`
 
-A jQuery selector to specify which forms within the smoothState element we should listen should bind to.
+A jQuery selector to specify to which forms within the smoothState element we should bind.
 
 ```js
 // Default
@@ -157,20 +157,20 @@ $(‘#main’).smoothState({ prefetch:false });
 
 ### `prefetchOn`
 
-The name of the events we will listen to from anchors if we're prefetching. If you would like to throttle the prefetch, do so by using firing custom events.
+The name of the events we will listen to from anchors if we're prefetching. If you would like to throttle the prefetch, do so by firing custom events.
 
 ```js
 // Default
 $(‘#main’).smoothState({ prefetchOn:'mouseover touchstart' });
 ```
 
-In order to add a smart throttle, you can use a lirbary like @tristen's [hoverintent](https://github.com/tristen/hoverintent) and trigger a custom 'intent' event. Then, you just add that to the `prefetchOn` option.
+In order to add a smart throttle, you can use a library like @tristen's [hoverintent](https://github.com/tristen/hoverintent) and trigger a custom 'intent' event. Then, you just add that to the `prefetchOn` option.
 
 ```js
 $(‘#main’).smoothState({ prefetchOn:'intent' });
 ```
 
-Or, if you want to get a little crazy, you could go the opotsite way and use @cihadturhan's [jQuery.aim](https://github.com/cihadturhan/jquery-aim) and add spider sense-like prefetching to smoothState.
+Or, if you want to get a little crazy, you could go the opposite way and use @cihadturhan's [jQuery.aim](https://github.com/cihadturhan/jquery-aim) and add spider sense-like prefetching to smoothState.
 
 ```js
 $(‘#main’).smoothState({ prefetchOn:'aim' });
@@ -189,7 +189,7 @@ $(‘#main’).smoothState({ cacheLength:0 });
 
 ### `loadingClass`
 
-We apply this class to the body while a page is still loading. We won’t apply the `loadingClass` if get the page before the animations are complete.
+We apply this class to the body while a page is still loading. We won’t apply the `loadingClass` if we receive the page before the animations are complete.
 
 ```js
 // Default
@@ -198,7 +198,7 @@ $(‘#main’).smoothState({ loadingClass:’is-loading’ });
 
 ### `alterRequest`
 
-A function that can alter the a request’s [ajax settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it we call it. We can use this to alter the url we’re requesting.
+A function that can alter the a request’s [AJAX settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before we call it. We can use this to alter the url we’re requesting.
 
 ```js
 // Default
@@ -242,7 +242,7 @@ $(‘#main’).smoothState({
 
 ### `onProgress`
 
-Run only if the page request is still pending and onStart has finished animating. This is a good place to add something like a  loading indicator.
+Run only if the page request is still pending and onStart has finished animating. This is a good place to add something like a loading indicator.
 
 ```js
 // Default
@@ -341,7 +341,7 @@ Please **avoid creating a Github issue** with personal support requests. We keep
 
 > Help! My `$(document).ready()` plugins work fine when I refresh but break on the second page load.
 
-smoothState provides the [onAfter](https://github.com/miguel-perez/smoothState.js#onafter) callback function that would allow you to re-run your plugins. This can be tricky if you’re unfamiliar with how Ajax works.
+smoothState provides the [onAfter](https://github.com/miguel-perez/smoothState.js#onafter) callback function that would allow you to re-run your plugins. This can be tricky if you’re unfamiliar with how AJAX works.
 
 When you run a plugin on `$(document).ready()`, it’s going to register *only* on elements that are currently on the page. Since we’re injecting new elements every load, we need to run the plugins again, scoping it to *just* the new stuff. 
 
