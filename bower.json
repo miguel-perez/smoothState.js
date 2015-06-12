@@ -1,7 +1,6 @@
 {
     "name": "smoothstate",
     "main": "./src/jquery.smoothState.js",
-    "version": "0.7.2",
     "description": "Unobtrusive page transitions with jQuery.",
     "keywords": [
         "pjax",
