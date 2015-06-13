@@ -287,7 +287,7 @@ $('#main').smoothState({
 
 ## Methods and properties
 
-smoothState provides some methods available by accessing the element's data property.
+`smoothState` provides some methods and properties, made accessible through the element's `data` property.
 
 ```js
 // Access smoothState
@@ -302,11 +302,11 @@ smoothState.load('/newPage.html');
 * [`href`](#href)
 * [`cache`](#cache)
 
-### `href`
+#### `href`
 
 The URL of the content that is currently displayed.
 
-### `cache`
+#### `cache`
 
 An object containing the cached pages after they are requested.
 
@@ -317,19 +317,19 @@ An object containing the cached pages after they are requested.
 * [`clear`](#clearurl)
 * [`restartCSSAnimations`](#restartcssanimations)
 
-### `load(url)`
+#### `load(url)`
 
 This loads the contents of a URL into our container.
 
-### `fetch(url)`
+#### `fetch(url)`
 
 This fetches the contents of a URL and caches it.
 
-### `clear(url)`
+#### `clear(url)`
 
 This clears a given page from the cache. If no URL is provided it will clear the entire cache.
 
-### `restartCSSAnimations()`
+#### `restartCSSAnimations()`
 
 This restarts any CSS animations applying to elements within the `smoothState` container.
 
