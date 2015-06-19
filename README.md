@@ -9,7 +9,7 @@ jquery.smoothState.js
 * [Need help?](#need-help)
 * [FAQ](#faq)
 * [Contribute](#contribute)
-* [Built with smoothState.js](#built-with-smoothstate-js)
+* [Built with smoothState.js](#built-with-smoothstatejs)
 
 
 ## About
