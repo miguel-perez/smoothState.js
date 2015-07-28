@@ -605,12 +605,15 @@
          */
         bindEventHandlers = function ($element) {
 
-          $element.on('click', options.anchors, clickAnchor);
+          if (options.anchors) {
+            $element.on('click', options.anchors, clickAnchor);
+            if (options.prefetch) {
+              $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+            }
+          }
 
-          $element.on('submit', options.forms, submitForm);
-
-          if (options.prefetch) {
-            $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+          if (options.forms) {
+            $element.on('submit', options.forms, submitForm);
           }
         },
 
