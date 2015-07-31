@@ -210,20 +210,19 @@
 
       /**
        * Stores a document fragment into an object
-       * @param   {object}    object - object where it will be sotred
+       * @param   {object}    object - object where it will be stored
        * @param   {string}    url - name of the entry
        * @param   {string|document}    doc - entire html
        * @param   {string}    id - the id of the fragment
        *
        */
       storePageIn: function (object, url, doc, id) {
-        var $newDoc = $(doc);
-
+        var $html = $( '<html></html>' ).append( $(doc) );
         object[url] = { // Content is indexed by the url
           status: 'loaded',
           // Stores the title of the page, .first() prevents getting svg titles
-          title: $newDoc.filter('title').first().text(),
-          html: $newDoc.filter('#' + id), // Stores the contents of the page
+          title: $html.find('title').first().text(),
+          html: $html.find('#' + id), // Stores the contents of the page
         };
         return object;
       },
