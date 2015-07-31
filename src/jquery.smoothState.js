@@ -37,11 +37,11 @@
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
-      /** Minimum number of milliseconds between anchor clicks. Clicks beyond this rate are ignored. */
-      clickAnchorRepeatDelay: 500,
-
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
+
+      /** Minimum number of milliseconds between click/submit events. Events ignored beyond this rate are ignored. */
+      repeatDelay: 500,
 
       /** A selector that defines what should be ignored by smoothState */
       blacklist: '.no-smoothState',
@@ -559,10 +559,10 @@
             event.preventDefault();
 
             // Apply rate limiting.
-            if (!isClickAnchorRateLimited()) {
+            if (!isRateLimited()) {
 
-              // Set the delay timeout until the next click is allowed.
-              setClickAnchorRepeatTime();
+              // Set the delay timeout until the next event is allowed.
+              setRateLimitRepeatTime();
 
               var request = utility.translate($anchor.prop('href'));
               isTransitioning = true;
@@ -579,50 +579,57 @@
         },
 
         /**
-         * DigitalMachinist (Jeff Rose)
-         * I figured to keep these together with this above function since they're all related.
-         * Feel free to move these somewhere more appropriate if you have such places.
-         */
-        clickAnchorRepeatTime = 0,
-        isClickAnchorRateLimited = function () {
-          var isFirstClick = (options.clickAnchorRepeatDelay === null);
-          var isDelayOver = (parseInt(Date.now()) > clickAnchorRepeatTime);
-          return !(isFirstClick || isDelayOver);
-        },
-        setClickAnchorRepeatTime = function () {
-          clickAnchorRepeatTime = parseInt(Date.now()) + parseInt(options.clickAnchorRepeatDelay);
-        },
-
-        /**
          * Binds to form submissions
          * @param  {Event} event
          */
         submitForm = function (event) {
           var $form = $(event.currentTarget);
 
-          if(!$form.is(options.blacklist)){
+          if (!$form.is(options.blacklist)) {
+
             event.preventDefault();
             event.stopPropagation();
 
-            var request = {
-                  url: $form.prop('action'),
-                  data: $form.serialize(),
-                  type: $form.prop('method')
-                };
+            // Apply rate limiting.
+            if (!isRateLimited()) {
 
-            isTransitioning = true;
+              // Set the delay timeout until the next event is allowed.
+              setRateLimitRepeatTime();
 
-            request = options.alterRequest(request);
+              var request = {
+                url: $form.prop('action'),
+                data: $form.serialize(),
+                type: $form.prop('method')
+              };
 
-            if(request.type.toLowerCase() === 'get') {
-              request.url = request.url + '?' + request.data;
+              isTransitioning = true;
+              request = options.alterRequest(request);
+
+              if (request.type.toLowerCase() === 'get') {
+                request.url = request.url + '?' + request.data;
+              }
+
+              // Call the onReady callback and set delay
+              options.onBefore($form, $container);
+
+              load(request);
             }
-
-            // Call the onReady callback and set delay
-            options.onBefore($form, $container);
-
-            load(request);
           }
+        },
+
+        /**
+         * DigitalMachinist (Jeff Rose)
+         * I figured to keep these together with this above functions since they're all related.
+         * Feel free to move these somewhere more appropriate if you have such places.
+         */
+        rateLimitRepeatTime = 0,
+        isRateLimited = function () {
+          var isFirstClick = (options.repeatDelay === null);
+          var isDelayOver = (parseInt(Date.now()) > rateLimitRepeatTime);
+          return !(isFirstClick || isDelayOver);
+        },
+        setRateLimitRepeatTime = function () {
+          rateLimitRepeatTime = parseInt(Date.now()) + parseInt(options.repeatDelay);
         },
 
         /**
