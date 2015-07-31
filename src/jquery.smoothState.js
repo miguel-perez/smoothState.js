@@ -37,6 +37,9 @@
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
+      /** Minimum number of milliseconds between anchor clicks. Clicks beyond this rate are ignored. */
+      clickAnchorRepeatDelay: 500,
+
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
 
@@ -546,25 +549,48 @@
          * @param   {object}    event
          */
         clickAnchor = function (event) {
-          var $anchor = $(event.currentTarget);
 
           // Ctrl (or Cmd) + click must open a new tab
+          var $anchor = $(event.currentTarget);
           if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist)) {
-            var request = utility.translate($anchor.prop('href'));
-
+              
             // stopPropagation so that event doesn't fire on parent containers.
-            isTransitioning = true;
             event.stopPropagation();
             event.preventDefault();
-            targetHash = $anchor.prop('hash');
 
-            // Allows modifications to the request
-            request = options.alterRequest(request);
+            // Apply rate limiting.
+            if (!isClickAnchorRateLimited()) {
 
-            options.onBefore($anchor, $container);
+              // Set the delay timeout until the next click is allowed.
+              setClickAnchorRepeatTime();
 
-            load(request);
+              var request = utility.translate($anchor.prop('href'));
+              isTransitioning = true;
+              targetHash = $anchor.prop('hash');
+
+              // Allows modifications to the request
+              request = options.alterRequest(request);
+
+              options.onBefore($anchor, $container);
+
+              load(request);
+            }
           }
+        },
+
+        /**
+         * DigitalMachinist (Jeff Rose)
+         * I figured to keep these together with this above function since they're all related.
+         * Feel free to move these somewhere more appropriate if you have such places.
+         */
+        clickAnchorRepeatTime = 0,
+        isClickAnchorRateLimited = function () {
+          var isFirstClick = (options.clickAnchorRepeatDelay === null);
+          var isDelayOver = (parseInt(Date.now()) > clickAnchorRepeatTime);
+          return !(isFirstClick || isDelayOver);
+        },
+        setClickAnchorRepeatTime = function () {
+          clickAnchorRepeatTime = parseInt(Date.now()) + parseInt(options.clickAnchorRepeatDelay);
         },
 
         /**
