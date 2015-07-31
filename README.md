@@ -136,6 +136,15 @@ A jQuery selector specifying which forms within the `smoothState` element should
 $('#main').smoothState({ forms: 'form' });
 ```
 
+### `repeatDelay`
+
+The minimum number of milliseconds between click/submit events. User events ignored beyond this rate are ignored. This can be used to ignore double-clicks so that the user's browser history won't become cluttered by incompleted page loads.
+
+```js
+// Default
+$('#main').smoothState({ repeatDelay: 500 });
+```
+
 ### `blacklist`
 
 A jQuery selector specifying which elements within the `smoothState` element should be ignored. This includes both form and anchor elements.
