@@ -40,6 +40,9 @@
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
 
+      /** If set to true, smoothState will store form responses in the cache. */
+      allowFormCaching: false,
+
       /** Minimum number of milliseconds between click/submit events. Events ignored beyond this rate are ignored. */
       repeatDelay: 500,
 
@@ -433,14 +436,20 @@
          * @param   {string}    url
          * @param   {bool}      push - used to determine if we should
          *                      add a new item into the history object
+         * @param   {bool}      cacheResponse - used to determine if
+         *                      we should allow the cache to forget this
+         *                      page after thid load completes.
          */
-        load = function (request, push) {
+        load = function (request, push, cacheResponse) {
 
           var settings = utility.translate(request);
 
-          /** Makes this an optional variable by setting a default */
-          if(typeof push === 'undefined') {
+          /** Makes these optional variables by setting defaults. */
+          if (typeof push === 'undefined') {
             push = true;
+          }
+          if (typeof cacheResponse === 'undefined') {
+            cacheResponse = true;
           }
 
           var
@@ -456,23 +465,28 @@
               loaded: function () {
                 var eventName = hasRunCallback ? 'ss.onProgressEnd' : 'ss.onStartEnd';
 
-                if(!callbBackEnded || !hasRunCallback) {
+                if (!callbBackEnded || !hasRunCallback) {
                   $container.one(eventName, function(){
                     updateContent(settings.url);
                   });
-                } else if(callbBackEnded) {
+                } 
+                else if(callbBackEnded) {
                   updateContent(settings.url);
                 }
 
-                if(push) {
+                if (push) {
                   window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
+                }
+
+                if (!cacheResponse) {
+                  clear( settings.url );
                 }
               },
 
               /** Loading, wait 10 ms and check again */
               fetching: function () {
 
-                if(!hasRunCallback) {
+                if (!hasRunCallback) {
 
                   hasRunCallback = true;
 
@@ -480,7 +494,7 @@
                   $container.one('ss.onStartEnd', function(){
 
                     // Add loading class
-                    if(options.loadingClass) {
+                    if (options.loadingClass) {
                       $body.addClass(options.loadingClass);
                     }
 
@@ -496,7 +510,7 @@
 
                 window.setTimeout(function () {
                   // Might of been canceled, better check!
-                  if(cache.hasOwnProperty(settings.url)){
+                  if (cache.hasOwnProperty(settings.url)){
                     responses[cache[settings.url].status]();
                   }
                 }, 10);
@@ -612,7 +626,7 @@
               // Call the onReady callback and set delay
               options.onBefore($form, $container);
 
-              load(request);
+              load(request, undefined, options.allowFormCaching);
             }
           }
         },

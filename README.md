@@ -136,6 +136,15 @@ A jQuery selector specifying which forms within the `smoothState` element should
 $('#main').smoothState({ forms: 'form' });
 ```
 
+### `allowFormCaching`
+
+Controls whather or not form submission responses are preserved in the cache. If set to true, smoothState will store form responses in the cache.
+
+```js
+// Default
+$('#main').smoothState({ allowFormCaching: false });
+```
+
 ### `repeatDelay`
 
 The minimum number of milliseconds between click/submit events. User events ignored beyond this rate are ignored. This can be used to ignore double-clicks so that the user's browser history won't become cluttered by incompleted page loads.
