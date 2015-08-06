@@ -40,6 +40,12 @@
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
 
+      /** If set to true, smoothState will store form responses in the cache. */
+      allowFormCaching: false,
+
+      /** Minimum number of milliseconds between click/submit events. Events ignored beyond this rate are ignored. */
+      repeatDelay: 500,
+
       /** A selector that defines what should be ignored by smoothState */
       blacklist: '.no-smoothState',
 
@@ -207,20 +213,19 @@
 
       /**
        * Stores a document fragment into an object
-       * @param   {object}    object - object where it will be sotred
+       * @param   {object}    object - object where it will be stored
        * @param   {string}    url - name of the entry
        * @param   {string|document}    doc - entire html
        * @param   {string}    id - the id of the fragment
        *
        */
       storePageIn: function (object, url, doc, id) {
-        var $newDoc = $(doc);
-
+        var $html = $( '<html></html>' ).append( $(doc) );
         object[url] = { // Content is indexed by the url
           status: 'loaded',
           // Stores the title of the page, .first() prevents getting svg titles
-          title: $newDoc.filter('title').first().text(),
-          html: $newDoc.filter('#' + id), // Stores the contents of the page
+          title: $html.find('title').first().text(),
+          html: $html.find('#' + id), // Stores the contents of the page
         };
         return object;
       },
@@ -435,14 +440,20 @@
          * @param   {string}    url
          * @param   {bool}      push - used to determine if we should
          *                      add a new item into the history object
+         * @param   {bool}      cacheResponse - used to determine if
+         *                      we should allow the cache to forget this
+         *                      page after thid load completes.
          */
-        load = function (request, push) {
+        load = function (request, push, cacheResponse) {
 
           var settings = utility.translate(request);
 
-          /** Makes this an optional variable by setting a default */
-          if(typeof push === 'undefined') {
+          /** Makes these optional variables by setting defaults. */
+          if (typeof push === 'undefined') {
             push = true;
+          }
+          if (typeof cacheResponse === 'undefined') {
+            cacheResponse = true;
           }
 
           var
@@ -458,23 +469,28 @@
               loaded: function () {
                 var eventName = hasRunCallback ? 'ss.onProgressEnd' : 'ss.onStartEnd';
 
-                if(!callbBackEnded || !hasRunCallback) {
+                if (!callbBackEnded || !hasRunCallback) {
                   $container.one(eventName, function(){
                     updateContent(settings.url);
                   });
-                } else if(callbBackEnded) {
+                } 
+                else if(callbBackEnded) {
                   updateContent(settings.url);
                 }
 
-                if(push) {
+                if (push) {
                   window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
+                }
+
+                if (!cacheResponse) {
+                  clear( settings.url );
                 }
               },
 
               /** Loading, wait 10 ms and check again */
               fetching: function () {
 
-                if(!hasRunCallback) {
+                if (!hasRunCallback) {
 
                   hasRunCallback = true;
 
@@ -482,7 +498,7 @@
                   $container.one('ss.onStartEnd', function(){
 
                     // Add loading class
-                    if(options.loadingClass) {
+                    if (options.loadingClass) {
                       $body.addClass(options.loadingClass);
                     }
 
@@ -498,7 +514,7 @@
 
                 window.setTimeout(function () {
                   // Might of been canceled, better check!
-                  if(cache.hasOwnProperty(settings.url)){
+                  if (cache.hasOwnProperty(settings.url)){
                     responses[cache[settings.url].status]();
                   }
                 }, 10);
@@ -553,24 +569,32 @@
          * @param   {object}    event
          */
         clickAnchor = function (event) {
-          var $anchor = $(event.currentTarget);
 
           // Ctrl (or Cmd) + click must open a new tab
+          var $anchor = $(event.currentTarget);
           if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist)) {
-            var request = utility.translate($anchor.prop('href'));
-
+              
             // stopPropagation so that event doesn't fire on parent containers.
-            isTransitioning = true;
             event.stopPropagation();
             event.preventDefault();
-            targetHash = $anchor.prop('hash');
 
-            // Allows modifications to the request
-            request = options.alterRequest(request);
+            // Apply rate limiting.
+            if (!isRateLimited()) {
 
-            options.onBefore($anchor, $container);
+              // Set the delay timeout until the next event is allowed.
+              setRateLimitRepeatTime();
 
-            load(request);
+              var request = utility.translate($anchor.prop('href'));
+              isTransitioning = true;
+              targetHash = $anchor.prop('hash');
+
+              // Allows modifications to the request
+              request = options.alterRequest(request);
+
+              options.onBefore($anchor, $container);
+
+              load(request);
+            }
           }
         },
 
@@ -581,29 +605,51 @@
         submitForm = function (event) {
           var $form = $(event.currentTarget);
 
-          if(!$form.is(options.blacklist)){
+          if (!$form.is(options.blacklist)) {
+
             event.preventDefault();
             event.stopPropagation();
 
-            var request = {
-                  url: $form.prop('action'),
-                  data: $form.serialize(),
-                  type: $form.prop('method')
-                };
+            // Apply rate limiting.
+            if (!isRateLimited()) {
 
-            isTransitioning = true;
+              // Set the delay timeout until the next event is allowed.
+              setRateLimitRepeatTime();
 
-            request = options.alterRequest(request);
+              var request = {
+                url: $form.prop('action'),
+                data: $form.serialize(),
+                type: $form.prop('method')
+              };
 
-            if(request.type.toLowerCase() === 'get') {
-              request.url = request.url + '?' + request.data;
+              isTransitioning = true;
+              request = options.alterRequest(request);
+
+              if (request.type.toLowerCase() === 'get') {
+                request.url = request.url + '?' + request.data;
+              }
+
+              // Call the onReady callback and set delay
+              options.onBefore($form, $container);
+
+              load(request, undefined, options.allowFormCaching);
             }
-
-            // Call the onReady callback and set delay
-            options.onBefore($form, $container);
-
-            load(request);
           }
+        },
+
+        /**
+         * DigitalMachinist (Jeff Rose)
+         * I figured to keep these together with this above functions since they're all related.
+         * Feel free to move these somewhere more appropriate if you have such places.
+         */
+        rateLimitRepeatTime = 0,
+        isRateLimited = function () {
+          var isFirstClick = (options.repeatDelay === null);
+          var isDelayOver = (parseInt(Date.now()) > rateLimitRepeatTime);
+          return !(isFirstClick || isDelayOver);
+        },
+        setRateLimitRepeatTime = function () {
+          rateLimitRepeatTime = parseInt(Date.now()) + parseInt(options.repeatDelay);
         },
 
         /**
@@ -612,12 +658,15 @@
          */
         bindEventHandlers = function ($element) {
 
-          $element.on('click', options.anchors, clickAnchor);
+          if (options.anchors) {
+            $element.on('click', options.anchors, clickAnchor);
+            if (options.prefetch) {
+              $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+            }
+          }
 
-          $element.on('submit', options.forms, submitForm);
-
-          if (options.prefetch) {
-            $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+          if (options.forms) {
+            $element.on('submit', options.forms, submitForm);
           }
         },
 
