@@ -9,7 +9,7 @@ jquery.smoothState.js
 * [Need help?](#need-help)
 * [FAQ](#faq)
 * [Contribute](#contribute)
-* [Built with smoothState.js](#built-with-smoothstate-js)
+* [Built with smoothState.js](#built-with-smoothstatejs)
 
 
 ## About
@@ -219,7 +219,7 @@ The function to run before a page load is started.
 $('#main').smoothState({
   // `$currentTarget` is a `jQuery Object` of the element, anchor or form, that triggered the load
   // `$container` is a `jQuery Object` of the the current smoothState container
-  alterRequest: function($currentTarget, $container) {}
+  onBefore: function($currentTarget, $container) {}
 });
 ```
 
