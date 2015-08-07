@@ -377,7 +377,7 @@
             var $targetHashEl = $(targetHash, $container);
             if($targetHashEl.length){
               var newPosition = $targetHashEl.offset().top;
-              document.body.scrollTop = newPosition;
+              $body.scrollTop(newPosition);
             }
             targetHash = null;
           }
