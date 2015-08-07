@@ -467,9 +467,12 @@
                 if (!callbBackEnded || !hasRunCallback) {
                   $container.one(eventName, function(){
                     updateContent(settings.url);
+                    if (!cacheResponse) {
+                      clear(settings.url);
+                    }
                   });
                 } 
-                else if(callbBackEnded) {
+                else if (callbBackEnded) {
                   updateContent(settings.url);
                 }
 
@@ -477,8 +480,8 @@
                   window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
                 }
 
-                if (!cacheResponse) {
-                  clear( settings.url );
+                if (callbBackEnded && !cacheResponse) {
+                  clear(settings.url);
                 }
               },
 
