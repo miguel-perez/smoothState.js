@@ -340,13 +340,13 @@
           // Allows us to accept a url string or object as the ajax settings
           var settings = utility.translate(request);
 
+          // Check the length of the cache and clear it if needed
+          cache = utility.clearIfOverCapacity(cache, options.cacheLength);
+
           // Don't prefetch if we have the content already or if it's a form
           if(cache.hasOwnProperty(settings.url) && typeof settings.data === 'undefined') {
             return;
           }
-
-          // Check the length of the cache and clear it if needed
-          cache = utility.clearIfOverCapacity(cache, options.cacheLength);
 
           // Let other parts of the code know we're working on getting the content
           cache[settings.url] = { status: 'fetching' };
