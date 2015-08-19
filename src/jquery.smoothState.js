@@ -174,7 +174,7 @@
       shouldLoadAnchor: function ($anchor, blacklist, hrefRegex) {
         var href = $anchor.prop('href');
         // URL will only be loaded if it's not an external link, hash, or blacklisted
-        return (!utility.isExternal(href) && !utility.isHash(href) && !$anchor.is(blacklist) && !$anchor.prop('target')) && (hrefRegex === '' || $anchor.prop('href').search(hrefRegex) !== -1);
+        return (!utility.isExternal(href) && !utility.isHash(href) && !$anchor.is(blacklist) && !$anchor.prop('target')) && (typeof hrefRegex === undefined || hrefRegex === '' || $anchor.prop('href').search(hrefRegex) !== -1);
       },
 
       /**
