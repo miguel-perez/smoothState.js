@@ -127,6 +127,16 @@ A jQuery selector specifying which anchors within the `smoothState` element shou
 $('#main').smoothState({ anchors: 'a' });
 ```
 
+### `hrefRegex`
+
+A regular expression to specify which anchor with a specific href property based on the regex smoothState should bind to. If empty, every href will be permitted.
+
+```js
+// Default
+$('#main').smoothState({ hrefRegex: '' });
+```
+
+
 ### `forms`
 
 A jQuery selector specifying which forms within the `smoothState` element should be bound.
