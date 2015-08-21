@@ -219,7 +219,7 @@ Scroll to top after onStart and scroll to hash after onReady. This is default be
 
 ```js
 // Default
-$('#main').smoothState({ scroll: 'true' });
+$('#main').smoothState({ scroll: true });
 ```
 
 ### `alterRequest`
