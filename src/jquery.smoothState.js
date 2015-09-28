@@ -226,6 +226,7 @@
           // Stores the title of the page, .first() prevents getting svg titles
           title: $html.find('title').first().text(),
           html: $html.find('#' + id), // Stores the contents of the page
+          doc: doc, // Stores the whole page document
         };
         return object;
       },
