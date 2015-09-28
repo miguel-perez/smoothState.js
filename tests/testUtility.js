@@ -102,6 +102,7 @@
    */
   QUnit.test( 'shouldLoadAnchor', function( assert ) {
     var blacklist   = '.no-smoothState, [target]',
+		hrefRegex 	= '',
       badAnchors  = [
         $('<a href="intex.html" class="no-smoothState"/>'),
         $('<a href="index.html" target="_blank" />'),
@@ -118,12 +119,12 @@
 
     // Invalid anchors
     for (i = badAnchors.length - 1; i >= 0; i--) {
-      assert.ok( util.shouldLoadAnchor(badAnchors[i], blacklist) === false, 'Bad: ' + $('<div/>').append(badAnchors[i]).html() );
+      assert.ok( util.shouldLoadAnchor(badAnchors[i], blacklist, hrefRegex) === false, 'Bad: ' + $('<div/>').append(badAnchors[i]).html() );
     }
 
     // Valid anchors
     for ( y = goodAnchors.length - 1; y >= 0; y--) {
-      assert.ok( util.shouldLoadAnchor(goodAnchors[y], blacklist) === true, 'Good: ' + $('<div/>').append(goodAnchors[y]).html() );
+      assert.ok( util.shouldLoadAnchor(goodAnchors[y], blacklist, hrefRegex) === true, 'Good: ' + $('<div/>').append(goodAnchors[y]).html() );
     }
 
   });
