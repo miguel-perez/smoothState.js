@@ -64,6 +64,9 @@
       /** Class that will be applied to the body while the page is loading */
       loadingClass: 'is-loading',
 
+      /** Scroll to top after onStart and scroll to hash after onReady */
+      scroll: true,
+
       /**
        * A function that can be used to alter the ajax request settings before it is called
        * @param  {Object} request jQuery.ajax settings object that will be used to make the request
@@ -417,7 +420,9 @@
               // Run callback
               options.onAfter($container, $newContent);
 
-              repositionWindow();
+              if (options.scroll) {
+                repositionWindow();
+              }
 
             });
 
@@ -540,7 +545,9 @@
           options.onStart.render($container);
 
           window.setTimeout(function(){
-            $body.scrollTop(0);
+            if (options.scroll) {
+              $body.scrollTop(0);
+            }
             $container.trigger('ss.onStartEnd');
           }, options.onStart.duration);
 

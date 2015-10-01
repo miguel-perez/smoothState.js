@@ -223,6 +223,15 @@ The class to apply to the `body` while a page is still loading, unless the page 
 $('#main').smoothState({ loadingClass: 'is-loading' });
 ```
 
+### `scroll`
+
+Scroll to top after onStart and scroll to hash after onReady. This is default behavior, if you want to implement your own scroll behavior, set `scroll: false`
+
+```js
+// Default
+$('#main').smoothState({ scroll: true });
+```
+
 ### `alterRequest`
 
 A function to alter a request's [AJAX settings](http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings) before it is called. This can be used to alter the requested URL, for example.
