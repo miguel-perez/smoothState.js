@@ -36,9 +36,9 @@
 
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
-	  
-	  /** Regex to specify which anchor's with a specific href value based on the regex smoothState should bind to. If empty, every href will be permitted. */
-	  hrefRegex: '',
+
+  	  /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
+  	  hrefRegex: '',
 
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
@@ -480,7 +480,7 @@
                       clear(settings.url);
                     }
                   });
-                } 
+                }
                 else if (callbBackEnded) {
                   updateContent(settings.url);
                 }
@@ -580,7 +580,7 @@
           // Ctrl (or Cmd) + click must open a new tab
           var $anchor = $(event.currentTarget);
           if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist, options.hrefRegex)) {
-              
+
             // stopPropagation so that event doesn't fire on parent containers.
             event.stopPropagation();
             event.preventDefault();
