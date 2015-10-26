@@ -34,6 +34,7 @@
     "gulp-qunit": "^1.2.1",
     "gulp-size": "^1.2.1",
     "gulp-uglify": "^1.2.0",
+    "gulp-webserver": "^0.9.1",
     "jshint-stylish": "^2.0.0",
     "qunitjs": "^1.18.0"
   },
