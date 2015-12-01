@@ -1,0 +1,16 @@
+{
+  "name": "smoothstate-transitions-demo",
+  "version": "1.0.0",
+  "description": "Demo: Switch transitions based on initiating link with smoothState.js",
+  "author": "Marc Löhe",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.8.5"
+  },
+  "config": {
+    "port": "8080"
+  },
+  "scripts": {
+    "start": "http-server ./ -p $npm_package_config_port"
+  }
+}
