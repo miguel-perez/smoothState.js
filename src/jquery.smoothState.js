@@ -372,19 +372,19 @@
           var ajaxRequest = $.ajax(settings);
 
           // Store contents in cache variable if successful
-          ajaxRequest.success(function (html) {
+          ajaxRequest.done(function (html) {
             utility.storePageIn(cache, settings.url, html, elementId);
             $container.data('smoothState').cache = cache;
           });
 
           // Mark as error to be acted on later
-          ajaxRequest.error(function () {
+          ajaxRequest.fail(function () {
             cache[settings.url].status = 'error';
           });
 
           // Call fetch callback
           if(callback) {
-            ajaxRequest.complete(callback);
+            ajaxRequest.always(callback);
           }
         },
 
