@@ -58,6 +58,8 @@
       /** The name of the event we will listen to from anchors if we're prefetching */
       prefetchOn: 'mouseover touchstart',
 
+      prefetchBlacklist: '.no-prefetch',
+
       /** The number of pages smoothState will try to store in memory */
       cacheLength: 0,
 
@@ -677,8 +679,9 @@
 
           if (options.anchors) {
             $element.on('click', options.anchors, clickAnchor);
+
             if (options.prefetch) {
-              $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+              $element.find(options.anchors).not(options.prefetchBlacklist).on(options.prefetchOn, null, hoverAnchor);
             }
           }
 
