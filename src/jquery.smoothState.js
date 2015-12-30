@@ -164,7 +164,7 @@
             type: 'GET'
           };
           if(typeof request === 'string') {
-            request = $.extend({}, defaults, { url: request });
+            request = $.extend({}, defaults, { url: request, destUrl: request });
           } else {
             request = $.extend({}, defaults, request);
           }
@@ -235,7 +235,7 @@
        * @param   {string}    id - the id of the fragment
        *
        */
-      storePageIn: function (object, url, doc, id) {
+      storePageIn: function (object, url, doc, id, destUrl) {
         var $html = $( '<html></html>' ).append( $(doc) );
         object[url] = { // Content is indexed by the url
           status: 'loaded',
@@ -243,6 +243,7 @@
           title: $html.find('title').first().text(),
           html: $html.find('#' + id), // Stores the contents of the page
           doc: doc, // Stores the whole page document
+          destUrl: destUrl // URL, which will be pushed to history stack
         };
         return object;
       },
@@ -385,10 +386,14 @@
             cache[settings.url].status = 'error';
           });
 
-          // Call fetch callback
-          if(callback) {
+          if (callback) {
             ajaxRequest.always(callback);
           }
+
+          ajaxRequest.complete(function(request, status) {
+            var currentLocationHeader = request.getResponseHeader('Current-Location');
+            if (currentLocationHeader) cache[settings.url].destUrl = currentLocationHeader;
+          });
         },
 
         repositionWindow = function(){
@@ -499,7 +504,7 @@
                 }
 
                 if (push) {
-                  window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
+                  window.history.pushState({ id: elementId }, cache[settings.url].title, cache[settings.url].destUrl);
                 }
 
                 if (callbBackEnded && !cacheResponse) {
@@ -637,9 +642,10 @@
               setRateLimitRepeatTime();
 
               var request = {
-                url: $form.prop('action'),
+                url: $form.attr('action'),
+                destUrl: $form.attr('action'),
                 data: $form.serialize(),
-                type: $form.prop('method')
+                type: $form.attr('method')
               };
 
               isTransitioning = true;
