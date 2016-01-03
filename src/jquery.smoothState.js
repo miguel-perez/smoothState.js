@@ -37,6 +37,9 @@
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
+  	  /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
+  	  hrefRegex: '',
+
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
 
@@ -55,11 +58,17 @@
       /** The name of the event we will listen to from anchors if we're prefetching */
       prefetchOn: 'mouseover touchstart',
 
+      /** jQuery selector to specify elements which should not be prefetched */
+      prefetchBlacklist: '.no-prefetch',
+
       /** The number of pages smoothState will try to store in memory */
       cacheLength: 0,
 
       /** Class that will be applied to the body while the page is loading */
       loadingClass: 'is-loading',
+
+      /** Scroll to top after onStart and scroll to hash after onReady */
+      scroll: true,
 
       /**
        * A function that can be used to alter the ajax request settings before it is called
@@ -168,10 +177,20 @@
        * @param   {string}    blacklist - jquery selector
        *
        */
-      shouldLoadAnchor: function ($anchor, blacklist) {
+      shouldLoadAnchor: function ($anchor, blacklist, hrefRegex) {
         var href = $anchor.prop('href');
-        // URL will only be loaded if it's not an external link, hash, or blacklisted
-        return (!utility.isExternal(href) && !utility.isHash(href) && !$anchor.is(blacklist) && !$anchor.prop('target'));
+        // URL will only be loaded if it's not an external link, hash, or
+        // blacklisted
+        return (
+            !utility.isExternal(href) &&
+            !utility.isHash(href) &&
+            !$anchor.is(blacklist) &&
+            !$anchor.prop('target')) &&
+            (
+              typeof hrefRegex === undefined ||
+              hrefRegex === '' ||
+              $anchor.prop('href').search(hrefRegex) !== -1
+            );
       },
 
       /**
@@ -223,6 +242,7 @@
           // Stores the title of the page, .first() prevents getting svg titles
           title: $html.find('title').first().text(),
           html: $html.find('#' + id), // Stores the contents of the page
+          doc: doc, // Stores the whole page document
         };
         return object;
       },
@@ -355,19 +375,19 @@
           var ajaxRequest = $.ajax(settings);
 
           // Store contents in cache variable if successful
-          ajaxRequest.success(function (html) {
+          ajaxRequest.done(function (html) {
             utility.storePageIn(cache, settings.url, html, elementId);
             $container.data('smoothState').cache = cache;
           });
 
           // Mark as error to be acted on later
-          ajaxRequest.error(function () {
+          ajaxRequest.fail(function () {
             cache[settings.url].status = 'error';
           });
 
           // Call fetch callback
           if(callback) {
-            ajaxRequest.complete(callback);
+            ajaxRequest.always(callback);
           }
         },
 
@@ -413,7 +433,9 @@
               // Run callback
               options.onAfter($container, $newContent);
 
-              repositionWindow();
+              if (options.scroll) {
+                repositionWindow();
+              }
 
             });
 
@@ -471,7 +493,7 @@
                       clear(settings.url);
                     }
                   });
-                } 
+                }
                 else if (callbBackEnded) {
                   updateContent(settings.url);
                 }
@@ -536,7 +558,9 @@
           options.onStart.render($container);
 
           window.setTimeout(function(){
-            $body.scrollTop(0);
+            if (options.scroll) {
+              $body.scrollTop(0);
+            }
             $container.trigger('ss.onStartEnd');
           }, options.onStart.duration);
 
@@ -552,7 +576,7 @@
           var request,
               $anchor = $(event.currentTarget);
 
-          if (utility.shouldLoadAnchor($anchor, options.blacklist) && !isTransitioning) {
+          if (utility.shouldLoadAnchor($anchor, options.blacklist, options.hrefRegex) && !isTransitioning) {
             event.stopPropagation();
             request = utility.translate($anchor.prop('href'));
             request = options.alterRequest(request);
@@ -568,8 +592,8 @@
 
           // Ctrl (or Cmd) + click must open a new tab
           var $anchor = $(event.currentTarget);
-          if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist)) {
-              
+          if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist, options.hrefRegex)) {
+
             // stopPropagation so that event doesn't fire on parent containers.
             event.stopPropagation();
             event.preventDefault();
@@ -656,8 +680,9 @@
 
           if (options.anchors) {
             $element.on('click', options.anchors, clickAnchor);
+
             if (options.prefetch) {
-              $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+              $element.find(options.anchors).not(options.prefetchBlacklist).on(options.prefetchOn, null, hoverAnchor);
             }
           }
 
