@@ -378,7 +378,7 @@
 
           // Store contents in cache variable if successful
           ajaxRequest.done(function (html) {
-            utility.storePageIn(cache, settings.url, html, elementId);
+            utility.storePageIn(cache, settings.url, html, elementId, settings.url);
             $container.data('smoothState').cache = cache;
           });
 
@@ -717,7 +717,7 @@
       }
 
       /** Stores the current page in cache variable */
-      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId);
+      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId, currentHref);
 
       /** Bind all of the event handlers on the container, not anchors */
       utility.triggerAllAnimationEndEvent($container, 'ss.onStartEnd ss.onProgressEnd ss.onEndEnd');
