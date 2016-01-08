@@ -164,7 +164,7 @@
             type: 'GET'
           };
           if(typeof request === 'string') {
-            request = $.extend({}, defaults, { url: request });
+            request = $.extend({}, defaults, { url: request, destUrl: request });
           } else {
             request = $.extend({}, defaults, request);
           }
@@ -233,9 +233,10 @@
        * @param   {string}    url - name of the entry
        * @param   {string|document}    doc - entire html
        * @param   {string}    id - the id of the fragment
+       * @param   {string}    destUrl - the destination url
        *
        */
-      storePageIn: function (object, url, doc, id) {
+      storePageIn: function (object, url, doc, id, destUrl) {
         var $html = $( '<html></html>' ).append( $(doc) );
         object[url] = { // Content is indexed by the url
           status: 'loaded',
@@ -243,6 +244,7 @@
           title: $html.find('title').first().text(),
           html: $html.find('#' + id), // Stores the contents of the page
           doc: doc, // Stores the whole page document
+          destUrl: destUrl // URL, which will be pushed to history stack
         };
         return object;
       },
@@ -376,7 +378,7 @@
 
           // Store contents in cache variable if successful
           ajaxRequest.done(function (html) {
-            utility.storePageIn(cache, settings.url, html, elementId);
+            utility.storePageIn(cache, settings.url, html, elementId, settings.url);
             $container.data('smoothState').cache = cache;
           });
 
@@ -385,10 +387,16 @@
             cache[settings.url].status = 'error';
           });
 
-          // Call fetch callback
-          if(callback) {
+          if (callback) {
             ajaxRequest.always(callback);
           }
+
+          ajaxRequest.complete(function(request, status) {
+            var currentLocationHeader = request.getResponseHeader('Current-Location');
+            if (currentLocationHeader) {
+              cache[settings.url].destUrl = currentLocationHeader;
+            }
+          });
         },
 
         repositionWindow = function(){
@@ -499,7 +507,7 @@
                 }
 
                 if (push) {
-                  window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
+                  window.history.pushState({ id: elementId }, cache[settings.url].title, cache[settings.url].destUrl);
                 }
 
                 if (callbBackEnded && !cacheResponse) {
@@ -637,9 +645,10 @@
               setRateLimitRepeatTime();
 
               var request = {
-                url: $form.prop('action'),
+                url: $form.attr('action'),
+                destUrl: $form.attr('action'),
                 data: $form.serialize(),
-                type: $form.prop('method')
+                type: $form.attr('method')
               };
 
               isTransitioning = true;
@@ -708,7 +717,7 @@
       }
 
       /** Stores the current page in cache variable */
-      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId);
+      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId, currentHref);
 
       /** Bind all of the event handlers on the container, not anchors */
       utility.triggerAllAnimationEndEvent($container, 'ss.onStartEnd ss.onProgressEnd ss.onEndEnd');
