@@ -233,6 +233,7 @@
        * @param   {string}    url - name of the entry
        * @param   {string|document}    doc - entire html
        * @param   {string}    id - the id of the fragment
+       * @param   {string}    destUrl - the destination url
        *
        */
       storePageIn: function (object, url, doc, id, destUrl) {
@@ -392,7 +393,9 @@
 
           ajaxRequest.complete(function(request, status) {
             var currentLocationHeader = request.getResponseHeader('Current-Location');
-            if (currentLocationHeader) cache[settings.url].destUrl = currentLocationHeader;
+            if (currentLocationHeader) {
+              cache[settings.url].destUrl = currentLocationHeader;
+            }
           });
         },
 
