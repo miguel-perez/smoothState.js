@@ -72,11 +72,22 @@
 
       /**
        * A function that can be used to alter the ajax request settings before it is called
-       * @param  {Object} request jQuery.ajax settings object that will be used to make the request
+       * @param  {Object} request - jQuery.ajax settings object that will be used to make the request
        * @return {Object}         Altered request object
        */
       alterRequest: function (request) {
         return request;
+      },
+
+      /**
+       * A function that can be used to alter the state object before it is updated or added to the browsers history
+       * @param  {Object} state - An object that will be assigned to history entry
+       * @param  {string} title - The history entry's title. For reference only
+       * @param  {string} url   - The history entry's URL. For reference only
+       * @return {Object}         Altered state object
+       */
+      alterChangeState: function (state, title, url) {
+        return state;
       },
 
       /** Run before a page load has been activated */
@@ -229,13 +240,14 @@
 
       /**
        * Stores a document fragment into an object
-       * @param   {object}    object - object where it will be stored
-       * @param   {string}    url - name of the entry
-       * @param   {string|document}    doc - entire html
-       * @param   {string}    id - the id of the fragment
-       *
+       * @param   {object}           object - object where it will be stored
+       * @param   {string}           url - name of the entry
+       * @param   {string|document}  doc - entire html
+       * @param   {string}           id - the id of the fragment
+       * @param   {object}           state - the history entry's object
+       * @return  {object}           updated object store
        */
-      storePageIn: function (object, url, doc, id) {
+      storePageIn: function (object, url, doc, id, state) {
         var $html = $( '<html></html>' ).append( $(doc) );
         object[url] = { // Content is indexed by the url
           status: 'loaded',
@@ -243,6 +255,7 @@
           title: $html.find('title').first().text(),
           html: $html.find('#' + id), // Stores the contents of the page
           doc: doc, // Stores the whole page document
+          state: state, // Stores the history entry for comparisons
         };
         return object;
       },
@@ -297,9 +310,14 @@
       if(e.state !== null) {
         var url = window.location.href,
           $page = $('#' + e.state.id),
-          page = $page.data('smoothState');
+          page = $page.data('smoothState'),
+          diffUrl = (page.href !== url && !utility.isHash(url, page.href)),
+          diffState = (event.state !== page.cache[page.href].state);
 
-        if(page.href !== url && !utility.isHash(url, page.href)) {
+        if(diffUrl || diffState) {
+          if (diffState) {
+            page.clear(page.href);
+          }
           page.load(url, false);
         }
       }
@@ -329,6 +347,9 @@
         /** Variable that stores pages after they are requested */
         cache = {},
 
+        /** Variable that stores data for a history entry */
+        state = {},
+
         /** Url of the content that is currently displayed */
         currentHref = window.location.href,
 
@@ -349,8 +370,8 @@
 
         /**
          * Fetches the contents of a url and stores it in the 'cache' variable
-         * @param  {String|Object}   request  url or request settings object
-         * @param  {Function} callback function that will run as soon as it finishes
+         * @param  {String|Object}   request  - url or request settings object
+         * @param  {Function}        callback - function that will run as soon as it finishes
          */
         fetch = function (request, callback) {
 
@@ -499,7 +520,14 @@
                 }
 
                 if (push) {
-                  window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
+                  /** Prepare a history entry */
+                  state = options.alterChangeState({ id: elementId }, cache[settings.url].title, settings.url);
+
+                  /** Update the cache to include the history entry for future comparisons */
+                  cache[settings.url].state = state;
+
+                  /** Add history entry */
+                  window.history.pushState(state, cache[settings.url].title, settings.url);
                 }
 
                 if (callbBackEnded && !cacheResponse) {
@@ -704,11 +732,16 @@
 
       /** Sets a default state */
       if(window.history.state === null) {
-        window.history.replaceState({ id: elementId }, document.title, currentHref);
+        state = options.alterChangeState({ id: elementId }, document.title, currentHref);
+
+        /** Update history entry */
+        window.history.replaceState(state, document.title, currentHref);
+      } else {
+        state = {};
       }
 
       /** Stores the current page in cache variable */
-      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId);
+      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId, state);
 
       /** Bind all of the event handlers on the container, not anchors */
       utility.triggerAllAnimationEndEvent($container, 'ss.onStartEnd ss.onProgressEnd ss.onEndEnd');
