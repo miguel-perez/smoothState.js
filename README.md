@@ -247,6 +247,21 @@ $('#main').smoothState({
 });
 ```
 
+### `alterChangeState`
+
+A function to alter a history entry's state object before it is modified or added to the browser's history. This can be used to attach serializable data to the history entry, for example.
+
+```js
+// Default
+$('#main').smoothState({
+  // Param `state` is an `Object` that contains the container ID, by default
+  alterChangeState: function(state) {
+    // Must return a serializable `Object` that is associated with the history entry
+    return state;
+  }
+});
+```
+
 ### `onBefore`
 
 The function to run before a page load is started.
