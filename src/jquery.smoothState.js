@@ -7,7 +7,15 @@
  *
  */
 
-;(function ( $, window, document, undefined ) {
+(function (factory) {
+  'use strict';
+
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    factory(require('jquery'), window, document);
+  } else {
+    factory(jQuery, window, document);
+  }
+}(function ( $, window, document, undefined ) {
   'use strict';
 
   /** Abort if browser does not support pushState */
@@ -790,4 +798,4 @@
   /* expose the default options */
   $.fn.smoothState.options = defaults;
 
-})(jQuery, window, document);
+}));
