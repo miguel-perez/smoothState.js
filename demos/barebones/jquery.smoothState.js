@@ -98,8 +98,11 @@
         return state;
       },
 
+      /** Run on click or submit events */
+      onAction: function ($currentTarget, $container) {},
+
       /** Run before a page load has been activated */
-      onBefore: function ($currentTarget, $container) {},
+      onBefore: function (request, $container) {},
 
       /** Run when a page load has been activated */
       onStart: {
@@ -586,6 +589,9 @@
               }
             };
 
+          // Run the onBefore callback and set trigger
+          options.onBefore(settings, $container);
+
           if (!cache.hasOwnProperty(settings.url)) {
             fetch(settings);
           }
@@ -647,7 +653,7 @@
               // Allows modifications to the request
               request = options.alterRequest(request);
 
-              options.onBefore($anchor, $container);
+              options.onAction($anchor, $container);
 
               load(request);
             }
@@ -686,7 +692,7 @@
               }
 
               // Call the onReady callback and set delay
-              options.onBefore($form, $container);
+              options.onAction($form, $container);
 
               load(request, undefined, options.allowFormCaching);
             }
