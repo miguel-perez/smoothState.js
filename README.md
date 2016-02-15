@@ -3,18 +3,29 @@ jquery.smoothState.js
 [![Build Status](https://travis-ci.org/miguel-perez/smoothState.js.svg?branch=master)](https://travis-ci.org/miguel-perez/smoothState.js)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+* [Built with smoothState.js](#built-with-smoothstatejs)
 * [About](#about)
 * [Options](#options)
 * [Methods and properties](#methods-and-properties)
 * [Need help?](#need-help)
 * [FAQ](#faq)
 * [Contribute](#contribute)
-* [Built with smoothState.js](#built-with-smoothstatejs)
+
+
+## Built with smoothState.js
+
+Below are some really cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/tayokoart) with a link.
+
+* [Rock Werchter](http://www.rockwerchter.be/en)
+* [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
+* [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
+* [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
 
 
 ## About
 
 smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the user's browser doesn't have the [required features](http://caniuse.com/#search=pushstate), smoothState.js fades into the background and never runs.
+
 
 ### Why add page transitions at all?
 
@@ -414,10 +425,4 @@ We're always looking for:
 * Ideas for enhancements
 * Demos and links to sites built with smoothState.js
 
-## Built with smoothState.js
 
-Below are some really cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/tayokoart) with a link.
-
-* [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
-* [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
-* [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
