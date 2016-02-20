@@ -320,7 +320,7 @@
           $page = $('#' + e.state.id),
           page = $page.data('smoothState'),
           diffUrl = (page.href !== url && !utility.isHash(url, page.href)),
-          diffState = (event.state !== page.cache[page.href].state);
+          diffState = (e.state !== page.cache[page.href].state);
 
         if(diffUrl || diffState) {
           if (diffState) {
