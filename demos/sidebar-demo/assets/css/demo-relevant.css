@@ -1,0 +1,165 @@
+/* Author: Danijel Grabež */
+/* Twitter: @danijel_grabez */
+
+/* ===========================================
+   Page navigation styling
+   =========================================== */
+.page-header {
+  background: rgba(3, 194, 150, 0.92);
+  position: fixed;
+  width: 300px;
+  height: 100vh;
+  -webkit-transition: 0.3s width ease-in-out;
+          transition: 0.3s width ease-in-out;
+}
+.page-header--homepage {
+  width: 50vw;
+}
+.page-nav {
+  zoom: 1;
+}
+.page-nav:before,
+.page-nav:after {
+  content: "";
+  display: table;
+}
+.page-nav:after {
+  clear: both;
+}
+.page-nav__list {
+  list-style: none;
+  margin: 150px 0;
+  padding: 0;
+  float: none;
+  text-align: center;
+  padding-bottom: 15px;
+}
+.page-nav__item {
+  margin: 0;
+  padding: 0 10px;
+  display: block;
+  line-height: 1;
+}
+.page-nav__item:not(:last-child) {
+  border-bottom: 1px dotted #dedddc;
+}
+.page-nav__link {
+  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #ffffff;
+  padding: 20px 0;
+  display: block;
+}
+.page-nav__link:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.page-nav__link:focus {
+  color: yellow;
+}
+.page-nav__link.is-active {
+  font-weight: 700;
+}
+.page-nav__link.is-active:hover {
+  font-weight: 700;
+  color: #ffffff;
+}
+/* ===========================================
+   Page content styling
+   =========================================== */
+.page-content {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  margin-left: 400px;
+  margin-right: 80px;
+  font-size: 18px;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  -webkit-transition: 0.3s width ease-in-out;
+          transition: 0.3s width ease-in-out;
+}
+.page-content--homepage {
+  margin-left: 55vw;
+}
+.page-content h1 {
+  font-size: 72px;
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+.page-content h3 {
+  margin-top: 80px;
+}
+.page-content img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+/* ===========================================
+   SmoothState styling
+   =========================================== */
+.m-scene .scene-main {
+  -webkit-animation-duration: .25s;
+          animation-duration: .25s;
+  -webkit-transition-timing-function: ease-in;
+          transition-timing-function: ease-in;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+.m-scene .scene-main--fadein {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+}
+.m-scene.is-exiting .scene-main {
+  -webkit-animation-direction: alternate-reverse;
+          animation-direction: alternate-reverse;
+}
+.m-scene .scene-nav {
+  -webkit-animation-duration: .25s;
+          animation-duration: .25s;
+  -webkit-transition-timing-function: ease-in;
+          transition-timing-function: ease-in;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-name: width;
+          animation-name: width;
+}
+.m-scene.is-exiting .scene-nav {
+  -webkit-animation-direction: alternate-reverse;
+          animation-direction: alternate-reverse;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes width {
+  0% {
+    width: 300px;
+  }
+  100% {
+    width: 50vw;
+  }
+}
+@keyframes width {
+  0% {
+    width: 300px;
+  }
+  100% {
+    width: 50vw;
+  }
+}
