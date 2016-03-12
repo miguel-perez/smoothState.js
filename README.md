@@ -159,7 +159,7 @@ $('#main').smoothState({ forms: 'form' });
 
 ### `allowFormCaching`
 
-Controls whather or not form submission responses are preserved in the cache. If set to true, smoothState will store form responses in the cache. This should be set to false unless you understand how caching form results will affect your website's behaviour very well.
+Controls whether or not form submission responses are preserved in the cache. If set to true, smoothState will store form responses in the cache. This should be set to false unless you understand how caching form results will affect your website's behaviour very well.
 
 ```js
 // Default
