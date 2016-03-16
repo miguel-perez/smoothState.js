@@ -34,18 +34,24 @@ $(function() {
     smoothState.load(url);
   });
 
-  QUnit.test('load(requestObject), onBefore, onStart, onProgress, onReady, onAfter', function (assert){
-    assert.expect(12);
+  QUnit.test('load(requestObject), onAction, onBefore, onStart, onProgress, onReady, onAfter', function (assert){
+    assert.expect(14);
     var time,
+        /*actual,
+        expected,*/
         duration = 50,
         frameWin = this.frameWin,
         frameDoc = frameWin.document,
         _$ = frameWin.jQuery,
         url = _$('#page-about').prop('href'),
         done = assert.async(),
-        testOnBefore = function ($currentTarget, $container) {
-          assert.ok($currentTarget instanceof _$, 'Container is passed into onStart and is jQuery');
-          assert.ok($container.is($main) && $container instanceof _$, 'Container is passed into onStart and is jQuery');
+        testOnAction = function ($currentTarget, $container) {
+          assert.ok($currentTarget instanceof _$, 'Container is passed into onAction and is jQuery');
+          assert.ok($container.is($main) && $container instanceof _$, 'Container is passed into onAction and is jQuery');
+        },
+        testOnBefore = function (request, $container) {
+          assert.propEqual(request, requestObject, 'Request is passed into onBefore and matches requestObject');
+          assert.ok($container.is($main) && $container instanceof _$, 'Container is passed into onBefore and is jQuery');
         },
         testOnStart = {
           duration: duration,
@@ -94,6 +100,7 @@ $(function() {
         },
         options = {
           debug: true,
+          onAction: testOnAction,
           onBefore: testOnBefore,
           onStart: testOnStart,
           onProgress: testOnProgress,
@@ -101,10 +108,11 @@ $(function() {
           onAfter: testOnAfter
         },
         requestObject = {
-          url: url,
+          dataType: 'html',
           type: 'POST',
+          url: url,
           data: {
-            foo:'bar'
+            foo: 'bar'
           }
         },
         $main = _$('#main'),

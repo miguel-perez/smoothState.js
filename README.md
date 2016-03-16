@@ -72,6 +72,7 @@ By default, smoothState.js will:
 
 smoothState.js **will not** add page transitions to pages. You'll need to define the animations you want to run using the hooks smoothState.js provides.
 
+* [`onAction`](#onaction) - Runs on click or submit events
 * [`onBefore`](#onbefore) - Runs before a page load has been started
 * [`onStart`](#onstart) - Runs once a page load has been activated
 * [`onProgress`](#onprogress) - Runs if the page request is still pending and the `onStart` animations have finished
@@ -273,6 +274,19 @@ $('#main').smoothState({
 });
 ```
 
+### `onAction`
+
+The function to run when an anchor is clicked or a form is submitted.
+
+```js
+// Default
+$('#main').smoothState({
+  // `$currentTarget` is a `jQuery Object` of the element, anchor or form, that triggered the load
+  // `$container` is a `jQuery Object` of the the current smoothState container
+  onAction: function($currentTarget, $container) {}
+});
+```
+
 ### `onBefore`
 
 The function to run before a page load is started.
@@ -280,9 +294,9 @@ The function to run before a page load is started.
 ```js
 // Default
 $('#main').smoothState({
-  // `$currentTarget` is a `jQuery Object` of the element, anchor or form, that triggered the load
+  // `request` is an `Object` that contains the URL requested and is compliant with `$.ajax`
   // `$container` is a `jQuery Object` of the the current smoothState container
-  onBefore: function($currentTarget, $container) {}
+  onBefore: function(request, $container) {}
 });
 ```
 
@@ -412,7 +426,7 @@ Please **avoid creating a Github issue** with personal support requests, to keep
 
 smoothState.js provides the [`onAfter`](https://github.com/miguel-perez/smoothState.js#onafter) callback function that allows you to re-run your plugins. This can be tricky if you're unfamiliar with how AJAX works.
 
-When you run a plugin on `$(document).ready()`, it's going to register *only* on elements that are currently on the page. Since we're injecting new elements every load, we need to run the plugins again, scoping it to *just* the new stuff. 
+When you run a plugin on `$(document).ready()`, it's going to register *only* on elements that are currently on the page. Since we're injecting new elements every load, we need to run the plugins again, scoping it to *just* the new stuff.
 
 A good way to do this is to wrap your plugin initializations in a function that we call on both `$.fn.ready()` and `onAfter`. You'll want to specify the [context](http://api.jquery.com/jQuery/#jQuery-selector-context) each time you initialize the plugins so that you don't double-bind them. This is called a "module execution controller".
 

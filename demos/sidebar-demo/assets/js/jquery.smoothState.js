@@ -45,8 +45,8 @@
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
-  	  /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
-  	  hrefRegex: '',
+      /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
+      hrefRegex: '',
 
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
@@ -98,8 +98,11 @@
         return state;
       },
 
+      /** Run on click or submit events */
+      onAction: function ($currentTarget, $container) {},
+
       /** Run before a page load has been activated */
-      onBefore: function ($currentTarget, $container) {},
+      onBefore: function (request, $container) {},
 
       /** Run when a page load has been activated */
       onStart: {
@@ -320,16 +323,8 @@
           $page = $('#' + e.state.id),
           page = $page.data('smoothState'),
           diffUrl = (page.href !== url && !utility.isHash(url, page.href)),
-          diffState = (e.state !== page.cache[page.href].state);
-        
-          //
-          // diffState = (event.state !== page.cache[page.href].state); 
-          // 
-          // 24.02.2016 -- Danijel Grabež
-          // line 323 is modified due to Firefox issue mentioned in this issue:
-          // https://github.com/miguel-perez/smoothState.js/issues/255
-          // 
-        
+          diffState = (event.state !== page.cache[page.href].state);
+
         if(diffUrl || diffState) {
           if (diffState) {
             page.clear(page.href);
@@ -594,6 +589,9 @@
               }
             };
 
+          // Run the onBefore callback and set trigger
+          options.onBefore(settings, $container);
+
           if (!cache.hasOwnProperty(settings.url)) {
             fetch(settings);
           }
@@ -655,7 +653,7 @@
               // Allows modifications to the request
               request = options.alterRequest(request);
 
-              options.onBefore($anchor, $container);
+              options.onAction($anchor, $container);
 
               load(request);
             }
@@ -694,7 +692,7 @@
               }
 
               // Call the onReady callback and set delay
-              options.onBefore($form, $container);
+              options.onAction($form, $container);
 
               load(request, undefined, options.allowFormCaching);
             }

@@ -12,7 +12,7 @@
             smoothState;
 
         smoothState = $main.smoothState({
-            onBefore: function($anchor, $container) {
+            onAction: function($anchor, $container) {
                 var current = $('[data-viewport]').first().data('viewport'),
                     target = $anchor.data('target');
                 current = current ? current : 0;
@@ -27,7 +27,7 @@
             },
             onStart: {
                 duration: 400,
-                render: function (url, $container) {
+                render: function ($container) {
                     $main.attr('data-transition', transition);
                     $main.addClass('is-exiting');
                     $site.animate({scrollTop: 0});
