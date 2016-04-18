@@ -176,7 +176,7 @@
     animation-name: fadeIn;
 }
 
-#main[data-transition=fade] .is-exiting .sceneElement {
+#main[data-transition=fade].is-exiting .sceneElement {
     -webkit-animation-name: fadeOut;
     animation-name: fadeOut;
 }
