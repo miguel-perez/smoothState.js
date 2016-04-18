@@ -45,8 +45,8 @@
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
-  	  /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
-  	  hrefRegex: '',
+      /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
+      hrefRegex: '',
 
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
@@ -68,6 +68,9 @@
 
       /** jQuery selector to specify elements which should not be prefetched */
       prefetchBlacklist: '.no-prefetch',
+
+      /** The response header field name defining the request's final URI. Useful for resolving redirections. */
+      locationHeader: 'X-SmoothState-Location',
 
       /** The number of pages smoothState will try to store in memory */
       cacheLength: 0,
@@ -252,18 +255,26 @@
        * @param   {string}           url - name of the entry
        * @param   {string|document}  doc - entire html
        * @param   {string}           id - the id of the fragment
-       * @param   {object}           state - the history entry's object
+       * @param   {object}           [state] - the history entry's object
+       * @param   {string}           [destUrl] - the destination url
        * @return  {object}           updated object store
        */
-      storePageIn: function (object, url, doc, id, state) {
+      storePageIn: function (object, url, doc, id, state, destUrl) {
         var $html = $( '<html></html>' ).append( $(doc) );
+        if (typeof state === 'undefined') {
+          state = {};
+        }
+        if (typeof destUrl === 'undefined') {
+          destUrl = url;
+        }
         object[url] = { // Content is indexed by the url
           status: 'loaded',
           // Stores the title of the page, .first() prevents getting svg titles
           title: $html.find('title').first().text(),
           html: $html.find('#' + id), // Stores the contents of the page
           doc: doc, // Stores the whole page document
-          state: state, // Stores the history entry for comparisons
+          state: state, // Stores the history entry for comparisons,
+          destUrl: destUrl // URL, which will be pushed to history stack
         };
         return object;
       },
@@ -414,6 +425,18 @@
             cache[settings.url].status = 'error';
           });
 
+          if (options.locationHeader) {
+            ajaxRequest.always(function(htmlOrXhr, status, errorOrXhr){
+              // Resolve where the XHR is based on done() or fail() argument positions
+              var xhr = (htmlOrXhr.statusCode ? htmlOrXhr : errorOrXhr),
+                  redirectedLocation = xhr.getResponseHeader(options.locationHeader);
+
+              if (redirectedLocation) {
+                cache[settings.url].destUrl = redirectedLocation;
+              }
+            });
+          }
+
           // Call fetch callback
           if(callback) {
             ajaxRequest.always(callback);
@@ -530,14 +553,16 @@
                 }
 
                 if (push) {
+                  var destUrl = cache[settings.url].destUrl;
+
                   /** Prepare a history entry */
-                  state = options.alterChangeState({ id: elementId }, cache[settings.url].title, settings.url);
+                  state = options.alterChangeState({ id: elementId }, cache[settings.url].title, destUrl);
 
                   /** Update the cache to include the history entry for future comparisons */
                   cache[settings.url].state = state;
 
                   /** Add history entry */
-                  window.history.pushState(state, cache[settings.url].title, settings.url);
+                  window.history.pushState(state, cache[settings.url].title, destUrl);
                 }
 
                 if (callbBackEnded && !cacheResponse) {
