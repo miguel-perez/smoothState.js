@@ -159,7 +159,7 @@ $('#main').smoothState({ forms: 'form' });
 
 ### `allowFormCaching`
 
-Controls whather or not form submission responses are preserved in the cache. If set to true, smoothState will store form responses in the cache. This should be set to false unless you understand how caching form results will affect your website's behaviour very well.
+Controls whether or not form submission responses are preserved in the cache. If set to true, smoothState will store form responses in the cache. This should be set to false unless you understand how caching form results will affect your website's behaviour very well.
 
 ```js
 // Default
@@ -412,7 +412,7 @@ Please **avoid creating a Github issue** with personal support requests, to keep
 
 smoothState.js provides the [`onAfter`](https://github.com/miguel-perez/smoothState.js#onafter) callback function that allows you to re-run your plugins. This can be tricky if you're unfamiliar with how AJAX works.
 
-When you run a plugin on `$(document).ready()`, it's going to register *only* on elements that are currently on the page. Since we're injecting new elements every load, we need to run the plugins again, scoping it to *just* the new stuff. 
+When you run a plugin on `$(document).ready()`, it's going to register *only* on elements that are currently on the page. Since we're injecting new elements every load, we need to run the plugins again, scoping it to *just* the new stuff.
 
 A good way to do this is to wrap your plugin initializations in a function that we call on both `$.fn.ready()` and `onAfter`. You'll want to specify the [context](http://api.jquery.com/jQuery/#jQuery-selector-context) each time you initialize the plugins so that you don't double-bind them. This is called a "module execution controller".
 

@@ -13,20 +13,22 @@ var gulp = require('gulp'),
 
 var
   scripts = [
-    './src/**/*.js',
+    './src/**/*.js'
   ],
   demos = [
-    './demos/barebones',
-    './demos/csstricks',
+    './demos/anchor-transitions/assets/js',
+    './demos/barebones/assets/js',
+    './demos/csstricks/assets/js',
+    './demos/sidebar/assets/js'
   ],
   tests = [
     './tests/**/*.js'
   ],
-  allScripts = scripts.concat(tests),
-  demoScripts = scripts.concat('./node_modules/jquery/dist/jquery.js');
+  srcScripts = scripts.concat(tests),
+  demoScripts = [ './jquery.smoothState.min.js' ];
 
 /** Serve demos for testing */
-gulp.task('serve', ['copyDemoFiles'], function() {
+gulp.task('serve', [ 'copyDemoFiles' ], function() {
   gulp.src('demos')
     .pipe(plugins.webserver({
       open: true
@@ -43,12 +45,14 @@ gulp.task('test', function() {
 gulp.task('copyDemoFiles', function() {
   return gulp.src(demoScripts)
         .pipe(gulp.dest(demos[0]))
-        .pipe(gulp.dest(demos[1]));
+        .pipe(gulp.dest(demos[1]))
+        .pipe(gulp.dest(demos[2]))
+        .pipe(gulp.dest(demos[3]));
 });
 
 /** Lint JavaScript */
 gulp.task('jshint', function () {
-  return gulp.src(allScripts)
+  return gulp.src(srcScripts)
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.jshint.reporter('fail'));
@@ -58,17 +62,17 @@ gulp.task('jshint', function () {
 gulp.task('uglify', function () {
   return gulp.src(scripts)
     .pipe(plugins.concat('jquery.smoothState.min.js'))
-    .pipe(plugins.uglify({preserveComments: 'some'}))
+    .pipe(plugins.uglify({ preserveComments: 'some' }))
     .pipe(gulp.dest('./'))
-    .pipe(plugins.size({title: 'scripts'}));
+    .pipe(plugins.size({ title: 'scripts' }));
 });
 
 /** Watch changes */
 gulp.task('watch', function() {
-  gulp.watch(allScripts, ['jshint', 'test', 'copyDemoFiles']);
+  gulp.watch(srcScripts, [ 'jshint', 'test', 'uglify', 'copyDemoFiles' ]);
 });
 
 /** Default task */
-gulp.task('default', ['jshint', 'test'], function() {
+gulp.task('default', [ 'jshint', 'test' ], function() {
   gulp.start('uglify');
 });

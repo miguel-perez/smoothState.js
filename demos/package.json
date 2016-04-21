@@ -1,0 +1,19 @@
+{
+  "name": "smoothstate-demos",
+  "version": "1.0.0",
+  "license": "MIT",
+  "contributors": [
+    "Miguel Perez",
+    "Marc Löhe",
+    "Danijel Grabež"
+  ],
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  },
+  "config": {
+    "port": "8080"
+  },
+  "scripts": {
+    "start": "http-server ./ -p $npm_package_config_port"
+  }
+}
