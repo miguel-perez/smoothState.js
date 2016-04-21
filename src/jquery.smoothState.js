@@ -465,6 +465,8 @@
               if (options.scroll) {
                 repositionWindow();
               }
+              
+              bindPrefetchHandlers($container);
 
             });
 
@@ -707,7 +709,18 @@
         setRateLimitRepeatTime = function () {
           rateLimitRepeatTime = parseInt(Date.now()) + parseInt(options.repeatDelay);
         },
-
+        
+        /**
+         * Binds prefetch events
+         * @param   {object}    event
+         */
+        bindPrefetchHandlers = function ($element) {
+            		
+          if (options.anchors && options.prefetch) {
+            $element.find(options.anchors).not(options.prefetchBlacklist).on(options.prefetchOn, null, hoverAnchor);
+          }
+        },
+		
         /**
          * Binds all events and inits functionality
          * @param   {object}    event
@@ -717,9 +730,7 @@
           if (options.anchors) {
             $element.on('click', options.anchors, clickAnchor);
 
-            if (options.prefetch) {
-              $element.find(options.anchors).not(options.prefetchBlacklist).on(options.prefetchOn, null, hoverAnchor);
-            }
+            bindPrefetchHandlers($element);
           }
 
           if (options.forms) {
@@ -756,6 +767,7 @@
 
       /** Bind all of the event handlers on the container, not anchors */
       bindEventHandlers($container);
+
 
       /** Public methods */
       return {
