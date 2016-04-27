@@ -2,7 +2,7 @@ smoothState.js
 ===============
 smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the user's browser doesn't have the [required features](http://caniuse.com/#search=pushstate), smoothState.js fades into the background and never runs.
 
-![demo of smoothstate](https://css-tricks.com/wp-content/uploads/2014/08/js-ecc9543f.gif)
+![demo of smoothstate](https://raw.githubusercontent.com/miguel-perez/smoothState.js/master/smoothstatedemo.gif)
 
 [![Build Status](https://travis-ci.org/miguel-perez/smoothState.js.svg?branch=master)](https://travis-ci.org/miguel-perez/smoothState.js)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
