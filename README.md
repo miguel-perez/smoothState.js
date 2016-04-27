@@ -13,7 +13,6 @@ smoothState.js is a jQuery plugin that [progressively enhances](http://www.smash
 * [Need help?](#need-help)
 * [Options](#options)
 * [Methods and properties](#methods-and-properties)
-
 * [FAQ](#faq)
 * [Contribute](#contribute)
 
