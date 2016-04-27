@@ -1,37 +1,43 @@
-jquery.smoothState.js
+smoothState.js
 ===============
+smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the user's browser doesn't have the [required features](http://caniuse.com/#search=pushstate), smoothState.js fades into the background and never runs.
+
 ![demo of smoothstate](https://css-tricks.com/wp-content/uploads/2014/08/js-ecc9543f.gif)
 
 [![Build Status](https://travis-ci.org/miguel-perez/smoothState.js.svg?branch=master)](https://travis-ci.org/miguel-perez/smoothState.js)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 
-
-* [Built with smoothState.js](#built-with-smoothstatejs)
 * [About](#about)
+* [Built with smoothState.js](#built-with-smoothstatejs)
+* [Need help?](#need-help)
 * [Options](#options)
 * [Methods and properties](#methods-and-properties)
-* [Need help?](#need-help)
+
 * [FAQ](#faq)
 * [Contribute](#contribute)
 
 
 ## Built with smoothState.js
 
-Below are some really cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/tayokoart) with a link.
+Below are some really cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/cxiengineer) with a link.
 
 * [Rock Werchter](http://www.rockwerchter.be/en)
 * [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
 * [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
 * [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
 
+## Need help?
+
+If you need a little help implementing smoothState there are a couple things you could do to get some support:
+
+1. Post on stackoverflow using the [smoothState.js tag](http://stackoverflow.com/tags/smoothState.js).
+2. Join the [Gitter room](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and talk to some of the contributors.
+3. Contact [Miguel](https://github.com/miguel-perez) directly, he provides pair-programing help billed by the hour 
+
+Please **avoid creating a Github issue** with personal support requests, to keep the tracker clear for bugs and pull requests.
 
 ## About
-
-smoothState.js is a jQuery plugin that [progressively enhances](http://www.smashingmagazine.com/2009/04/22/progressive-enhancement-what-it-is-and-how-to-use-it/) page loads to give us control over page transitions. If the user's browser doesn't have the [required features](http://caniuse.com/#search=pushstate), smoothState.js fades into the background and never runs.
-
-
-### Why add page transitions at all?
 
 Imagine, for a second, how disorienting it would be if touching a doorknob teleported you to the other side of the door. Navigating the web feels like using a teleporting doorknob. Layouts change, elements rearrange or disappear, and it takes time for the user to adjust. Smooth transitions reduce the effort it takes for users to get settled into a new environment.
 
@@ -400,15 +406,6 @@ This clears a given page from the cache. If no URL is provided it will clear the
 
 This restarts any CSS animations applying to elements within the `smoothState` container.
 
-## Need help?
-
-If you need a little help implementing smoothState there are a couple things you could do to get some support:
-
-1. Post on stackoverflow using the [smoothState.js tag](http://stackoverflow.com/tags/smoothState.js).
-2. Join the [Gitter room](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and talk to some of the contributors.
-3. Contact [Miguel](http://miguel-perez.com/). He provides training and consultation services.
-
-Please **avoid creating a Github issue** with personal support requests, to keep the tracker clear for bugs and pull requests.
 
 ## FAQ
 
