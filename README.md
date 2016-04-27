@@ -1,7 +1,11 @@
 jquery.smoothState.js
 ===============
+![demo of smoothstate](https://css-tricks.com/wp-content/uploads/2014/08/js-ecc9543f.gif)
+
 [![Build Status](https://travis-ci.org/miguel-perez/smoothState.js.svg?branch=master)](https://travis-ci.org/miguel-perez/smoothState.js)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
 
 * [Built with smoothState.js](#built-with-smoothstatejs)
 * [About](#about)
