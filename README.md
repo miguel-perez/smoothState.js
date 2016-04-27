@@ -8,9 +8,10 @@ smoothState.js is a jQuery plugin that [progressively enhances](http://www.smash
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/miguel-perez/smoothState.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 
-* [About](#about)
+
 * [Built with smoothState.js](#built-with-smoothstatejs)
 * [Need help?](#need-help)
+* [Intro](#intro)
 * [Options](#options)
 * [Methods and properties](#methods-and-properties)
 * [FAQ](#faq)
@@ -36,7 +37,7 @@ If you need a little help implementing smoothState there are a couple things you
 
 Please **avoid creating a Github issue** with personal support requests, to keep the tracker clear for bugs and pull requests.
 
-## About
+## Intro
 
 Imagine, for a second, how disorienting it would be if touching a doorknob teleported you to the other side of the door. Navigating the web feels like using a teleporting doorknob. Layouts change, elements rearrange or disappear, and it takes time for the user to adjust. Smooth transitions reduce the effort it takes for users to get settled into a new environment.
 
