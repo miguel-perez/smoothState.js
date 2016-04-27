@@ -20,12 +20,13 @@ smoothState.js is a jQuery plugin that [progressively enhances](http://www.smash
 
 ## Built with smoothState.js
 
-Below are some really cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/cxiengineer) with a link.
+Below are some cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/cxiengineer) with a link.
 
-* [Rock Werchter](http://www.rockwerchter.be/en)
+* [Contributor demos](https://rawgit.com/miguel-perez/smoothState.js/master/demos/index.html)
 * [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
 * [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
 * [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
+* [Rock Werchter](http://www.rockwerchter.be/en)
 
 ## Need help?
 
