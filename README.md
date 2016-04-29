@@ -22,11 +22,20 @@ smoothState.js is a jQuery plugin that [progressively enhances](http://www.smash
 
 Below are some cool sites built with smoothState.js. Feel free to submit a pull request with your own site, or [tweet me](https://twitter.com/cxiengineer) with a link.
 
-* [Contributor demos](https://rawgit.com/miguel-perez/smoothState.js/master/demos/index.html)
+
+### Contributor demos
+* [Barebones behavior](https://rawgit.com/miguel-perez/smoothState.js/master/demos/barebones/index.html)
+* [CSSTricks demo](https://rawgit.com/miguel-perez/smoothState.js/master/demos/csstricks/index.html)
+* [Contextual transitions](https://rawgit.com/miguel-perez/smoothState.js/master/demos/anchor-transitions/index.html)
+* [Sidebar demo](https://rawgit.com/miguel-perez/smoothState.js/master/demos/sidebar/index.html)
+
+### Live Sites
 * [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
 * [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
 * [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
-* [Rock Werchter](http://www.rockwerchter.be/en)
+* [Rock Werchter](http://www.rockwerchter.be/en) by Rock Werchter
+* [Portfolio Site](http://aaronporter.co/) by [Aaron Porter](https://twitter.com/Aaron_porter)
+* [Open Innovation in Science](http://www.openinnovationinscience.at/home.html) by [Roland Schütz](https://twitter.com/rolandschuetz)
 
 ## Need help?
 
