@@ -236,6 +236,18 @@ Or, for the opposite effect, use something like @cihadturhan's [jQuery.aim](http
 $('#main').smoothState({ prefetchOn: 'aim' });
 ```
 
+### `locationHeader`
+
+A field name to lookup among the headers from the HTTP response to alert smoothState.js of any redirected URL.
+
+smoothState.js makes AJAX requests using `XMLHttpRequest`, which silently follows redirects. This transparence prevents smoothState.js from knowing if a request resulted in a redirection.
+
+For example, when you visit `/about` and the server redirects you to `/about/company`, smoothState.js is only ever informed of a successful response from `/about`. The `locationHeader` option gives smoothState.js a HTTP response header to consult and replace the browser's history entry with the _real_ URI.
+
+```js
+$('#main').smoothState({ locationHeader: 'X-SmoothState-Location' });
+```
+
 ### `cacheLength`
 
 The number of pages to cache. smoothState.js can cache pages in memory, avoiding the user having to request pages more than once. Cached pages will load instantaneously.
