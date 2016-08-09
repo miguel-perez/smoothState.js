@@ -331,7 +331,7 @@
           $page = $('#' + e.state.id),
           page = $page.data('smoothState'),
           diffUrl = (page.href !== url && !utility.isHash(url, page.href)),
-          diffState = (e.state !== page.cache[page.href].state);
+          diffState = !page.cache[page.href] || (e.state !== page.cache[page.href].state);
 
         if(diffUrl || diffState) {
           if (diffState) {
