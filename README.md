@@ -31,6 +31,7 @@ Below are some cool sites built with smoothState.js. Feel free to submit a pull 
 
 ### Live Sites
 * [Twitch Conf](http://www.twitchcon.com/) by [Alexis Gallisá](https://twitter.com/alexisg)
+* [Interactive portfolio](http://riccardozanutta.com/lato) by [Recardo Zanutta](https://twitter.com/RiccardoZanutta)
 * [Refune](http://refune.com/) by [Victor Meyer](https://twitter.com/pudgereyem)
 * [Beau Han Xu London](http://beauhanxu.com/) by [Lawrence Gosset](https://twitter.com/gosseti)
 * [Rock Werchter](http://www.rockwerchter.be/en) by Rock Werchter
