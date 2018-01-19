@@ -237,6 +237,17 @@ Or, for the opposite effect, use something like @cihadturhan's [jQuery.aim](http
 $('#main').smoothState({ prefetchOn: 'aim' });
 ```
 
+### `prefetchBubblesOn`
+
+The name of the events that are to bubble up to their parents when prefetching.
+
+```js
+// Default
+$('#main').smoothState({ prefetchBubblesOn: 'mouseover' });
+```
+
+By default, `smoothState` will stop propagation of prefetch events. This allows you to customize events that will not be stopped by the prefetch handler.
+
 ### `locationHeader`
 
 A field name to lookup among the headers from the HTTP response to alert smoothState.js of any redirected URL.
