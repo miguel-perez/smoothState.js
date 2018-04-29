@@ -700,16 +700,18 @@
               setRateLimitRepeatTime();
 
               var request = {
-                url: $form.prop('action'),
+                url: $form.attr('action'),  // submitForm-get-bugfix
                 data: $form.serialize(),
-                type: $form.prop('method')
+                type: $form.attr('method')  // submitForm-get-bugfix
               };
 
               isTransitioning = true;
               request = options.alterRequest(request);
 
               if (request.type.toLowerCase() === 'get') {
+                if (!request.url) request.url = '';  // submitForm-get-bugfix
                 request.url = request.url + '?' + request.data;
+                request.data = '';  // submitForm-get-bugfix
               }
 
               // Call the onReady callback and set delay
