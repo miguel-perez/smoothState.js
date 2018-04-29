@@ -505,7 +505,30 @@
             window.location = url;
           }
         },
+        /**Reload the page */
+        reload = function () {
+          // Apply rate limiting.
+          if (!isRateLimited()) {
 
+            // Set the delay timeout until the next event is allowed.
+            setRateLimitRepeatTime();
+
+            // clear cache
+            cache = {};
+            $container.data('smoothState').cache = cache;
+
+            var request = utility.translate(window.location.href);
+            isTransitioning = true;
+            targetHash = window.location.hash;
+
+            // Allows modifications to the request
+            request = options.alterRequest(request);
+            console.log(request);
+            options.onBefore(null, $container);
+                
+            load(request);
+          }
+        },
         /**
          * Loads the contents of a url into our container
          * @param   {string}    url
@@ -799,6 +822,7 @@
         href: currentHref,
         cache: cache,
         clear: clear,
+        reload: reload,
         load: load,
         fetch: fetch,
         restartCSSAnimations: restartCSSAnimations
