@@ -700,18 +700,20 @@
               setRateLimitRepeatTime();
 
               var request = {
-                url: $form.attr('action'),  // submitForm-get-bugfix
+                url: $form.attr('action'),
                 data: $form.serialize(),
-                type: $form.attr('method')  // submitForm-get-bugfix
+                type: $form.attr('method')
               };
 
               isTransitioning = true;
               request = options.alterRequest(request);
 
               if (request.type.toLowerCase() === 'get') {
-                if (!request.url) request.url = '';  // submitForm-get-bugfix
+                if (!request.url) request.url = '';
                 request.url = request.url + '?' + request.data;
-                request.data = '';  // submitForm-get-bugfix
+                request.data = '';  
+              } else {
+                if (!request.url) request.url = self.location.href;
               }
 
               // Call the onReady callback and set delay
