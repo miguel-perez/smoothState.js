@@ -699,11 +699,26 @@
               // Set the delay timeout until the next event is allowed.
               setRateLimitRepeatTime();
 
-              var request = {
-                url: $form.attr('action'),
-                data: $form.serialize(),
-                type: $form.attr('method')
-              };
+              if (typeof FormData === 'function' && $form.attr('enctype') == 'multipart/form-data') {
+                // file upload supported
+                var request = {
+                  url: $form.attr('action'),
+                  data: new FormData($form[0]),
+                  type: $form.attr('method'),
+                  async: true,
+                  cache: false,
+                  contentType: false,
+                  enctype: 'multipart/form-data',
+                  processData: false
+                };
+              } else {
+                // file upload not supported
+                var request = {
+                  url: $form.attr('action'),
+                  data: $form.serialize(),
+                  type: $form.attr('method')
+                };
+              }
 
               isTransitioning = true;
               request = options.alterRequest(request);
