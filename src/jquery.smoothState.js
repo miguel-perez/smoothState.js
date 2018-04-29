@@ -713,7 +713,7 @@
                 request.url = request.url + '?' + request.data;
                 request.data = '';  
               } else {
-                if (!request.url) request.url = self.location.href;
+                if (!request.url) request.url = self.location.pathname + self.location.search;
               }
 
               // Call the onReady callback and set delay
