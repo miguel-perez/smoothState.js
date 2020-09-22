@@ -513,7 +513,7 @@
          *                      add a new item into the history object
          * @param   {bool}      cacheResponse - used to determine if
          *                      we should allow the cache to forget this
-         *                      page after thid load completes.
+         *                      page after this load completes.
          */
         load = function (request, push, cacheResponse) {
 
