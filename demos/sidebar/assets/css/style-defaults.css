@@ -1,0 +1,331 @@
+/* Author: Danijel Grabež */
+/* Twitter: @danijel_grabez */
+
+/* ===========================================================
+ * Import of all Less files
+ 
+ * =========================================================== */
+/* Helpers
+ * =========================================================== */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a {
+  background-color: transparent;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0;
+  padding: 0;
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+/*
+// End Normalize 
+// =========================================== */
+
+/* ===========================================
+ * Site typography
+ * =========================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+h4,
+h5,
+h6 {
+  margin-top: 12.5px;
+  margin-bottom: 12.5px;
+}
+
+h1 {
+  font-size: 36px;
+  font-size: 2.25rem;
+}
+h2 {
+  font-size: 30px;
+  font-size: 1.875rem;
+}
+h3 {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+h4 {
+  font-size: 18px;
+  font-size: 1.125rem;
+}
+h5 {
+  font-size: 16px;
+  font-size: 1rem;
+}
+h6 {
+  font-size: 12px;
+  font-size: 0.75rem;
+}
+p {
+  margin: 0 0 13px;
+}
+.lead {
+  margin: 25px 0 100px;
+  font-size: 18px;
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.4;
+}
+a {
+  color: #03c296;
+  text-decoration: none;
+  -webkit-transition: all .3s;
+          transition: all .3s;
+}
+a:hover {
+  color: #02906f;
+  outline: 0;
+}
+a:focus {
+  color: purple;
+  outline: 0;
+}
+a:active {
+  color: #012b22;
+}
+
+b,
+strong {
+  font-weight: 700;
+}
+em {
+  font-style: italic;
+}
+
+/* ===========================================
+ * General site styling
+ * =========================================== */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-font-kerning: normal;
+          font-kerning: normal;
+  -webkit-font-variant-ligatures: common-ligatures, contextual;
+          font-variant-ligatures: common-ligatures, contextual;
+  font-variant-numeric: oldstyle-nums, proportional-nums;
+  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
+          font-feature-settings: "kern", "liga", "clig", "calt";
+  overflow-x: hidden;
+}
+::-moz-selection {
+  background: #03c296;
+  color: #ffffff;
+}
+::selection {
+  background: #f74b59;
+  color: #ffffff;
+}
+[role="button"] {
+  cursor: pointer;
+}
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #555;
+}

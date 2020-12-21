@@ -19,8 +19,8 @@
   "undef": true,
   "unused": "vars",
   "strict": true,
-  "maxparams": 4,
+  "maxparams": 6,
   "maxdepth": 4,
   "maxstatements": 15,
-  "maxcomplexity": 6
+  "maxcomplexity": 7
 }

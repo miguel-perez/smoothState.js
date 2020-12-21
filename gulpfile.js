@@ -1,15 +1,39 @@
 'use strict';
 
 var gulp = require('gulp'),
-    plugins = require('gulp-load-plugins')();
+    fs = require('fs'),
+    path = require('path'),
+    plugins = require('gulp-load-plugins')(),
+    getFolders = function(dir){
+      return  fs.readdirSync(dir)
+        .filter(function(file) {
+          return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+    };
 
-var scripts = [
-    './src/**/*.js',
+var
+  scripts = [
+    './src/**/*.js'
+  ],
+  demos = [
+    './demos/anchor-transitions/assets/js',
+    './demos/barebones/assets/js',
+    './demos/csstricks/assets/js',
+    './demos/sidebar/assets/js'
   ],
   tests = [
     './tests/**/*.js'
   ],
-  allScripts = scripts.concat(tests);
+  srcScripts = scripts.concat(tests),
+  demoScripts = [ './jquery.smoothState.min.js' ];
+
+/** Serve demos for testing */
+gulp.task('serve', [ 'copyDemoFiles' ], function() {
+  gulp.src('demos')
+    .pipe(plugins.webserver({
+      open: true
+    }));
+});
 
 /** Run all unit tests */
 gulp.task('test', function() {
@@ -17,9 +41,18 @@ gulp.task('test', function() {
         .pipe(plugins.qunit());
 });
 
+/** Run all unit tests */
+gulp.task('copyDemoFiles', function() {
+  return gulp.src(demoScripts)
+        .pipe(gulp.dest(demos[0]))
+        .pipe(gulp.dest(demos[1]))
+        .pipe(gulp.dest(demos[2]))
+        .pipe(gulp.dest(demos[3]));
+});
+
 /** Lint JavaScript */
 gulp.task('jshint', function () {
-  return gulp.src(allScripts)
+  return gulp.src(srcScripts)
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.jshint.reporter('fail'));
@@ -29,17 +62,17 @@ gulp.task('jshint', function () {
 gulp.task('uglify', function () {
   return gulp.src(scripts)
     .pipe(plugins.concat('jquery.smoothState.min.js'))
-    .pipe(plugins.uglify({preserveComments: 'some'}))
+    .pipe(plugins.uglify({ preserveComments: 'some' }))
     .pipe(gulp.dest('./'))
-    .pipe(plugins.size({title: 'scripts'}));
+    .pipe(plugins.size({ title: 'scripts' }));
 });
 
 /** Watch changes */
 gulp.task('watch', function() {
-  gulp.watch(allScripts, ['jshint', 'test']);
+  gulp.watch(srcScripts, [ 'jshint', 'test', 'uglify', 'copyDemoFiles' ]);
 });
 
 /** Default task */
-gulp.task('default', ['jshint', 'test'], function() {
+gulp.task('default', [ 'jshint', 'test' ], function() {
   gulp.start('uglify');
 });

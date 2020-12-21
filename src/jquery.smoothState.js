@@ -7,7 +7,15 @@
  *
  */
 
-;(function ( $, window, document, undefined ) {
+(function (factory) {
+  'use strict';
+
+  if(typeof module === 'object' && typeof module.exports === 'object') {
+    factory(require('jquery'), window, document);
+  } else {
+    factory(jQuery, window, document);
+  }
+}(function ( $, window, document, undefined ) {
   'use strict';
 
   /** Abort if browser does not support pushState */
@@ -37,8 +45,17 @@
       /** jQuery selector to specify which anchors smoothState should bind to */
       anchors: 'a',
 
+      /** Regex to specify which href smoothState should load. If empty, every href will be permitted. */
+      hrefRegex: '',
+
       /** jQuery selector to specify which forms smoothState should bind to */
       forms: 'form',
+
+      /** If set to true, smoothState will store form responses in the cache. */
+      allowFormCaching: false,
+
+      /** Minimum number of milliseconds between click/submit events. Events ignored beyond this rate are ignored. */
+      repeatDelay: 500,
 
       /** A selector that defines what should be ignored by smoothState */
       blacklist: '.no-smoothState',
@@ -49,19 +66,39 @@
       /** The name of the event we will listen to from anchors if we're prefetching */
       prefetchOn: 'mouseover touchstart',
 
+      /** jQuery selector to specify elements which should not be prefetched */
+      prefetchBlacklist: '.no-prefetch',
+
+      /** The response header field name defining the request's final URI. Useful for resolving redirections. */
+      locationHeader: 'X-SmoothState-Location',
+
       /** The number of pages smoothState will try to store in memory */
       cacheLength: 0,
 
       /** Class that will be applied to the body while the page is loading */
       loadingClass: 'is-loading',
 
+      /** Scroll to top after onStart and scroll to hash after onReady */
+      scroll: true,
+
       /**
        * A function that can be used to alter the ajax request settings before it is called
-       * @param  {Object} request jQuery.ajax settings object that will be used to make the request
+       * @param  {Object} request - jQuery.ajax settings object that will be used to make the request
        * @return {Object}         Altered request object
        */
       alterRequest: function (request) {
         return request;
+      },
+
+      /**
+       * A function that can be used to alter the state object before it is updated or added to the browsers history
+       * @param  {Object} state - An object that will be assigned to history entry
+       * @param  {string} title - The history entry's title. For reference only
+       * @param  {string} url   - The history entry's URL. For reference only
+       * @return {Object}         Altered state object
+       */
+      alterChangeState: function (state, title, url) {
+        return state;
       },
 
       /** Run before a page load has been activated */
@@ -162,10 +199,20 @@
        * @param   {string}    blacklist - jquery selector
        *
        */
-      shouldLoadAnchor: function ($anchor, blacklist) {
+      shouldLoadAnchor: function ($anchor, blacklist, hrefRegex) {
         var href = $anchor.prop('href');
-        // URL will only be loaded if it's not an external link, hash, or blacklisted
-        return (!utility.isExternal(href) && !utility.isHash(href) && !$anchor.is(blacklist) && !$anchor.prop('target'));
+        // URL will only be loaded if it's not an external link, hash, or
+        // blacklisted
+        return (
+            !utility.isExternal(href) &&
+            !utility.isHash(href) &&
+            !$anchor.is(blacklist) &&
+            !$anchor.prop('target')) &&
+            (
+              typeof hrefRegex === undefined ||
+              hrefRegex === '' ||
+              $anchor.prop('href').search(hrefRegex) !== -1
+            );
       },
 
       /**
@@ -204,20 +251,30 @@
 
       /**
        * Stores a document fragment into an object
-       * @param   {object}    object - object where it will be sotred
-       * @param   {string}    url - name of the entry
-       * @param   {string|document}    doc - entire html
-       * @param   {string}    id - the id of the fragment
-       *
+       * @param   {object}           object - object where it will be stored
+       * @param   {string}           url - name of the entry
+       * @param   {string|document}  doc - entire html
+       * @param   {string}           id - the id of the fragment
+       * @param   {object}           [state] - the history entry's object
+       * @param   {string}           [destUrl] - the destination url
+       * @return  {object}           updated object store
        */
-      storePageIn: function (object, url, doc, id) {
-        var $newDoc = $(doc);
-
+      storePageIn: function (object, url, doc, id, state, destUrl) {
+        var $html = $( '<html></html>' ).append( $(doc) );
+        if (typeof state === 'undefined') {
+          state = {};
+        }
+        if (typeof destUrl === 'undefined') {
+          destUrl = url;
+        }
         object[url] = { // Content is indexed by the url
           status: 'loaded',
           // Stores the title of the page, .first() prevents getting svg titles
-          title: $newDoc.filter('title').first().text(),
-          html: $newDoc.filter('#' + id), // Stores the contents of the page
+          title: $html.find('title').first().text(),
+          html: $html.find('#' + id), // Stores the contents of the page
+          doc: doc, // Stores the whole page document
+          state: state, // Stores the history entry for comparisons,
+          destUrl: destUrl // URL, which will be pushed to history stack
         };
         return object;
       },
@@ -272,9 +329,14 @@
       if(e.state !== null) {
         var url = window.location.href,
           $page = $('#' + e.state.id),
-          page = $page.data('smoothState');
+          page = $page.data('smoothState'),
+          diffUrl = (page.href !== url && !utility.isHash(url, page.href)),
+          diffState = (e.state !== page.cache[page.href].state);
 
-        if(page.href !== url && !utility.isHash(url, page.href)) {
+        if(diffUrl || diffState) {
+          if (diffState) {
+            page.clear(page.href);
+          }
           page.load(url, false);
         }
       }
@@ -304,6 +366,9 @@
         /** Variable that stores pages after they are requested */
         cache = {},
 
+        /** Variable that stores data for a history entry */
+        state = {},
+
         /** Url of the content that is currently displayed */
         currentHref = window.location.href,
 
@@ -324,8 +389,8 @@
 
         /**
          * Fetches the contents of a url and stores it in the 'cache' variable
-         * @param  {String|Object}   request  url or request settings object
-         * @param  {Function} callback function that will run as soon as it finishes
+         * @param  {String|Object}   request  - url or request settings object
+         * @param  {Function}        callback - function that will run as soon as it finishes
          */
         fetch = function (request, callback) {
 
@@ -335,13 +400,13 @@
           // Allows us to accept a url string or object as the ajax settings
           var settings = utility.translate(request);
 
+          // Check the length of the cache and clear it if needed
+          cache = utility.clearIfOverCapacity(cache, options.cacheLength);
+
           // Don't prefetch if we have the content already or if it's a form
           if(cache.hasOwnProperty(settings.url) && typeof settings.data === 'undefined') {
             return;
           }
-
-          // Check the length of the cache and clear it if needed
-          cache = utility.clearIfOverCapacity(cache, options.cacheLength);
 
           // Let other parts of the code know we're working on getting the content
           cache[settings.url] = { status: 'fetching' };
@@ -350,19 +415,31 @@
           var ajaxRequest = $.ajax(settings);
 
           // Store contents in cache variable if successful
-          ajaxRequest.success(function (html) {
+          ajaxRequest.done(function (html) {
             utility.storePageIn(cache, settings.url, html, elementId);
             $container.data('smoothState').cache = cache;
           });
 
           // Mark as error to be acted on later
-          ajaxRequest.error(function () {
+          ajaxRequest.fail(function () {
             cache[settings.url].status = 'error';
           });
 
+          if (options.locationHeader) {
+            ajaxRequest.always(function(htmlOrXhr, status, errorOrXhr){
+              // Resolve where the XHR is based on done() or fail() argument positions
+              var xhr = (htmlOrXhr.statusCode ? htmlOrXhr : errorOrXhr),
+                  redirectedLocation = xhr.getResponseHeader(options.locationHeader);
+
+              if (redirectedLocation) {
+                cache[settings.url].destUrl = redirectedLocation;
+              }
+            });
+          }
+
           // Call fetch callback
           if(callback) {
-            ajaxRequest.complete(callback);
+            ajaxRequest.always(callback);
           }
         },
 
@@ -372,7 +449,7 @@
             var $targetHashEl = $(targetHash, $container);
             if($targetHashEl.length){
               var newPosition = $targetHashEl.offset().top;
-              document.body.scrollTop = newPosition;
+              $body.scrollTop(newPosition);
             }
             targetHash = null;
           }
@@ -408,7 +485,11 @@
               // Run callback
               options.onAfter($container, $newContent);
 
-              repositionWindow();
+              if (options.scroll) {
+                repositionWindow();
+              }
+              
+              bindPrefetchHandlers($container);
 
             });
 
@@ -430,14 +511,20 @@
          * @param   {string}    url
          * @param   {bool}      push - used to determine if we should
          *                      add a new item into the history object
+         * @param   {bool}      cacheResponse - used to determine if
+         *                      we should allow the cache to forget this
+         *                      page after this load completes.
          */
-        load = function (request, push) {
+        load = function (request, push, cacheResponse) {
 
           var settings = utility.translate(request);
 
-          /** Makes this an optional variable by setting a default */
-          if(typeof push === 'undefined') {
+          /** Makes these optional variables by setting defaults. */
+          if (typeof push === 'undefined') {
             push = true;
+          }
+          if (typeof cacheResponse === 'undefined') {
+            cacheResponse = true;
           }
 
           var
@@ -453,23 +540,40 @@
               loaded: function () {
                 var eventName = hasRunCallback ? 'ss.onProgressEnd' : 'ss.onStartEnd';
 
-                if(!callbBackEnded || !hasRunCallback) {
+                if (!callbBackEnded || !hasRunCallback) {
                   $container.one(eventName, function(){
                     updateContent(settings.url);
+                    if (!cacheResponse) {
+                      clear(settings.url);
+                    }
                   });
-                } else if(callbBackEnded) {
+                }
+                else if (callbBackEnded) {
                   updateContent(settings.url);
                 }
 
-                if(push) {
-                  window.history.pushState({ id: elementId }, cache[settings.url].title, settings.url);
+                if (push) {
+                  var destUrl = cache[settings.url].destUrl;
+
+                  /** Prepare a history entry */
+                  state = options.alterChangeState({ id: elementId }, cache[settings.url].title, destUrl);
+
+                  /** Update the cache to include the history entry for future comparisons */
+                  cache[settings.url].state = state;
+
+                  /** Add history entry */
+                  window.history.pushState(state, cache[settings.url].title, destUrl);
+                }
+
+                if (callbBackEnded && !cacheResponse) {
+                  clear(settings.url);
                 }
               },
 
               /** Loading, wait 10 ms and check again */
               fetching: function () {
 
-                if(!hasRunCallback) {
+                if (!hasRunCallback) {
 
                   hasRunCallback = true;
 
@@ -477,7 +581,7 @@
                   $container.one('ss.onStartEnd', function(){
 
                     // Add loading class
-                    if(options.loadingClass) {
+                    if (options.loadingClass) {
                       $body.addClass(options.loadingClass);
                     }
 
@@ -493,7 +597,7 @@
 
                 window.setTimeout(function () {
                   // Might of been canceled, better check!
-                  if(cache.hasOwnProperty(settings.url)){
+                  if (cache.hasOwnProperty(settings.url)){
                     responses[cache[settings.url].status]();
                   }
                 }, 10);
@@ -517,7 +621,9 @@
           options.onStart.render($container);
 
           window.setTimeout(function(){
-            $body.scrollTop(0);
+            if (options.scroll) {
+              $body.scrollTop(0);
+            }
             $container.trigger('ss.onStartEnd');
           }, options.onStart.duration);
 
@@ -533,7 +639,7 @@
           var request,
               $anchor = $(event.currentTarget);
 
-          if (utility.shouldLoadAnchor($anchor, options.blacklist) && !isTransitioning) {
+          if (utility.shouldLoadAnchor($anchor, options.blacklist, options.hrefRegex) && !isTransitioning) {
             event.stopPropagation();
             request = utility.translate($anchor.prop('href'));
             request = options.alterRequest(request);
@@ -546,24 +652,32 @@
          * @param   {object}    event
          */
         clickAnchor = function (event) {
-          var $anchor = $(event.currentTarget);
 
           // Ctrl (or Cmd) + click must open a new tab
-          if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist)) {
-            var request = utility.translate($anchor.prop('href'));
+          var $anchor = $(event.currentTarget);
+          if (!event.metaKey && !event.ctrlKey && utility.shouldLoadAnchor($anchor, options.blacklist, options.hrefRegex)) {
 
             // stopPropagation so that event doesn't fire on parent containers.
-            isTransitioning = true;
             event.stopPropagation();
             event.preventDefault();
-            targetHash = $anchor.prop('hash');
 
-            // Allows modifications to the request
-            request = options.alterRequest(request);
+            // Apply rate limiting.
+            if (!isRateLimited()) {
 
-            options.onBefore($anchor, $container);
+              // Set the delay timeout until the next event is allowed.
+              setRateLimitRepeatTime();
 
-            load(request);
+              var request = utility.translate($anchor.prop('href'));
+              isTransitioning = true;
+              targetHash = $anchor.prop('hash');
+
+              // Allows modifications to the request
+              request = options.alterRequest(request);
+
+              options.onBefore($anchor, $container);
+
+              load(request);
+            }
           }
         },
 
@@ -574,43 +688,78 @@
         submitForm = function (event) {
           var $form = $(event.currentTarget);
 
-          if(!$form.is(options.blacklist)){
+          if (!$form.is(options.blacklist)) {
+
             event.preventDefault();
             event.stopPropagation();
 
-            var request = {
-                  url: $form.prop('action'),
-                  data: $form.serialize(),
-                  type: $form.prop('method')
-                };
+            // Apply rate limiting.
+            if (!isRateLimited()) {
 
-            isTransitioning = true;
+              // Set the delay timeout until the next event is allowed.
+              setRateLimitRepeatTime();
 
-            request = options.alterRequest(request);
+              var request = {
+                url: $form.prop('action'),
+                data: $form.serialize(),
+                type: $form.prop('method')
+              };
 
-            if(request.type.toLowerCase() === 'get') {
-              request.url = request.url + '?' + request.data;
+              isTransitioning = true;
+              request = options.alterRequest(request);
+
+              if (request.type.toLowerCase() === 'get') {
+                request.url = request.url + '?' + request.data;
+              }
+
+              // Call the onReady callback and set delay
+              options.onBefore($form, $container);
+
+              load(request, undefined, options.allowFormCaching);
             }
-
-            // Call the onReady callback and set delay
-            options.onBefore($form, $container);
-
-            load(request);
           }
         },
 
+        /**
+         * DigitalMachinist (Jeff Rose)
+         * I figured to keep these together with this above functions since they're all related.
+         * Feel free to move these somewhere more appropriate if you have such places.
+         */
+        rateLimitRepeatTime = 0,
+        isRateLimited = function () {
+          var isFirstClick = (options.repeatDelay === null);
+          var isDelayOver = (parseInt(Date.now()) > rateLimitRepeatTime);
+          return !(isFirstClick || isDelayOver);
+        },
+        setRateLimitRepeatTime = function () {
+          rateLimitRepeatTime = parseInt(Date.now()) + parseInt(options.repeatDelay);
+        },
+        
+        /**
+         * Binds prefetch events
+         * @param   {object}    event
+         */
+        bindPrefetchHandlers = function ($element) {
+            		
+          if (options.anchors && options.prefetch) {
+            $element.find(options.anchors).not(options.prefetchBlacklist).on(options.prefetchOn, null, hoverAnchor);
+          }
+        },
+		
         /**
          * Binds all events and inits functionality
          * @param   {object}    event
          */
         bindEventHandlers = function ($element) {
 
-          $element.on('click', options.anchors, clickAnchor);
+          if (options.anchors) {
+            $element.on('click', options.anchors, clickAnchor);
 
-          $element.on('submit', options.forms, submitForm);
+            bindPrefetchHandlers($element);
+          }
 
-          if (options.prefetch) {
-            $element.on(options.prefetchOn, options.anchors, hoverAnchor);
+          if (options.forms) {
+            $element.on('submit', options.forms, submitForm);
           }
         },
 
@@ -627,17 +776,23 @@
 
       /** Sets a default state */
       if(window.history.state === null) {
-        window.history.replaceState({ id: elementId }, document.title, currentHref);
+        state = options.alterChangeState({ id: elementId }, document.title, currentHref);
+
+        /** Update history entry */
+        window.history.replaceState(state, document.title, currentHref);
+      } else {
+        state = {};
       }
 
       /** Stores the current page in cache variable */
-      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId);
+      utility.storePageIn(cache, currentHref, document.documentElement.outerHTML, elementId, state);
 
       /** Bind all of the event handlers on the container, not anchors */
       utility.triggerAllAnimationEndEvent($container, 'ss.onStartEnd ss.onProgressEnd ss.onEndEnd');
 
       /** Bind all of the event handlers on the container, not anchors */
       bindEventHandlers($container);
+
 
       /** Public methods */
       return {
@@ -680,4 +835,4 @@
   /* expose the default options */
   $.fn.smoothState.options = defaults;
 
-})(jQuery, window, document);
+}));
