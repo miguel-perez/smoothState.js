@@ -201,6 +201,12 @@
        */
       shouldLoadAnchor: function ($anchor, blacklist, hrefRegex) {
         var href = $anchor.prop('href');
+
+        if(typeof href === 'object' && href.baseVal) {
+          // if the link is inside an SVG, then the property is an SVGAnimatedString
+          href = href.baseVal;
+	}
+
         // URL will only be loaded if it's not an external link, hash, or
         // blacklisted
         return (
