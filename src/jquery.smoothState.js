@@ -699,17 +699,36 @@
               // Set the delay timeout until the next event is allowed.
               setRateLimitRepeatTime();
 
-              var request = {
-                url: $form.prop('action'),
-                data: $form.serialize(),
-                type: $form.prop('method')
-              };
+              if (typeof FormData === 'function' && $form.attr('enctype') == 'multipart/form-data') {
+                // file upload supported
+                var request = {
+                  url: $form.attr('action'),
+                  data: new FormData($form[0]),
+                  type: $form.attr('method'),
+                  async: true,
+                  cache: false,
+                  contentType: false,
+                  enctype: 'multipart/form-data',
+                  processData: false
+                };
+              } else {
+                // file upload not supported
+                var request = {
+                  url: $form.attr('action'),
+                  data: $form.serialize(),
+                  type: $form.attr('method')
+                };
+              }
 
               isTransitioning = true;
               request = options.alterRequest(request);
 
               if (request.type.toLowerCase() === 'get') {
+                if (!request.url) request.url = '';
                 request.url = request.url + '?' + request.data;
+                request.data = '';  
+              } else {
+                if (!request.url) request.url = self.location.pathname + self.location.search;
               }
 
               // Call the onReady callback and set delay
