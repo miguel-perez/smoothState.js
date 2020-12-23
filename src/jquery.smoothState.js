@@ -65,6 +65,9 @@
 
       /** The name of the event we will listen to from anchors if we're prefetching */
       prefetchOn: 'mouseover touchstart',
+	    
+      /** The name of the events that are to bubble up to their parents when prefetching. */
+      prefetchBubblesOn: '',
 
       /** jQuery selector to specify elements which should not be prefetched */
       prefetchBlacklist: '.no-prefetch',
@@ -640,7 +643,9 @@
               $anchor = $(event.currentTarget);
 
           if (utility.shouldLoadAnchor($anchor, options.blacklist, options.hrefRegex) && !isTransitioning) {
-            event.stopPropagation();
+            if(options.prefetchBubblesOn.indexOf(event.type) === -1){
+	       event.stopPropagation();
+	    }
             request = utility.translate($anchor.prop('href'));
             request = options.alterRequest(request);
             fetch(request);
