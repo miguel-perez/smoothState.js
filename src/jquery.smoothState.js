@@ -606,7 +606,6 @@
               /** Error, abort and redirect */
               error: function (){
                 if(options.debug && consl) {
-                  consl.log('There was an error loading: ' + settings.url);
                 } else {
                   window.location = settings.url;
                 }
@@ -675,6 +674,9 @@
               request = options.alterRequest(request);
 
               options.onBefore($anchor, $container);
+		    
+	      if( request.url === window.location.href )
+	        return;
 
               load(request);
             }
